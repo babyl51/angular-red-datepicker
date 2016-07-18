@@ -117,3 +117,39 @@ body {
 .calendar-box li:hover:not(.fadeNonClick):not(.cantUse) {
     background-color: #EBF1F4;
 }
+
+.isBetween {
+    background-color: #EBF1F4;
+}
+
+.start {
+    background-color: #EBF1F4;
+    position: relative;
+}
+
+.start:before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    width: 1px;
+    height: 100%;
+    background: #2693D5;
+    left: 0;
+    top: 0;
+}
+
+.end {
+    background-color: #EBF1F4;
+    position: relative;
+}
+
+.end:after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    width: 1px;
+    height: 100%;
+    background: #2693D5;
+    right: 0;
+    top: 0;
+}

@@ -19,12 +19,9 @@
 
 
         function linkFunc(scope, el, attr, ctrl) {
-            // angular.el("day").on('click', function (e) {
+            // angular.element(el).find('li').on('click', function (e) {
             //     console.log(angular.element(e.target).html());
             // });
-            angular.element(el).find('li').on('click', function (e) {
-                console.log(angular.element(e.target).html());
-            });
         }
     }
 
@@ -36,6 +33,12 @@
         var date = moment(new Date());
         vm.days = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
 
+        vm.selectedDays = [];
+        vm.startSelection = '';
+        vm.endSelection = '';
+
+        vm.earliest_date = moment(new Date('January 1, 2010')).startOf('day');
+        vm.latest_date = moment(new Date('December 31, 2026 ')).startOf('day');
         vm.today = {
             date: date.startOf('day'),
             year: date.format('YYYY'),
@@ -69,9 +72,49 @@
 
             if (!day.afterCurrentNextMonth && !day.afterCurrent) {
                 day.active = day.active ? false : true;
+                if (vm.selectedDays.length == 2) {
+                    _.forEach(vm.selectedDays, function (value) {
+                        value.active = false;
+                    });
+                    _.remove(vm.selectedDays);
+                    vm.selectedDays.push(day);
+                } else if (vm.selectedDays.length == 1) {
+                    vm.selectedDays.push(day);
+                    vm.activeRange(vm.selectedDays);
+                } else {
+                    vm.selectedDays.push(day);
+                }
             }
+        };
 
+        vm.activeRange = function (value) {
+            if (moment(value[0].date).isBefore(value[1].date)) {
+                vm.startSelection = value[0].date;
+                vm.endSelection = value[1].date;
+            } else {
+                vm.startSelection = value[1].date;
+                vm.endSelection = value[0].date;
+            }
+            // vm.coloredDays();
+            vm.monthShow = new vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
+        };
 
+        vm.coloredDays = function () {
+            _.forEach(vm.monthShow, function (value) {
+                if (moment(value.date).isSame(vm.startSelection)) {
+                    value.start = true;
+                    value.active = false;
+                } else if (moment(value.date).isSame(vm.endSelection)) {
+                    value.active = false;
+                    value.end = true;
+                } else if (moment(value.date).isBetween(vm.startSelection, vm.endSelection)) {
+                    value.isBetween = true;
+                } else {
+                    value.start = false;
+                    value.end = false;
+                    value.isBetween = false;
+                }
+            });
         };
 
 
@@ -83,25 +126,24 @@
                 }
                 vm.month.name = this_moment.subtract(1, 'month').format('MMMM');
                 vm.month.id = moment().month(vm.month.name).format('M');
-
-                vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
+                vm.monthShow = new vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
             } else if (direction == 'right') {
                 if (vm.month.id == 12) {
                     vm.year = this_moment.add(1, 'year').format('YYYY');
                 }
                 vm.month.name = this_moment.add(1, 'month').format('MMMM');
                 vm.month.id = moment().month(vm.month.name).format('M');
-                vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
+                vm.monthShow = new vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
             }
         };
         vm.yearChange = function (direction) {
             var this_moment = moment([vm.year, vm.month.id - 1, 1]);
             if (direction == 'left') {
                 vm.year = this_moment.subtract(1, 'year').format('YYYY');
-                vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
+                vm.monthShow = new vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
             } else if (direction == 'right') {
                 vm.year = this_moment.add(1, 'year').format('YYYY');
-                vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
+                vm.monthShow = new vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
             }
         };
         vm.calendarArray = function (current) {
@@ -121,12 +163,16 @@
                 var a = {
                     str: +month.format('D'),
                     current: month.isSame(vm.today.date),
-                    date: month.toString(),
+                    date: month.toArray(),
                     fade: true,
-                    nameOfDay: month.format('dd'),
-                    idOfDay: month.format('d'),
+                    //TODO may need after locales change
+                    // nameOfDay: month.format('dd'),
+                    // idOfDay: month.format('d'),
                     active: false,
-                    beforeMonth: true
+                    beforeMonth: true,
+                    start: month.isSame(vm.startSelection),
+                    end: month.isSame(vm.endSelection),
+                    isBetween: month.isBetween(vm.startSelection, vm.endSelection)
                 };
                 vm.beforeMonthShow.push(a);
                 month.subtract(1, 'day');
@@ -138,12 +184,13 @@
                 var a = {
                     str: +month.format('D'),
                     current: month.isSame(vm.today.date),
-                    date: month.toString(),
+                    date: month.toArray(),
                     fade: false,
-                    nameOfDay: month.format('dd'),
-                    idOfDay: month.format('d'),
                     afterCurrent: month.isAfter(vm.today.date),
-                    active: false
+                    active: false,
+                    start: month.isSame(vm.startSelection),
+                    end: month.isSame(vm.endSelection),
+                    isBetween: month.isBetween(vm.startSelection, vm.endSelection)
                 };
                 vm.currentMonthShow.push(a);
                 month.add(1, 'day');
@@ -159,24 +206,50 @@
                     str: +month.format('D'),
                     current: month.isSame(vm.today.date),
                     fade: true,
-                    date: month.toString(),
-                    nameOfDay: month.format('dd'),
-                    idOfDay: month.format('d'),
+                    date: month.toArray(),
                     afterCurrentNextMonth: month.isAfter(vm.today.date),
                     active: false,
-                    nextMonth: true
+                    nextMonth: true,
+                    start: month.isSame(vm.startSelection),
+                    end: month.isSame(vm.endSelection),
+                    isBetween: month.isBetween(vm.startSelection, vm.endSelection)
                 };
                 vm.nextMonthShow.push(a);
                 month.add(1, 'day');
             });
 
-            vm.monthShow = vm.beforeMonthShow.concat(vm.currentMonthShow, vm.nextMonthShow);
-            return vm.monthShow;
+
+            return vm.beforeMonthShow.concat(vm.currentMonthShow, vm.nextMonthShow);
 
         };
-        vm.monthShow = vm.calendarArray(vm.today.date);
+        vm.monthShow = new vm.calendarArray(vm.today.date);
 
-        
+        vm.list = [{
+            label: 'Last 30 days',
+            start: moment(vm.today.date).subtract(29, 'days'),
+            end: vm.today.date
+        }, {
+            label: 'Last month',
+            start: moment(vm.today.date).subtract(1, 'month').startOf('month'),
+            end: moment(vm.today.date).subtract(1, 'month').endOf('month')
+        }, {
+            label: 'Last 3 months',
+            start: moment(vm.today.date).subtract(3, 'month').startOf('month'),
+            end: moment(vm.today.date).subtract(1, 'month').endOf('month')
+        }, {
+            label: 'Last 6 months',
+            start: moment(vm.today.date).subtract(6, 'month').startOf('month'),
+            end: moment(vm.today.date).subtract(1, 'month').endOf('month')
+        }, {
+            label: 'Last year',
+            start: moment(vm.today.date).subtract(12, 'month').startOf('month'),
+            end: moment(vm.today.date).subtract(1, 'month').endOf('month')
+        }, {
+            label: 'All time',
+            start: vm.earliest_date,
+            end: vm.latest_date
+        }];
+
     }
 
 })();

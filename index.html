@@ -26,7 +26,8 @@ Released under the MIT license: http://jsbin.mit-license.org
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Calendar</title>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans&subset=latin,cyrillic' rel='stylesheet'
+          type='text/css'>
 </head>
 
 <body>
@@ -35,6 +36,12 @@ Released under the MIT license: http://jsbin.mit-license.org
 
 <script type="text/ng-template" id="calendar.html">
     <div class="calendar">
+        <div class="inputs">
+            <div class="range">
+                
+            </div>
+            <div class="list"></div>
+        </div>
         <div class="switchers">
             <div class="month">
                 <i class="fa fa-chevron-left" aria-hidden="true"
@@ -64,7 +71,16 @@ Released under the MIT license: http://jsbin.mit-license.org
             <ul class="calendar-box">
                 <li class="day"
                     ng-repeat="day in calendar.monthShow"
-                    ng-class="{fade: day.fade, current: day.current, cantUse: day.afterCurrent, fadeNonClick: day.afterCurrentNextMonth, active: day.active}"
+                    ng-class="{
+                    fade: day.fade,
+                    current: day.current,
+                    cantUse: day.afterCurrent,
+                    fadeNonClick: day.afterCurrentNextMonth,
+                    active: day.active,
+                    isBetween: day.isBetween,
+                    start: day.start,
+                    end: day.end
+                    }"
                     ng-click="calendar.getDay(day)"
                 >
                     {{day.str}}
@@ -73,6 +89,8 @@ Released under the MIT license: http://jsbin.mit-license.org
                 </li>
             </ul>
         </div>
+        <div>{{calendar.startSelection}}</div>
+        <div>{{calendar.endSelection}}</div>
     </div>
 
 </script>
