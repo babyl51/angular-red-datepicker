@@ -19,7 +19,10 @@
 
 
         function linkFunc(scope, el, attr, ctrl) {
-            angular.element(el).find('ul').on('click', function (e) {
+            // angular.el("day").on('click', function (e) {
+            //     console.log(angular.element(e.target).html());
+            // });
+            angular.element(el).find('li').on('click', function (e) {
                 console.log(angular.element(e.target).html());
             });
         }
@@ -55,6 +58,23 @@
         // }
 
 
+        vm.getDay = function (day) {
+            if (day.fade && !day.afterCurrentNextMonth) {
+                if (day.beforeMonth) {
+                    vm.monthChange(vm.month.id, 'left');
+                } else if (day.nextMonth) {
+                    vm.monthChange(vm.month.id, 'right');
+                }
+            }
+
+            if (!day.afterCurrentNextMonth && !day.afterCurrent) {
+                day.active = day.active ? false : true;
+            }
+
+
+        };
+
+
         vm.monthChange = function (id, direction) {
             var this_moment = moment([vm.year, id - 1, 1]);
             if (direction == 'left') {
@@ -74,7 +94,6 @@
                 vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
             }
         };
-
         vm.yearChange = function (direction) {
             var this_moment = moment([vm.year, vm.month.id - 1, 1]);
             if (direction == 'left') {
@@ -85,8 +104,6 @@
                 vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
             }
         };
-
-
         vm.calendarArray = function (current) {
             vm.beforeMonthShow = [];
             vm.currentMonthShow = [];
@@ -107,7 +124,9 @@
                     date: month.toString(),
                     fade: true,
                     nameOfDay: month.format('dd'),
-                    idOfDay: month.format('d')
+                    idOfDay: month.format('d'),
+                    active: false,
+                    beforeMonth: true
                 };
                 vm.beforeMonthShow.push(a);
                 month.subtract(1, 'day');
@@ -123,7 +142,8 @@
                     fade: false,
                     nameOfDay: month.format('dd'),
                     idOfDay: month.format('d'),
-                    afterCurrent: month.isAfter(vm.today.date)
+                    afterCurrent: month.isAfter(vm.today.date),
+                    active: false
                 };
                 vm.currentMonthShow.push(a);
                 month.add(1, 'day');
@@ -142,7 +162,9 @@
                     date: month.toString(),
                     nameOfDay: month.format('dd'),
                     idOfDay: month.format('d'),
-                    afterCurrentNextMonth: month.isAfter(vm.today.date)
+                    afterCurrentNextMonth: month.isAfter(vm.today.date),
+                    active: false,
+                    nextMonth: true
                 };
                 vm.nextMonthShow.push(a);
                 month.add(1, 'day');
@@ -153,6 +175,8 @@
 
         };
         vm.monthShow = vm.calendarArray(vm.today.date);
+
+        
     }
 
 })();

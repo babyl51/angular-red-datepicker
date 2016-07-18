@@ -14,134 +14,19 @@ Released under the MIT license: http://jsbin.mit-license.org
     <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet"
           type="text/css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.13.1/lodash.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/locale/ru.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <script src="core.js"></script>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Calendar</title>
-
-<style id="jsbin-css">
-.month i {
-    cursor: pointer;
-}
-.year i{
-    cursor: pointer;
-}
-.days-name {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-}
-
-.days-name li {
-    float: left;
-    display: inline-block;
-    border: 1px solid #969696;
-    cursor: pointer;
-    width: 25px;
-    text-align: center;
-    margin: 2px;
-}
-
-.calendar {
-    width: 220px;
-}
-.calendar .manage .all_months {
-    float: left;
-    border: 1px solid #cccccc;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    width: 130px;
-    text-align: center;
-}
-.calendar .manage .all_months .month-left {
-    float: left;
-}
-.calendar .manage .all_months .month-right {
-    float: right;
-}
-.calendar .manage .all_months .month-left,
-.calendar .manage .all_months .month-right {
-    cursor: pointer;
-}
-.calendar .manage .all_months .month-left:hover,
-.calendar .manage .all_months .month-right:hover {
-    color: #1fbba6;
-}
-.calendar .manage .all_years {
-    float: right;
-    border: 1px solid #cccccc;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    margin: 0 5px 0 0px;
-}
-.calendar .manage .all_years .year-left,
-.calendar .manage .all_years .year-right {
-    cursor: pointer;
-}
-.calendar .manage .all_years .year-left:hover,
-.calendar .manage .all_years .year-right:hover {
-    color: #1fbba6;
-}
-.calendar .days {
-    display: block;
-}
-.calendar .days ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-    width: 100%;
-}
-.calendar .days ul li {
-    float: left;
-    display: inline-block;
-    border: 1px solid #969696;
-    width: 25px;
-    text-align: center;
-    margin: 2px;
-}
-.calendar .calendar-box {
-    display: block;
-}
-.calendar .calendar-box ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-    width: 100%;
-}
-.calendar .calendar-box ul li {
-    float: left;
-    display: inline-block;
-    border: 1px solid #969696;
-    cursor: pointer;
-    width: 25px;
-    text-align: center;
-    margin: 2px;
-}
-.calendar .calendar-box ul li span {
-    display: block;
-    text-align: center;
-}
-.calendar .calendar-box ul .fade {
-    background: #969696;
-}
-.calendar .calendar-box ul .active {
-    background: #1fbba6;
-    color: #ffffff;
-}
-.calendar .calendar-box ul .cantUse {
-    background: #c8c8c8;
-    cursor: auto;
-}
-.calendar .calendar-box ul .fadeNonClick {
-    background: #969696;
-    cursor: auto;
-}
-</style>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
@@ -150,485 +35,48 @@ Released under the MIT license: http://jsbin.mit-license.org
 
 <script type="text/ng-template" id="calendar.html">
     <div class="calendar">
-        <div class="month">
-            <i class="fa fa-chevron-left" aria-hidden="true"
-               ng-click="calendar.monthChange(calendar.month.id, 'left')"></i>
-            <span>{{calendar.month.name}}</span>
-            <span>{{calendar.month.id}}</span>
-            <i class="fa fa-chevron-right" aria-hidden="true"
-               ng-click="calendar.monthChange(calendar.month.id, 'right')"
-               ng-hide="calendar.today.month== calendar.month.id"
-            ></i>
+        <div class="switchers">
+            <div class="month">
+                <i class="fa fa-chevron-left" aria-hidden="true"
+                   ng-click="calendar.monthChange(calendar.month.id, 'left')"></i>
+                <span>{{calendar.month.name}}</span>
+                <!--<span>{{calendar.month.id}}</span>-->
+                <i class="fa fa-chevron-right" aria-hidden="true"
+                   ng-click="calendar.monthChange(calendar.month.id, 'right')"
+                   ng-hide="calendar.today.month== calendar.month.id"
+                ></i>
+            </div>
+            <div class="year">
+                <i class="fa fa-chevron-left" aria-hidden="true" ng-click="calendar.yearChange('left')"></i>
+                <span>{{calendar.year}}</span>
+                <i class="fa fa-chevron-right" aria-hidden="true"
+                   ng-click="calendar.yearChange('right')"
+                   ng-hide="calendar.today.year == calendar.year"
+                ></i>
+            </div>
         </div>
-        <div class="year">
-            <i class="fa fa-chevron-left" aria-hidden="true" ng-click="calendar.yearChange('left')"></i>
-            <span>{{calendar.year}}</span>
-            <i class="fa fa-chevron-right" aria-hidden="true"
-               ng-click="calendar.yearChange('right')"
-               ng-hide="calendar.today.year == calendar.year"
-            ></i>
-        </div>
-        <ul class="days-name">
-            <li ng-repeat="dayName in calendar.days">{{dayName}}</li>
-        </ul>
+
 
         <div class="calendar">
-            <div class="calendar-box">
-                <ul>
-                    <li ng-repeat="day in calendar.monthShow"
-                        ng-class="{fade: day.fade, active: day.current, cantUse: day.afterCurrent, fadeNonClick: day.afterCurrentNextMonth}">
-                        {{day.str}}
-                        <br>
-                        {{day.nameOfDay}}
-                    </li>
-                </ul>
-            </div>
+            <ul class="days-name">
+                <li ng-repeat="dayName in calendar.days">{{dayName}}</li>
+            </ul>
+            <ul class="calendar-box">
+                <li class="day"
+                    ng-repeat="day in calendar.monthShow"
+                    ng-class="{fade: day.fade, current: day.current, cantUse: day.afterCurrent, fadeNonClick: day.afterCurrentNextMonth, active: day.active}"
+                    ng-click="calendar.getDay(day)"
+                >
+                    {{day.str}}
+                    <!--<hr>-->
+                    <!--{{day.nameOfDay}}-->
+                </li>
+            </ul>
         </div>
     </div>
 
 </script>
 
-<script id="jsbin-javascript">
-(function () {
-    'use strict';
-
-    angular.module('calendarApp', [])
-        .constant('moment', moment)
-        .constant('_', window._)
-        .directive('calendar', calendar);
-
-    function calendar() {
-        return {
-            restrict: 'E',
-            templateUrl: 'calendar.html',
-            scope: {},
-            link: linkFunc,
-            controller: calendarController,
-            controllerAs: 'calendar',
-            bindToController: true
-        };
-
-
-        function linkFunc(scope, el, attr, ctrl) {
-            angular.element(el).find('ul').on('click', function (e) {
-                console.log(angular.element(e.target).html());
-            });
-        }
-    }
-
-    calendarController.$inject = ['$scope'];
-
-    function calendarController($scope) {
-        var vm = this;
-        moment.locale('ru');
-        var date = moment(new Date());
-        vm.days = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
-
-        vm.today = {
-            date: date.startOf('day'),
-            year: date.format('YYYY'),
-            month: date.format('M')
-        };
-        vm.month = {
-            name: moment().format('MMMM'),
-            id: moment().format('M')
-        };
-        vm.year = moment().year();
-
-        // TODO change locales
-        // vm.allMoment = moment.localeData();
-        // vm.weekDaysName = vm.allMoment._weekdaysMin;
-        // vm.weekStart = vm.allMoment._week.dow;
-        //
-        // if (vm.allMoment._week.dow == 1) {
-        //     var removed = vm.weekDaysName.splice(0, 1);
-        //     vm.weekDaysName.push(removed[0]);
-        // }
-
-
-        vm.monthChange = function (id, direction) {
-            var this_moment = moment([vm.year, id - 1, 1]);
-            if (direction == 'left') {
-                if (vm.month.id == 1) {
-                    vm.year = this_moment.subtract(1, 'year').format('YYYY');
-                }
-                vm.month.name = this_moment.subtract(1, 'month').format('MMMM');
-                vm.month.id = moment().month(vm.month.name).format('M');
-
-                vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
-            } else if (direction == 'right') {
-                if (vm.month.id == 12) {
-                    vm.year = this_moment.add(1, 'year').format('YYYY');
-                }
-                vm.month.name = this_moment.add(1, 'month').format('MMMM');
-                vm.month.id = moment().month(vm.month.name).format('M');
-                vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
-            }
-        };
-
-        vm.yearChange = function (direction) {
-            var this_moment = moment([vm.year, vm.month.id - 1, 1]);
-            if (direction == 'left') {
-                vm.year = this_moment.subtract(1, 'year').format('YYYY');
-                vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
-            } else if (direction == 'right') {
-                vm.year = this_moment.add(1, 'year').format('YYYY');
-                vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
-            }
-        };
-
-
-        vm.calendarArray = function (current) {
-            vm.beforeMonthShow = [];
-            vm.currentMonthShow = [];
-            vm.nextMonthShow = [];
-            vm.currentMonth = moment(current).startOf('month');
-            vm.beforeMonth = moment(current).subtract(1, 'month').endOf('month');
-            vm.nextMonth = moment(current).add(1, 'month').startOf('month');
-            vm.startDay = moment(current).startOf('month').format('d');
-            vm.endDay = moment(current).endOf('month').format('d');
-
-            //Before month
-            var start = (Number(vm.startDay) ? (vm.startDay == 1 ? 7 : vm.startDay - 1) : 6);
-            _.times(start, function (n) {
-                var month = vm.beforeMonth;
-                var a = {
-                    str: +month.format('D'),
-                    current: month.isSame(vm.today.date),
-                    date: month.toString(),
-                    fade: true,
-                    nameOfDay: month.format('dd'),
-                    idOfDay: month.format('d')
-                };
-                vm.beforeMonthShow.push(a);
-                month.subtract(1, 'day');
-            });
-
-            //Current Month
-            _.times(vm.currentMonth.daysInMonth(), function (n) {
-                var month = vm.currentMonth;
-                var a = {
-                    str: +month.format('D'),
-                    current: month.isSame(vm.today.date),
-                    date: month.toString(),
-                    fade: false,
-                    nameOfDay: month.format('dd'),
-                    idOfDay: month.format('d'),
-                    afterCurrent: month.isAfter(vm.today.date)
-                };
-                vm.currentMonthShow.push(a);
-                month.add(1, 'day');
-            });
-            _.reverse(vm.beforeMonthShow);
-
-
-            //End Month
-            var end = (Number(vm.endDay) ? (vm.endDay == 6 ? 1 : 7 - vm.endDay ) : 7);
-            _.times(end, function (n) {
-                var month = vm.nextMonth;
-                var a = {
-                    str: +month.format('D'),
-                    current: month.isSame(vm.today.date),
-                    fade: true,
-                    date: month.toString(),
-                    nameOfDay: month.format('dd'),
-                    idOfDay: month.format('d'),
-                    afterCurrentNextMonth: month.isAfter(vm.today.date)
-                };
-                vm.nextMonthShow.push(a);
-                month.add(1, 'day');
-            });
-
-            vm.monthShow = vm.beforeMonthShow.concat(vm.currentMonthShow, vm.nextMonthShow);
-            return vm.monthShow;
-
-        };
-        vm.monthShow = vm.calendarArray(vm.today.date);
-    }
-
-})();
-</script>
-
-
-<script id="jsbin-source-css" type="text/css">.month i {
-    cursor: pointer;
-}
-.year i{
-    cursor: pointer;
-}
-.days-name {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-}
-
-.days-name li {
-    float: left;
-    display: inline-block;
-    border: 1px solid #969696;
-    cursor: pointer;
-    width: 25px;
-    text-align: center;
-    margin: 2px;
-}
-
-.calendar {
-    width: 220px;
-}
-.calendar .manage .all_months {
-    float: left;
-    border: 1px solid #cccccc;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    width: 130px;
-    text-align: center;
-}
-.calendar .manage .all_months .month-left {
-    float: left;
-}
-.calendar .manage .all_months .month-right {
-    float: right;
-}
-.calendar .manage .all_months .month-left,
-.calendar .manage .all_months .month-right {
-    cursor: pointer;
-}
-.calendar .manage .all_months .month-left:hover,
-.calendar .manage .all_months .month-right:hover {
-    color: #1fbba6;
-}
-.calendar .manage .all_years {
-    float: right;
-    border: 1px solid #cccccc;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    margin: 0 5px 0 0px;
-}
-.calendar .manage .all_years .year-left,
-.calendar .manage .all_years .year-right {
-    cursor: pointer;
-}
-.calendar .manage .all_years .year-left:hover,
-.calendar .manage .all_years .year-right:hover {
-    color: #1fbba6;
-}
-.calendar .days {
-    display: block;
-}
-.calendar .days ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-    width: 100%;
-}
-.calendar .days ul li {
-    float: left;
-    display: inline-block;
-    border: 1px solid #969696;
-    width: 25px;
-    text-align: center;
-    margin: 2px;
-}
-.calendar .calendar-box {
-    display: block;
-}
-.calendar .calendar-box ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-    width: 100%;
-}
-.calendar .calendar-box ul li {
-    float: left;
-    display: inline-block;
-    border: 1px solid #969696;
-    cursor: pointer;
-    width: 25px;
-    text-align: center;
-    margin: 2px;
-}
-.calendar .calendar-box ul li span {
-    display: block;
-    text-align: center;
-}
-.calendar .calendar-box ul .fade {
-    background: #969696;
-}
-.calendar .calendar-box ul .active {
-    background: #1fbba6;
-    color: #ffffff;
-}
-.calendar .calendar-box ul .cantUse {
-    background: #c8c8c8;
-    cursor: auto;
-}
-.calendar .calendar-box ul .fadeNonClick {
-    background: #969696;
-    cursor: auto;
-}
-</script>
-
-<script id="jsbin-source-javascript" type="text/javascript">(function () {
-    'use strict';
-
-    angular.module('calendarApp', [])
-        .constant('moment', moment)
-        .constant('_', window._)
-        .directive('calendar', calendar);
-
-    function calendar() {
-        return {
-            restrict: 'E',
-            templateUrl: 'calendar.html',
-            scope: {},
-            link: linkFunc,
-            controller: calendarController,
-            controllerAs: 'calendar',
-            bindToController: true
-        };
-
-
-        function linkFunc(scope, el, attr, ctrl) {
-            angular.element(el).find('ul').on('click', function (e) {
-                console.log(angular.element(e.target).html());
-            });
-        }
-    }
-
-    calendarController.$inject = ['$scope'];
-
-    function calendarController($scope) {
-        var vm = this;
-        moment.locale('ru');
-        var date = moment(new Date());
-        vm.days = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
-
-        vm.today = {
-            date: date.startOf('day'),
-            year: date.format('YYYY'),
-            month: date.format('M')
-        };
-        vm.month = {
-            name: moment().format('MMMM'),
-            id: moment().format('M')
-        };
-        vm.year = moment().year();
-
-        // TODO change locales
-        // vm.allMoment = moment.localeData();
-        // vm.weekDaysName = vm.allMoment._weekdaysMin;
-        // vm.weekStart = vm.allMoment._week.dow;
-        //
-        // if (vm.allMoment._week.dow == 1) {
-        //     var removed = vm.weekDaysName.splice(0, 1);
-        //     vm.weekDaysName.push(removed[0]);
-        // }
-
-
-        vm.monthChange = function (id, direction) {
-            var this_moment = moment([vm.year, id - 1, 1]);
-            if (direction == 'left') {
-                if (vm.month.id == 1) {
-                    vm.year = this_moment.subtract(1, 'year').format('YYYY');
-                }
-                vm.month.name = this_moment.subtract(1, 'month').format('MMMM');
-                vm.month.id = moment().month(vm.month.name).format('M');
-
-                vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
-            } else if (direction == 'right') {
-                if (vm.month.id == 12) {
-                    vm.year = this_moment.add(1, 'year').format('YYYY');
-                }
-                vm.month.name = this_moment.add(1, 'month').format('MMMM');
-                vm.month.id = moment().month(vm.month.name).format('M');
-                vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
-            }
-        };
-
-        vm.yearChange = function (direction) {
-            var this_moment = moment([vm.year, vm.month.id - 1, 1]);
-            if (direction == 'left') {
-                vm.year = this_moment.subtract(1, 'year').format('YYYY');
-                vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
-            } else if (direction == 'right') {
-                vm.year = this_moment.add(1, 'year').format('YYYY');
-                vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
-            }
-        };
-
-
-        vm.calendarArray = function (current) {
-            vm.beforeMonthShow = [];
-            vm.currentMonthShow = [];
-            vm.nextMonthShow = [];
-            vm.currentMonth = moment(current).startOf('month');
-            vm.beforeMonth = moment(current).subtract(1, 'month').endOf('month');
-            vm.nextMonth = moment(current).add(1, 'month').startOf('month');
-            vm.startDay = moment(current).startOf('month').format('d');
-            vm.endDay = moment(current).endOf('month').format('d');
-
-            //Before month
-            var start = (Number(vm.startDay) ? (vm.startDay == 1 ? 7 : vm.startDay - 1) : 6);
-            _.times(start, function (n) {
-                var month = vm.beforeMonth;
-                var a = {
-                    str: +month.format('D'),
-                    current: month.isSame(vm.today.date),
-                    date: month.toString(),
-                    fade: true,
-                    nameOfDay: month.format('dd'),
-                    idOfDay: month.format('d')
-                };
-                vm.beforeMonthShow.push(a);
-                month.subtract(1, 'day');
-            });
-
-            //Current Month
-            _.times(vm.currentMonth.daysInMonth(), function (n) {
-                var month = vm.currentMonth;
-                var a = {
-                    str: +month.format('D'),
-                    current: month.isSame(vm.today.date),
-                    date: month.toString(),
-                    fade: false,
-                    nameOfDay: month.format('dd'),
-                    idOfDay: month.format('d'),
-                    afterCurrent: month.isAfter(vm.today.date)
-                };
-                vm.currentMonthShow.push(a);
-                month.add(1, 'day');
-            });
-            _.reverse(vm.beforeMonthShow);
-
-
-            //End Month
-            var end = (Number(vm.endDay) ? (vm.endDay == 6 ? 1 : 7 - vm.endDay ) : 7);
-            _.times(end, function (n) {
-                var month = vm.nextMonth;
-                var a = {
-                    str: +month.format('D'),
-                    current: month.isSame(vm.today.date),
-                    fade: true,
-                    date: month.toString(),
-                    nameOfDay: month.format('dd'),
-                    idOfDay: month.format('d'),
-                    afterCurrentNextMonth: month.isAfter(vm.today.date)
-                };
-                vm.nextMonthShow.push(a);
-                month.add(1, 'day');
-            });
-
-            vm.monthShow = vm.beforeMonthShow.concat(vm.currentMonthShow, vm.nextMonthShow);
-            return vm.monthShow;
-
-        };
-        vm.monthShow = vm.calendarArray(vm.today.date);
-    }
-
-})();
-</script></body>
+</body>
 
 </html>

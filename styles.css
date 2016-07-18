@@ -1,22 +1,29 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
 .month i {
     cursor: pointer;
 }
-.year i{
+
+.year i {
     cursor: pointer;
 }
+
 .days-name {
     list-style: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
+    border: 1px solid #969696;
+    border-bottom: none;
 }
 
 .days-name li {
     float: left;
     display: inline-block;
-    border: 1px solid #969696;
     cursor: pointer;
-    width: 25px;
+    width: 27px;
     text-align: center;
     margin: 2px;
 }
@@ -24,96 +31,89 @@
 .calendar {
     width: 220px;
 }
-.calendar .manage .all_months {
+
+.calendar .switchers {
+    overflow: hidden;
+    /*margin: 2px;*/
+    padding: 5px 0;
+    border: 1px solid #969696;
+    border-bottom: none;
+}
+
+.month {
+    /*border: 1px solid #c8c8c8;*/
+    /*border-radius: 3px;*/
     float: left;
-    border: 1px solid #cccccc;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    width: 130px;
-    text-align: center;
+    padding: 0 20px;
+    position: relative;
 }
-.calendar .manage .all_months .month-left {
-    float: left;
-}
-.calendar .manage .all_months .month-right {
+
+.year {
+    /*border: 1px solid #c8c8c8;*/
+    /*border-radius: 3px;*/
     float: right;
+    padding: 0 20px;
+    position: relative;
 }
-.calendar .manage .all_months .month-left,
-.calendar .manage .all_months .month-right {
-    cursor: pointer;
+
+.fa-chevron-right {
+    position: absolute;
+    top: 5px;
+    right: 2px;
 }
-.calendar .manage .all_months .month-left:hover,
-.calendar .manage .all_months .month-right:hover {
-    color: #1fbba6;
+
+.fa-chevron-left {
+    position: absolute;
+    top: 5px;
+    left: 2px;
 }
-.calendar .manage .all_years {
-    float: right;
-    border: 1px solid #cccccc;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    margin: 0 5px 0 0px;
-}
-.calendar .manage .all_years .year-left,
-.calendar .manage .all_years .year-right {
-    cursor: pointer;
-}
-.calendar .manage .all_years .year-left:hover,
-.calendar .manage .all_years .year-right:hover {
-    color: #1fbba6;
-}
-.calendar .days {
-    display: block;
-}
-.calendar .days ul {
+
+.calendar-box {
     list-style: none;
     padding: 0;
     margin: 0;
     overflow: hidden;
-    width: 100%;
+    border: 1px solid #969696;
+    -moz-border-radius-bottomleft: 3px;
+    -moz-border-radius-bottomright: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
-.calendar .days ul li {
+
+.calendar-box li {
     float: left;
     display: inline-block;
-    border: 1px solid #969696;
-    width: 25px;
-    text-align: center;
-    margin: 2px;
-}
-.calendar .calendar-box {
-    display: block;
-}
-.calendar .calendar-box ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-    width: 100%;
-}
-.calendar .calendar-box ul li {
-    float: left;
-    display: inline-block;
-    border: 1px solid #969696;
+    /*border: 1px solid #969696;*/
     cursor: pointer;
-    width: 25px;
+    width: 27px;
     text-align: center;
-    margin: 2px;
+    padding: 2px;
 }
-.calendar .calendar-box ul li span {
-    display: block;
-    text-align: center;
+
+.calendar-box .current {
+    color: #2693D5 !important;
+    background-color: rgba(38, 147, 213, .2) !important;
 }
-.calendar .calendar-box ul .fade {
-    background: #969696;
+
+.calendar-box .cantUse {
+    cursor: default;
+    color: rgba(195, 202, 205, .7)
 }
-.calendar .calendar-box ul .active {
-    background: #1fbba6;
-    color: #ffffff;
+
+.calendar-box .fade {
+    cursor: pointer;
+    color: rgba(195, 202, 205, .7)
 }
-.calendar .calendar-box ul .cantUse {
-    background: #c8c8c8;
-    cursor: auto;
+
+.calendar-box .fadeNonClick {
+    cursor: default;
+    color: rgba(195, 202, 205, .7)
 }
-.calendar .calendar-box ul .fadeNonClick {
-    background: #969696;
-    cursor: auto;
+
+.calendar-box .active {
+    background-color: #EBF1F4;
+}
+
+.calendar-box li:hover:not(.fadeNonClick):not(.cantUse) {
+    background-color: #EBF1F4;
 }
