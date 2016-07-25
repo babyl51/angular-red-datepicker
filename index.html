@@ -37,17 +37,20 @@ Released under the MIT license: http://jsbin.mit-license.org
 <script type="text/ng-template" id="calendar.html">
     <div class="calendar">
         <div class="inputs">
-            <div class="range">
-                
+            <div contenteditable="">{{calendar.startSelection}}</div>
+            <div contenteditable="">{{calendar.endSelection}}</div>
+        </div>
+        <div class="range">
+            <div class="range-btn">Click</div>
+            <div class="list">
+                <ul><li ng-repeat="item in calendar.list" ng-click="calendar.listSelected(item)">{{item.label}}</li></ul>
             </div>
-            <div class="list"></div>
         </div>
         <div class="switchers">
             <div class="month">
                 <i class="fa fa-chevron-left" aria-hidden="true"
                    ng-click="calendar.monthChange(calendar.month.id, 'left')"></i>
                 <span>{{calendar.month.name}}</span>
-                <!--<span>{{calendar.month.id}}</span>-->
                 <i class="fa fa-chevron-right" aria-hidden="true"
                    ng-click="calendar.monthChange(calendar.month.id, 'right')"
                    ng-hide="calendar.today.month== calendar.month.id"
@@ -84,13 +87,9 @@ Released under the MIT license: http://jsbin.mit-license.org
                     ng-click="calendar.getDay(day)"
                 >
                     {{day.str}}
-                    <!--<hr>-->
-                    <!--{{day.nameOfDay}}-->
                 </li>
             </ul>
         </div>
-        <div>{{calendar.startSelection}}</div>
-        <div>{{calendar.endSelection}}</div>
     </div>
 
 </script>

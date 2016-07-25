@@ -89,32 +89,13 @@
 
         vm.activeRange = function (value) {
             if (moment(value[0].date).isBefore(value[1].date)) {
-                vm.startSelection = value[0].date;
-                vm.endSelection = value[1].date;
+                vm.startSelection = moment(value[0].date).toISOString();
+                vm.endSelection = moment(value[1].date).toISOString();
             } else {
-                vm.startSelection = value[1].date;
-                vm.endSelection = value[0].date;
+                vm.startSelection = moment(value[1].date).toISOString();
+                vm.endSelection = moment(value[0].date).toISOString();
             }
-            // vm.coloredDays();
             vm.monthShow = new vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
-        };
-
-        vm.coloredDays = function () {
-            _.forEach(vm.monthShow, function (value) {
-                if (moment(value.date).isSame(vm.startSelection)) {
-                    value.start = true;
-                    value.active = false;
-                } else if (moment(value.date).isSame(vm.endSelection)) {
-                    value.active = false;
-                    value.end = true;
-                } else if (moment(value.date).isBetween(vm.startSelection, vm.endSelection)) {
-                    value.isBetween = true;
-                } else {
-                    value.start = false;
-                    value.end = false;
-                    value.isBetween = false;
-                }
-            });
         };
 
 
@@ -226,30 +207,34 @@
 
         vm.list = [{
             label: 'Last 30 days',
-            start: moment(vm.today.date).subtract(29, 'days'),
-            end: vm.today.date
+            start: moment(vm.today.date).subtract(29, 'days').toISOString(),
+            end: vm.today.date.toISOString()
         }, {
             label: 'Last month',
-            start: moment(vm.today.date).subtract(1, 'month').startOf('month'),
-            end: moment(vm.today.date).subtract(1, 'month').endOf('month')
+            start: moment(vm.today.date).subtract(1, 'month').startOf('month').toISOString(),
+            end: moment(vm.today.date).subtract(1, 'month').endOf('month').toISOString()
         }, {
             label: 'Last 3 months',
-            start: moment(vm.today.date).subtract(3, 'month').startOf('month'),
-            end: moment(vm.today.date).subtract(1, 'month').endOf('month')
+            start: moment(vm.today.date).subtract(3, 'month').startOf('month').toISOString(),
+            end: moment(vm.today.date).subtract(1, 'month').endOf('month').toISOString()
         }, {
             label: 'Last 6 months',
-            start: moment(vm.today.date).subtract(6, 'month').startOf('month'),
-            end: moment(vm.today.date).subtract(1, 'month').endOf('month')
+            start: moment(vm.today.date).subtract(6, 'month').startOf('month').toISOString(),
+            end: moment(vm.today.date).subtract(1, 'month').endOf('month').toISOString()
         }, {
             label: 'Last year',
-            start: moment(vm.today.date).subtract(12, 'month').startOf('month'),
-            end: moment(vm.today.date).subtract(1, 'month').endOf('month')
+            start: moment(vm.today.date).subtract(12, 'month').startOf('month').toISOString(),
+            end: moment(vm.today.date).subtract(1, 'month').endOf('month').toISOString()
         }, {
             label: 'All time',
             start: vm.earliest_date,
             end: vm.latest_date
         }];
 
+        vm.listSelected = function (item) {
+            vm.startSelection = item.start;
+            vm.endSelection = item.end;
+        }
     }
 
 })();
