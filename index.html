@@ -11,14 +11,16 @@ Released under the MIT license: http://jsbin.mit-license.org
 <html ng-app="calendarApp">
 
 <head>
+
+    <!--TODO look to ng-pattern-->
     <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet"
           type="text/css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.13.1/lodash.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.13.1/lodash.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
-    <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/locale/ru.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ngMask/3.1.1/ngMask.min.js"></script>-->
 
     <link rel="stylesheet" href="styles.css">
     <script src="core.js"></script>
@@ -37,12 +39,12 @@ Released under the MIT license: http://jsbin.mit-license.org
 <script type="text/ng-template" id="calendar.html">
     <div class="calendar">
         <div class="inputs">
-            <div contenteditable="">{{calendar.startSelection}}</div>
-            <div contenteditable="">{{calendar.endSelection}}</div>
+            <input type="text" ng-model="calendar.startSelection" ng-pattern="calendar.regex">
+            <input type="text" ng-model="calendar.endSelection" ng-pattern="calendar.regex">
         </div>
         <div class="range">
-            <div class="range-btn">Click</div>
-            <div class="list">
+            <div class="range-btn" ng-click="fade = !fade ">Click</div>
+            <div class="list" ng-class="{'list-show': fade}">
                 <ul><li ng-repeat="item in calendar.list" ng-click="calendar.listSelected(item)">{{item.label}}</li></ul>
             </div>
         </div>

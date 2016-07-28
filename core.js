@@ -4,7 +4,8 @@
     angular.module('calendarApp', [])
         .constant('moment', moment)
         .constant('_', window._)
-        .directive('calendar', calendar);
+        .directive('calendar', calendar)
+        .directive('dateMask', dateMask);
 
     function calendar() {
         return {
@@ -31,6 +32,9 @@
         var vm = this;
         moment.locale('ru');
         var date = moment(new Date());
+        
+        vm.regex = '/(19|20)\d\d-((0[1-9]|1[012])-(0[1-9]|[12]\d)|(0[13-9]|1[012])-30|(0[13578]|1[02])-31)/g';
+        
         vm.days = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
 
         vm.selectedDays = [];
@@ -234,6 +238,19 @@
         vm.listSelected = function (item) {
             vm.startSelection = item.start;
             vm.endSelection = item.end;
+        }
+    }
+
+    function dateMask() {
+        return {
+
+            restrict: 'E',
+            scope: {},
+            link: linkFunc
+        };
+
+        function linkFunc($scope, element, attrs, controller) {
+           
         }
     }
 

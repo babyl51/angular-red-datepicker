@@ -153,3 +153,23 @@ body {
     right: 0;
     top: 0;
 }
+.range{
+    box-sizing: border-box;
+    width: 100%;
+}
+.range-btn{
+    box-sizing: border-box;
+    border:1px solid #ccc;
+    background: #EBF1F4;
+    text-align: center;
+    padding: 5px 0;
+    width: 100%;
+    cursor: pointer;
+    margin: 5px 0;
+}
+.list{
+    display: none;
+}
+.list-show{
+    display: block;
+}
