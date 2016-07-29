@@ -29,8 +29,9 @@ body {
 }
 
 .calendar {
-    width: 220px;
+    width: 320px;
 }
+
 
 .calendar .switchers {
     overflow: hidden;
@@ -40,6 +41,9 @@ body {
     border-bottom: none;
 }
 
+.switchers{
+    width: 218px; float: right;
+}
 .month {
     /*border: 1px solid #c8c8c8;*/
     /*border-radius: 3px;*/
@@ -67,7 +71,9 @@ body {
     top: 5px;
     left: 2px;
 }
-
+.calendar-container{
+    width: 220px; float: right;
+}
 .calendar-box {
     list-style: none;
     padding: 0;
@@ -169,6 +175,18 @@ body {
 }
 .list{
     display: none;
+
+}
+.list ul{
+    padding: 10px 5px;
+    margin: 0;
+    list-style: none;
+}
+.list ul li{
+    cursor: pointer;
+}
+.list ul li:hover{
+    text-decoration: underline;
 }
 .list-show{
     display: block;

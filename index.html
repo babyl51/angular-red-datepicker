@@ -1,12 +1,4 @@
 <!DOCTYPE html>
-<!--
-Created using JS Bin
-http://jsbin.com
-
-Copyright (c) 2016 by johnnyswan (http://jsbin.com/quxohiw/56/edit)
-
-Released under the MIT license: http://jsbin.mit-license.org
--->
 <meta name="robots" content="noindex">
 <html ng-app="calendarApp">
 
@@ -17,10 +9,10 @@ Released under the MIT license: http://jsbin.mit-license.org
           type="text/css"/>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.13.1/lodash.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/locale/ru.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
-    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ngMask/3.1.1/ngMask.min.js"></script>-->
 
     <link rel="stylesheet" href="styles.css">
     <script src="core.js"></script>
@@ -38,14 +30,21 @@ Released under the MIT license: http://jsbin.mit-license.org
 
 <script type="text/ng-template" id="calendar.html">
     <div class="calendar">
-        <div class="inputs">
-            <input type="text" ng-model="calendar.startSelection" ng-pattern="calendar.regex">
-            <input type="text" ng-model="calendar.endSelection" ng-pattern="calendar.regex">
+        <div class="inputs" ng-if="calendar.startSelection">
+            <div>
+                {{calendar.startSelection.date}} - {{calendar.startSelection.months +1}} - {{calendar.startSelection.years}}
+            </div>
+            <div>
+                {{calendar.endSelection.date}} - {{calendar.endSelection.months +1}} - {{calendar.endSelection.years}}
+            </div>
         </div>
+
+        <div class="range-btn" ng-click="fade = !fade ">Click</div>
         <div class="range">
-            <div class="range-btn" ng-click="fade = !fade ">Click</div>
             <div class="list" ng-class="{'list-show': fade}">
-                <ul><li ng-repeat="item in calendar.list" ng-click="calendar.listSelected(item)">{{item.label}}</li></ul>
+                <ul>
+                    <li ng-repeat="item in calendar.list" ng-click="calendar.listSelected(item)">{{item.label}}</li>
+                </ul>
             </div>
         </div>
         <div class="switchers">
@@ -55,7 +54,7 @@ Released under the MIT license: http://jsbin.mit-license.org
                 <span>{{calendar.month.name}}</span>
                 <i class="fa fa-chevron-right" aria-hidden="true"
                    ng-click="calendar.monthChange(calendar.month.id, 'right')"
-                   ng-hide="calendar.today.month== calendar.month.id"
+                   ng-hide="calendar.today.month == calendar.month.id"
                 ></i>
             </div>
             <div class="year">
@@ -69,7 +68,7 @@ Released under the MIT license: http://jsbin.mit-license.org
         </div>
 
 
-        <div class="calendar">
+        <div class="calendar-container">
             <ul class="days-name">
                 <li ng-repeat="dayName in calendar.days">{{dayName}}</li>
             </ul>

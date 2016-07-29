@@ -32,14 +32,15 @@
         var vm = this;
         moment.locale('ru');
         var date = moment(new Date());
-        
-        vm.regex = '/(19|20)\d\d-((0[1-9]|1[012])-(0[1-9]|[12]\d)|(0[13-9]|1[012])-30|(0[13578]|1[02])-31)/g';
-        
+
+        // vm.regex = '/(19|20)\d\d-((0[1-9]|1[012])-(0[1-9]|[12]\d)|(0[13-9]|1[012])-30|(0[13578]|1[02])-31)/g';
+
         vm.days = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
 
         vm.selectedDays = [];
         vm.startSelection = '';
         vm.endSelection = '';
+
 
         vm.earliest_date = moment(new Date('January 1, 2010')).startOf('day');
         vm.latest_date = moment(new Date('December 31, 2026 ')).startOf('day');
@@ -72,8 +73,12 @@
                 } else if (day.nextMonth) {
                     vm.monthChange(vm.month.id, 'right');
                 }
+            } else {
+                vm.daySelect(day);
             }
+        };
 
+        vm.daySelect = function (day) {
             if (!day.afterCurrentNextMonth && !day.afterCurrent) {
                 day.active = day.active ? false : true;
                 if (vm.selectedDays.length == 2) {
@@ -93,11 +98,11 @@
 
         vm.activeRange = function (value) {
             if (moment(value[0].date).isBefore(value[1].date)) {
-                vm.startSelection = moment(value[0].date).toISOString();
-                vm.endSelection = moment(value[1].date).toISOString();
+                vm.startSelection = moment(value[0].date).toObject();
+                vm.endSelection = moment(value[1].date).toObject();
             } else {
-                vm.startSelection = moment(value[1].date).toISOString();
-                vm.endSelection = moment(value[0].date).toISOString();
+                vm.startSelection = moment(value[1].date).toObject();
+                vm.endSelection = moment(value[0].date).toObject();
             }
             vm.monthShow = new vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
         };
@@ -211,24 +216,24 @@
 
         vm.list = [{
             label: 'Last 30 days',
-            start: moment(vm.today.date).subtract(29, 'days').toISOString(),
-            end: vm.today.date.toISOString()
+            start: moment(vm.today.date).subtract(29, 'days').toObject(),
+            end: vm.today.date.toObject()
         }, {
             label: 'Last month',
-            start: moment(vm.today.date).subtract(1, 'month').startOf('month').toISOString(),
-            end: moment(vm.today.date).subtract(1, 'month').endOf('month').toISOString()
+            start: moment(vm.today.date).subtract(1, 'month').startOf('month').toObject(),
+            end: moment(vm.today.date).subtract(1, 'month').endOf('month').toObject()
         }, {
             label: 'Last 3 months',
-            start: moment(vm.today.date).subtract(3, 'month').startOf('month').toISOString(),
-            end: moment(vm.today.date).subtract(1, 'month').endOf('month').toISOString()
+            start: moment(vm.today.date).subtract(3, 'month').startOf('month').toObject(),
+            end: moment(vm.today.date).subtract(1, 'month').endOf('month').toObject()
         }, {
             label: 'Last 6 months',
-            start: moment(vm.today.date).subtract(6, 'month').startOf('month').toISOString(),
-            end: moment(vm.today.date).subtract(1, 'month').endOf('month').toISOString()
+            start: moment(vm.today.date).subtract(6, 'month').startOf('month').toObject(),
+            end: moment(vm.today.date).subtract(1, 'month').endOf('month').toObject()
         }, {
             label: 'Last year',
-            start: moment(vm.today.date).subtract(12, 'month').startOf('month').toISOString(),
-            end: moment(vm.today.date).subtract(1, 'month').endOf('month').toISOString()
+            start: moment(vm.today.date).subtract(12, 'month').startOf('month').toObject(),
+            end: moment(vm.today.date).subtract(1, 'month').endOf('month').toObject()
         }, {
             label: 'All time',
             start: vm.earliest_date,
@@ -250,7 +255,7 @@
         };
 
         function linkFunc($scope, element, attrs, controller) {
-           
+
         }
     }
 
