@@ -30,68 +30,96 @@
 
 <script type="text/ng-template" id="calendar.html">
     <div class="calendar">
-        <div class="inputs" ng-if="calendar.startSelection">
-            <div>
-                {{calendar.startSelection.date}} - {{calendar.startSelection.months +1}} - {{calendar.startSelection.years}}
-            </div>
-            <div>
-                {{calendar.endSelection.date}} - {{calendar.endSelection.months +1}} - {{calendar.endSelection.years}}
-            </div>
-        </div>
 
-        <div class="range-btn" ng-click="fade = !fade ">Click</div>
-        <div class="range">
-            <div class="list" ng-class="{'list-show': fade}">
-                <ul>
-                    <li ng-repeat="item in calendar.list" ng-click="calendar.listSelected(item)">{{item.label}}</li>
-                </ul>
+        <div class="calendar-manage">
+            <div class="inputs">
+                <div class="selection-start">
+                    {{calendar.startSelection.date}} - {{calendar.startSelection.months +1}} -
+                    {{calendar.startSelection.years}}
+                </div>
+                <div class="separator">&mdash;</div>
+                <div class="selection-end">
+                    {{calendar.endSelection.date}} - {{calendar.endSelection.months +1}} -
+                    {{calendar.endSelection.years}}
+                </div>
             </div>
-        </div>
-        <div class="switchers">
-            <div class="month">
-                <i class="fa fa-chevron-left" aria-hidden="true"
-                   ng-click="calendar.monthChange(calendar.month.id, 'left')"></i>
-                <span>{{calendar.month.name}}</span>
-                <i class="fa fa-chevron-right" aria-hidden="true"
-                   ng-click="calendar.monthChange(calendar.month.id, 'right')"
-                   ng-hide="calendar.today.month == calendar.month.id"
-                ></i>
+            <div class="calendar-btns">
+                <div id="calendar-list-btn"
+                     ng-click="calendar.calendarShow = !calendar.calendarShow; calendar.rangeShow = false">
+                    <span>{{calendar.todayForFront}}</span>
+                </div>
+                <div id="range-list-btn"
+                     ng-click="calendar.rangeShow = !calendar.rangeShow; calendar.calendarShow = false "></div>
             </div>
-            <div class="year">
-                <i class="fa fa-chevron-left" aria-hidden="true" ng-click="calendar.yearChange('left')"></i>
-                <span>{{calendar.year}}</span>
-                <i class="fa fa-chevron-right" aria-hidden="true"
-                   ng-click="calendar.yearChange('right')"
-                   ng-hide="calendar.today.year == calendar.year"
-                ></i>
-            </div>
-        </div>
 
 
-        <div class="calendar-container">
-            <ul class="days-name">
-                <li ng-repeat="dayName in calendar.days">{{dayName}}</li>
-            </ul>
-            <ul class="calendar-box">
-                <li class="day"
-                    ng-repeat="day in calendar.monthShow"
-                    ng-class="{
-                    fade: day.fade,
-                    current: day.current,
-                    cantUse: day.afterCurrent,
-                    fadeNonClick: day.afterCurrentNextMonth,
-                    active: day.active,
-                    isBetween: day.isBetween,
-                    start: day.start,
-                    end: day.end
-                    }"
-                    ng-click="calendar.getDay(day)"
-                >
-                    {{day.str}}
+        </div>
+
+        <div class="range-list" ng-class="{'range-list-show': calendar.rangeShow}">
+            <ul>
+                <li ng-repeat="item in calendar.list" ng-click="calendar.listSelected(item)">
+                    <span class="item-name">
+                        {{item.label}}
+                    </span>
+                    <span class="item-date-start">
+                        {{item.start.date}}.{{item.start.months + 1}}.{{item.start.years}}
+                    </span>
+                    <span class="item-date-separator">&mdash;</span>
+                    <span class="item-date-end">
+                         {{item.end.date}}.{{item.end.months + 1}}.{{item.end.years}}
+                    </span>
+
                 </li>
             </ul>
         </div>
+
+        <div class="calendar-box" ng-class="{'calendar-box-show': calendar.calendarShow}">
+            <div class="switchers">
+                <div class="month">
+                    <i class="fa fa-chevron-left" aria-hidden="true"
+                       ng-click="calendar.monthChange(calendar.month.id, 'left')"></i>
+                    <span>{{calendar.month.name}}</span>
+                    <i class="fa fa-chevron-right" aria-hidden="true"
+                       ng-click="calendar.monthChange(calendar.month.id, 'right')"
+                       ng-hide="calendar.today.month == calendar.month.id"
+                    ></i>
+                </div>
+                <div class="year">
+                    <i class="fa fa-chevron-left" aria-hidden="true" ng-click="calendar.yearChange('left')"></i>
+                    <span>{{calendar.year}}</span>
+                    <i class="fa fa-chevron-right" aria-hidden="true"
+                       ng-click="calendar.yearChange('right')"
+                       ng-hide="calendar.today.year == calendar.year"
+                    ></i>
+                </div>
+            </div>
+            <div class="calendar-container">
+                <ul class="days-name">
+                    <li ng-repeat="dayName in calendar.days">{{dayName}}</li>
+                </ul>
+                <ul class="calendar-body">
+                    <li class="day"
+                        ng-repeat="day in calendar.monthShow"
+                        ng-class="{
+                            fade: day.fade,
+                            current: day.current,
+                            cantUse: day.afterCurrent,
+                            fadeNonClick: day.afterCurrentNextMonth,
+                            active: day.active,
+                            isBetween: day.isBetween,
+                            start: day.start,
+                            end: day.end
+                        }"
+                        ng-click="calendar.getDay(day)"
+                    >
+                        {{day.str}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
     </div>
+
 
 </script>
 

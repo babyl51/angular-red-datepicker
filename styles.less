@@ -1,0 +1,257 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.calendar {
+  position: relative;
+  max-width: 315px;
+  .calendar-manage {
+    max-width: 315px;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    height: 32px;
+    .inputs {
+      display: inline-block;
+      overflow: hidden;
+      height: 32px;
+      padding: 0 5px;
+      div {
+        display: inline-block;
+        float: left;
+      }
+      .selection-start {
+        padding: 5px 2px;
+      }
+      .selection-end {
+        padding: 5px 2px;
+      }
+      .separator {
+        padding: 5px 2px;
+      }
+
+    }
+    .calendar-btns {
+      display: inline-block;
+      overflow: hidden;
+      float: right;
+      margin: 0 10px 0 0;
+
+      #calendar-list-btn {
+        float: left;
+        width: 32px;
+        height: 32px;
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWwoJLnN0MHtmaWxsOm5vbmU7fQpdXT48L3N0eWxlPjxwb2x5bGluZSBjbGFzcz0ic3QwIiBwb2ludHM9IjgwLDExMiA4MCwxNzYgNDMyLDE3NiA0MzIsMTEyICIvPjxwYXRoIGQ9Ik0zNTIsOTZWNjRoLTE2djMySDE3NlY2NGgtMTZ2MzJINjR2MzUyaDM4NFY5NkgzNTJ6IE00MzIsNDMySDgwVjE5MmgzNTJWNDMyeiBNNDMyLDE3Nkg4MHYtNjRoODB2MzJoMTZ2LTMyaDE2MHYzMmgxNnYtMzIgIGg4MFYxNzZ6Ii8+PC9zdmc+);
+        background-size: contain;
+        text-align: center;
+        cursor: pointer;
+        //border-left: 1px solid #cccccc;
+        //border-right: 1px solid #cccccc;
+        span {
+          font-size: 14px;
+          margin: 9px 0 0 0;
+          display: block;
+          color: #009f8a;
+        }
+      }
+      #range-list-btn {
+        float: left;
+        width: 25px;
+        height: 25px;
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMyIDMyIiBoZWlnaHQ9IjMycHgiIGlkPSLQodC70L7QuV8xIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMycHgiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxnIGlkPSJNZW51XzFfIj48cGF0aCBkPSJNMSwxMGgzMGMwLjU1MiwwLDEtMC40NDgsMS0xYzAtMC41NTItMC40NDgtMS0xLTFIMUMwLjQ0OCw4LDAsOC40NDgsMCw5QzAsOS41NTIsMC40NDgsMTAsMSwxMHoiIGZpbGw9IiMxMjEzMTMiLz48cGF0aCBkPSJNMzEsMTVIMWMtMC41NTIsMC0xLDAuNDQ4LTEsMWMwLDAuNTUyLDAuNDQ4LDEsMSwxaDMwYzAuNTUyLDAsMS0wLjQ0OCwxLTFDMzIsMTUuNDQ4LDMxLjU1MiwxNSwzMSwxNXoiIGZpbGw9IiMxMjEzMTMiLz48cGF0aCBkPSJNMzEsMjJIMTFjLTAuNTUyLDAtMSwwLjQ0OC0xLDFzMC40NDgsMSwxLDFoMjBjMC41NTIsMCwxLTAuNDQ4LDEtMVMzMS41NTIsMjIsMzEsMjJ6IiBmaWxsPSIjMTIxMzEzIi8+PC9nPjxnLz48Zy8+PGcvPjxnLz48Zy8+PGcvPjwvc3ZnPg==);
+        background-size: contain;
+        text-align: center;
+        cursor: pointer;
+        margin: 3px 0 0 5px;
+      }
+    }
+  }
+  .calendar-manage:hover {
+    border: 1px solid #009f8a
+  }
+
+  .range-list {
+    display: none;
+    padding: 5px;
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      //border: 1px solid #cccccc;
+      box-shadow: 0 0 5px #C3CACD;
+      -moz-border-radius-bottomleft: 3px;
+      -moz-border-radius-bottomright: 3px;
+      border-bottom-right-radius: 3px;
+      border-bottom-left-radius: 3px;
+      li {
+        cursor: pointer;
+        border-bottom: 1px solid #EBF1F4;
+        padding: 5px;
+        .item-name {
+          color: #009f8a;
+        }
+        .item-date-start,
+        .item-date-separator,
+        .item-date-end {
+          font-size: 12px;
+          color: #969696;
+        }
+      }
+      li:last-child {
+        border-bottom: none;
+      }
+      li:hover {
+        background: #EBF1F4;
+      }
+    }
+  }
+  .range-list-show {
+    display: block;
+    position: absolute;
+    margin: 5px 0 0 0;
+    right: 0;
+    left: 0;
+  }
+  .calendar-box {
+    display: none;
+    width: 217px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid #cccccc;
+    -moz-border-radius-bottomleft: 3px;
+    -moz-border-radius-bottomright: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    .switchers {
+      overflow: hidden;
+      padding: 5px 0;
+      border-bottom: none;
+      width: 100%;
+      .month {
+        float: left;
+        padding: 0 20px;
+        position: relative;
+        i {
+          cursor: pointer;
+        }
+      }
+      .year {
+        float: right;
+        padding: 0 20px;
+        position: relative;
+        i {
+          cursor: pointer;
+        }
+      }
+      .fa-chevron-right {
+        position: absolute;
+        top: 5px;
+        right: 2px;
+      }
+      .fa-chevron-left {
+        position: absolute;
+        top: 5px;
+        left: 2px;
+      }
+    }
+
+    .calendar-container {
+      .days-name {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        border-bottom: 1px solid #cccccc;
+        border-top: 1px solid #cccccc;
+        li {
+          float: left;
+          display: inline-block;
+          cursor: pointer;
+          width: 27px;
+          text-align: center;
+          margin: 2px;
+        }
+      }
+      .calendar-body {
+        overflow: hidden;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+
+        li {
+          float: left;
+          display: inline-block;
+          cursor: pointer;
+          width: 27px;
+          text-align: center;
+          padding: 2px;
+        }
+        li:hover:not(.fadeNonClick):not(.cantUse) {
+          background-color: #EBF1F4;
+        }
+        .current {
+          color: #2693D5 !important;
+          background-color: rgba(38, 147, 213, .2) !important;
+        }
+        .cantUse {
+          cursor: default;
+          color: rgba(195, 202, 205, .7)
+        }
+        .fade {
+          cursor: pointer;
+          color: rgba(195, 202, 205, .7)
+        }
+        .fadeNonClick {
+          cursor: default;
+          color: rgba(195, 202, 205, .7)
+        }
+        .active {
+          background-color: #EBF1F4;
+        }
+        .isBetween {
+          background-color: #EBF1F4;
+        }
+        .start {
+          background-color: #EBF1F4;
+          position: relative;
+        }
+        .start:before {
+          content: "";
+          position: absolute;
+          z-index: 1;
+          width: 1px;
+          height: 100%;
+          background: #2693D5;
+          left: 0;
+          top: 0;
+        }
+        .end {
+          background-color: #EBF1F4;
+          position: relative;
+        }
+        .end:after {
+          content: "";
+          position: absolute;
+          z-index: 1;
+          width: 1px;
+          height: 100%;
+          background: #2693D5;
+          right: 0;
+          top: 0;
+        }
+
+      }
+    }
+  }
+
+  .calendar-box-show {
+    display: block;
+    position: absolute;
+    //margin: 5px 0 0 0;
+    right: 0;
+    left: 0;
+    margin: 5px auto;
+  }
+
+}
