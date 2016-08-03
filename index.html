@@ -30,17 +30,16 @@
 
 <script type="text/ng-template" id="calendar.html">
     <div class="calendar">
-
         <div class="calendar-manage">
             <div class="inputs">
                 <div class="selection-start">
-                    {{calendar.startSelection.date}} - {{calendar.startSelection.months +1}} -
-                    {{calendar.startSelection.years}}
+                    {{calendar.startSelection[2]}} - {{calendar.startSelection[1] +1}} -
+                    {{calendar.startSelection[0]}}
                 </div>
                 <div class="separator">&mdash;</div>
                 <div class="selection-end">
-                    {{calendar.endSelection.date}} - {{calendar.endSelection.months +1}} -
-                    {{calendar.endSelection.years}}
+                    {{calendar.endSelection[2]}} - {{calendar.endSelection[1] +1}} -
+                    {{calendar.endSelection[0]}}
                 </div>
             </div>
             <div class="calendar-btns">
@@ -51,10 +50,7 @@
                 <div id="range-list-btn"
                      ng-click="calendar.rangeShow = !calendar.rangeShow; calendar.calendarShow = false "></div>
             </div>
-
-
         </div>
-
         <div class="range-list" ng-class="{'range-list-show': calendar.rangeShow}">
             <ul>
                 <li ng-repeat="item in calendar.list" ng-click="calendar.listSelected(item)">
@@ -62,11 +58,11 @@
                         {{item.label}}
                     </span>
                     <span class="item-date-start">
-                        {{item.start.date}}.{{item.start.months + 1}}.{{item.start.years}}
+                        {{item.start[2]}}.{{item.start[1]+1}}.{{item.start[0]}}
                     </span>
                     <span class="item-date-separator">&mdash;</span>
                     <span class="item-date-end">
-                         {{item.end.date}}.{{item.end.months + 1}}.{{item.end.years}}
+                        {{item.end[2]}}.{{item.end[1]+1}}.{{item.end[0]}}
                     </span>
 
                 </li>
@@ -117,10 +113,7 @@
                 </ul>
             </div>
         </div>
-
     </div>
-
-
 </script>
 
 </body>
