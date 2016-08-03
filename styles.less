@@ -4,7 +4,7 @@ body {
 
 .calendar {
   position: relative;
-  max-width: 315px;
+  max-width: 285px;
   .calendar-manage {
     max-width: 315px;
     border: 1px solid #cccccc;
@@ -15,18 +15,27 @@ body {
       overflow: hidden;
       height: 32px;
       padding: 0 5px;
+      width: 200px;
+      text-align: center;
       div {
-        display: inline-block;
         float: left;
+        input {
+          outline: 0;
+          width: 80px;
+          text-align: center;
+          height: 30px;
+          border: 0;
+          font-size: 16px;
+        }
       }
-      .selection-start {
-        padding: 5px 2px;
-      }
+      .selection-start,
       .selection-end {
-        padding: 5px 2px;
+        padding: 0 2px;
+        display: inline-block;
       }
       .separator {
-        padding: 5px 2px;
+        padding: 3px 2px;
+        display: inline-block;
       }
 
     }
@@ -129,31 +138,44 @@ body {
       padding: 5px 0;
       border-bottom: none;
       width: 100%;
+      .year,
       .month {
-        float: left;
         padding: 0 20px;
         position: relative;
-        i {
-          cursor: pointer;
+        border-radius: 3px;
+        border: 1px solid rgba(195, 202, 205, .5);
+      }
+      .month {
+        float: left;
+        margin: 0 0 0 5px;
+        span {
+          width: 70px;
+          display: block;
+          text-align: center;
         }
       }
       .year {
         float: right;
-        padding: 0 20px;
-        position: relative;
-        i {
-          cursor: pointer;
-        }
+        margin: 0 5px 0 0;
       }
-      .fa-chevron-right {
+      i {
+        cursor: pointer;
+        width: 16px;
+        height: 16px;
+      }
+      .right {
         position: absolute;
-        top: 5px;
+        top: 3px;
         right: 2px;
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABAElEQVRoQ+3Zyw3CQAwE0EkHdAIlQAd0SglQAnRCCWilcMzFO58ocu5r5c3ksJEXHORZDuJAQ/bWZDfSjYgS6E9rI9g7gBeAryj4zbHMRgbiAeAN4ObGMCGntY1zAsOEjNpjGDYkhlFAIhgVxI5RQqwYNcSGcUAsGBdEjnFCpBg3RIZJQCSYFISOSUKomDSEhtkL5AngAuAD4Fr5l0lDxrV/GjFqTUJoiCSEikhB6IgERIJwQ2QIJ0SKcEHkCAfEglBDbAglxIpQQewIBSSCYENiCDbkv1YoX8Vndirs2+8hFj0zgU6fZTcy/ULVAQ2pJqc6142okq3O7UaqyanO/QBuz2Qzqh3/7wAAAABJRU5ErkJggg==);
+        background-size: cover;
       }
-      .fa-chevron-left {
+      .left {
         position: absolute;
-        top: 5px;
+        top: 3px;
         left: 2px;
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABCklEQVRoQ+3Z0Q0CMQwDUN8GbAIjwEQwAkwGI8AmjIAqAUJ8nmMnd0r/W+nZ/UjVCStZ00ocaEi1JruRbkSUQF8tMtgNgCOAC3nOd3tGIwNxBbB7Q84RGDfkF/EAsAfwXBpEhhhBuBqRIlwQOcIBsSDUEBtCCbEiVBA7QgFJQURD0hCRkFREFCQdEQEpgWAhZRAMpBSChdwAbAHcARyixvG5Iz0z/Y5WymAYyAivDIaFlMFEQEpgoiDpmEhIKiYakoZRQFIwKogdo4RYMWqIDeOAWDAuiBzjhEgxbsg/ZvyPLPJb4fPcGFPzKQrBPKzmvn9k+zKulgTTEEmsxKHdCBGeZGs3IomVOPQFv4RgM1vSu+kAAAAASUVORK5CYII=);
+        background-size: cover;
       }
     }
 

@@ -3,7 +3,7 @@ body {
 }
 .calendar {
   position: relative;
-  max-width: 315px;
+  max-width: 285px;
 }
 .calendar .calendar-manage {
   max-width: 315px;
@@ -16,19 +16,28 @@ body {
   overflow: hidden;
   height: 32px;
   padding: 0 5px;
+  width: 200px;
+  text-align: center;
 }
 .calendar .calendar-manage .inputs div {
-  display: inline-block;
   float: left;
 }
-.calendar .calendar-manage .inputs .selection-start {
-  padding: 5px 2px;
+.calendar .calendar-manage .inputs div input {
+  outline: 0;
+  width: 80px;
+  text-align: center;
+  height: 30px;
+  border: 0;
+  font-size: 16px;
 }
+.calendar .calendar-manage .inputs .selection-start,
 .calendar .calendar-manage .inputs .selection-end {
-  padding: 5px 2px;
+  padding: 0 2px;
+  display: inline-block;
 }
 .calendar .calendar-manage .inputs .separator {
-  padding: 5px 2px;
+  padding: 3px 2px;
+  display: inline-block;
 }
 .calendar .calendar-manage .calendar-btns {
   display: inline-block;
@@ -124,31 +133,44 @@ body {
   border-bottom: none;
   width: 100%;
 }
+.calendar .calendar-box .switchers .year,
 .calendar .calendar-box .switchers .month {
-  float: left;
   padding: 0 20px;
   position: relative;
+  border-radius: 3px;
+  border: 1px solid rgba(195, 202, 205, 0.5);
 }
-.calendar .calendar-box .switchers .month i {
-  cursor: pointer;
+.calendar .calendar-box .switchers .month {
+  float: left;
+  margin: 0 0 0 5px;
+}
+.calendar .calendar-box .switchers .month span {
+  width: 70px;
+  display: block;
+  text-align: center;
 }
 .calendar .calendar-box .switchers .year {
   float: right;
-  padding: 0 20px;
-  position: relative;
+  margin: 0 5px 0 0;
 }
-.calendar .calendar-box .switchers .year i {
+.calendar .calendar-box .switchers i {
   cursor: pointer;
+  width: 16px;
+  height: 16px;
 }
-.calendar .calendar-box .switchers .fa-chevron-right {
+.calendar .calendar-box .switchers .right {
   position: absolute;
-  top: 5px;
+  top: 3px;
   right: 2px;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABAElEQVRoQ+3Zyw3CQAwE0EkHdAIlQAd0SglQAnRCCWilcMzFO58ocu5r5c3ksJEXHORZDuJAQ/bWZDfSjYgS6E9rI9g7gBeAryj4zbHMRgbiAeAN4ObGMCGntY1zAsOEjNpjGDYkhlFAIhgVxI5RQqwYNcSGcUAsGBdEjnFCpBg3RIZJQCSYFISOSUKomDSEhtkL5AngAuAD4Fr5l0lDxrV/GjFqTUJoiCSEikhB6IgERIJwQ2QIJ0SKcEHkCAfEglBDbAglxIpQQewIBSSCYENiCDbkv1YoX8Vndirs2+8hFj0zgU6fZTcy/ULVAQ2pJqc6142okq3O7UaqyanO/QBuz2Qzqh3/7wAAAABJRU5ErkJggg==);
+  background-size: cover;
 }
-.calendar .calendar-box .switchers .fa-chevron-left {
+.calendar .calendar-box .switchers .left {
   position: absolute;
-  top: 5px;
+  top: 3px;
   left: 2px;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABCklEQVRoQ+3Z0Q0CMQwDUN8GbAIjwEQwAkwGI8AmjIAqAUJ8nmMnd0r/W+nZ/UjVCStZ00ocaEi1JruRbkSUQF8tMtgNgCOAC3nOd3tGIwNxBbB7Q84RGDfkF/EAsAfwXBpEhhhBuBqRIlwQOcIBsSDUEBtCCbEiVBA7QgFJQURD0hCRkFREFCQdEQEpgWAhZRAMpBSChdwAbAHcARyixvG5Iz0z/Y5WymAYyAivDIaFlMFEQEpgoiDpmEhIKiYakoZRQFIwKogdo4RYMWqIDeOAWDAuiBzjhEgxbsg/ZvyPLPJb4fPcGFPzKQrBPKzmvn9k+zKulgTTEEmsxKHdCBGeZGs3IomVOPQFv4RgM1vSu+kAAAAASUVORK5CYII=);
+  background-size: cover;
 }
 .calendar .calendar-box .calendar-container .days-name {
   list-style: none;

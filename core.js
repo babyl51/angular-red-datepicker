@@ -45,8 +45,16 @@
         };
         vm.year = moment().year();
         vm.selectedDays = [];
+        vm.startSelection = moment(vm.endSelection).subtract(6, 'day').startOf('day').toArray();
         vm.endSelection = moment(new Date()).startOf('day').toArray();
-        vm.startSelection = moment(vm.endSelection).subtract(7, 'day').startOf('day').toArray();
+        vm.rangeShow = false;
+        vm.calendarShow = false;
+        // vm.startSelection = moment(vm.endSelection).subtract(7, 'day').startOf('day').format('D.M.YYYY');
+        // vm.endSelection = moment(new Date()).startOf('day').format('D.M.YYYY');
+
+        vm.inputStart = vm.startSelection[2] + '.' + (vm.startSelection[1] + 1) + '.' + vm.startSelection[0];
+        vm.inputEnd = vm.endSelection[2] + '.' + (vm.endSelection[1] + 1) + '.' + vm.endSelection[0];
+
 
         // TODO change locales
         // vm.allMoment = moment.localeData();
@@ -58,31 +66,44 @@
         //     vm.weekDaysName.push(removed[0]);
         // }
 
-        vm.list = [{
-            label: 'Last 30 days',
-            start: moment(vm.today.date).subtract(29, 'days').toArray(),
-            end: vm.today.date.toArray()
-        }, {
-            label: 'Last month',
-            start: moment(vm.today.date).subtract(1, 'month').startOf('month').toArray(),
-            end: moment(vm.today.date).subtract(1, 'month').endOf('month').toArray()
-        }, {
-            label: 'Last 3 months',
-            start: moment(vm.today.date).subtract(3, 'month').startOf('month').toArray(),
-            end: moment(vm.today.date).subtract(1, 'month').endOf('month').toArray()
-        }, {
-            label: 'Last 6 months',
-            start: moment(vm.today.date).subtract(6, 'month').startOf('month').toArray(),
-            end: moment(vm.today.date).subtract(1, 'month').endOf('month').toArray()
-        }, {
-            label: 'Last year',
-            start: moment(vm.today.date).subtract(12, 'month').startOf('month').toArray(),
-            end: moment(vm.today.date).subtract(1, 'month').endOf('month').toArray()
-        }, {
-            label: 'All time',
-            start: vm.earliest_date.toArray(),
-            end: vm.latest_date.toArray()
-        }];
+        vm.list = [
+            {
+                label: 'Last Week',
+                start: moment(vm.today.date).subtract(6, 'days').toArray(),
+                end: vm.today.date.toArray()
+            },
+            {
+                label: 'Last 15 days',
+                start: moment(vm.today.date).subtract(14, 'days').toArray(),
+                end: vm.today.date.toArray()
+            },
+            {
+                label: 'Last 30 days',
+                start: moment(vm.today.date).subtract(29, 'days').toArray(),
+                end: vm.today.date.toArray()
+            },
+            {
+                label: 'Last month',
+                start: moment(vm.today.date).subtract(1, 'month').startOf('month').toArray(),
+                end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').toArray()
+            }, {
+                label: 'Last 3 months',
+                start: moment(vm.today.date).subtract(3, 'month').startOf('month').toArray(),
+                end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').toArray()
+            }, {
+                label: 'Last 6 months',
+                start: moment(vm.today.date).subtract(6, 'month').startOf('month').toArray(),
+                end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').toArray()
+            }, {
+                label: 'Last year',
+                start: moment(vm.today.date).subtract(12, 'month').startOf('month').toArray(),
+                end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').toArray()
+            }, {
+                label: 'All time',
+                start: vm.earliest_date.toArray(),
+                end: vm.latest_date.toArray()
+            }
+        ];
 
 
         vm.getDay = getDay;
@@ -92,6 +113,11 @@
         vm.yearChange = yearChange;
         vm.calendarArray = calendarArray;
         vm.listSelected = listSelected;
+
+        vm.print = function () {
+            console.log(vm.inputStart);
+            console.log(vm.inputEnd);
+        };
 
         function getDay(day) {
             if (day.fade && !day.afterCurrentNextMonth) {
@@ -131,6 +157,8 @@
                 vm.startSelection = moment(value[1].date).toArray();
                 vm.endSelection = moment(value[0].date).toArray();
             }
+            vm.inputStart = vm.startSelection[2] + '.' + (vm.startSelection[1] + 1) + '.' + vm.startSelection[0];
+            vm.inputEnd = vm.endSelection[2] + '.' + (vm.endSelection[1] + 1) + '.' + vm.endSelection[0];
             vm.monthShow = new vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
         }
 
@@ -243,6 +271,8 @@
         function listSelected(item) {
             vm.startSelection = item.start;
             vm.endSelection = item.end;
+            vm.inputStart = vm.startSelection[2] + '.' + (vm.startSelection[1] + 1) + '.' + vm.startSelection[0];
+            vm.inputEnd = vm.endSelection[2] + '.' + (vm.endSelection[1] + 1) + '.' + vm.endSelection[0];
             vm.monthShow = new vm.calendarArray(vm.today.date);
         }
 

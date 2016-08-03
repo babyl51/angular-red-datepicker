@@ -4,9 +4,7 @@
 
 <head>
 
-    <!--TODO look to ng-pattern-->
-    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet"
-          type="text/css"/>
+
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.13.1/lodash.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
     <script type="text/javascript"
@@ -33,13 +31,11 @@
         <div class="calendar-manage">
             <div class="inputs">
                 <div class="selection-start">
-                    {{calendar.startSelection[2]}} - {{calendar.startSelection[1] +1}} -
-                    {{calendar.startSelection[0]}}
+                    <input id="date-start" type="text" placeholder="" ng-model="calendar.inputStart">
                 </div>
                 <div class="separator">&mdash;</div>
                 <div class="selection-end">
-                    {{calendar.endSelection[2]}} - {{calendar.endSelection[1] +1}} -
-                    {{calendar.endSelection[0]}}
+                    <input id="date-end" type="text" placeholder="" ng-model="calendar.inputEnd">
                 </div>
             </div>
             <div class="calendar-btns">
@@ -72,18 +68,18 @@
         <div class="calendar-box" ng-class="{'calendar-box-show': calendar.calendarShow}">
             <div class="switchers">
                 <div class="month">
-                    <i class="fa fa-chevron-left" aria-hidden="true"
+                    <i class="left" aria-hidden="true"
                        ng-click="calendar.monthChange(calendar.month.id, 'left')"></i>
                     <span>{{calendar.month.name}}</span>
-                    <i class="fa fa-chevron-right" aria-hidden="true"
+                    <i class="right" aria-hidden="true"
                        ng-click="calendar.monthChange(calendar.month.id, 'right')"
                        ng-hide="calendar.today.month == calendar.month.id"
                     ></i>
                 </div>
                 <div class="year">
-                    <i class="fa fa-chevron-left" aria-hidden="true" ng-click="calendar.yearChange('left')"></i>
+                    <i class="left" aria-hidden="true" ng-click="calendar.yearChange('left')"></i>
                     <span>{{calendar.year}}</span>
-                    <i class="fa fa-chevron-right" aria-hidden="true"
+                    <i class="right" aria-hidden="true"
                        ng-click="calendar.yearChange('right')"
                        ng-hide="calendar.today.year == calendar.year"
                     ></i>
