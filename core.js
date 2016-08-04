@@ -4,7 +4,9 @@
     angular.module('calendarApp', [])
         .constant('moment', moment)
         .constant('_', window._)
-        .directive('calendar', calendar);
+        .directive('calendar', calendar)
+        .directive('clickOutsideCalendar', clickOutsideCalendar)
+        .directive('clickOutsideRange', clickOutsideRange);
 
     function calendar() {
         return {
@@ -113,6 +115,7 @@
         vm.yearChange = yearChange;
         vm.calendarArray = calendarArray;
         vm.listSelected = listSelected;
+        vm.showPopup = showPopup;
 
         vm.print = function () {
             console.log(vm.inputStart);
@@ -276,10 +279,62 @@
             vm.monthShow = new vm.calendarArray(vm.today.date);
         }
 
+        function showPopup(el) {
+            if (el == 'calendarShow') {
+                vm.calendarShow = !vm.calendarShow;
+                vm.rangeShow = false;
+            } else if (el == 'rangeShow') {
+                vm.rangeShow = !vm.rangeShow;
+                vm.calendarShow = false;
+            }
+        }
 
         vm.monthShow = new vm.calendarArray(vm.today.date);
 
     }
 
+    clickOutsideCalendar.$inject = ['$document'];
+    function clickOutsideCalendar($document) {
+        return {
+            restrict: 'A',
+            link: clickFunction,
+            controller: calendarController
+        };
+        function clickFunction(scope, el, attr, ctrl) {
+            // el.bind('click', function (event) {
+            //     event.stopPropagation();
+            // });
+            // var calendar = document.getElementById('calendar-list-btn');
+            // $document.bind('click', function (e) {
+            //     if (e.target == calendar) {
+            //         e.stopPropagation();
+            //     } else {
+            //         ctrl.calendarShow = false;
+            //     }
+            // });
+        }
+    }
+
+    clickOutsideRange.$inject = ['$document'];
+    function clickOutsideRange($document) {
+        return {
+            restrict: 'A',
+            link: clickFunction,
+            controller: calendarController
+        };
+        function clickFunction(scope, el, attr, ctrl) {
+            // el.bind('click', function (event) {
+            //     event.stopPropagation();
+            // });
+            // var range = document.getElementById('range-list-btn');
+            // $document.bind('click', function (e) {
+            //     if (e.target == range) {
+            //         e.stopPropagation();
+            //     } else {
+            //         scope.calendar.rangeShow = false;
+            //     }
+            // });
+        }
+    }
 
 })();

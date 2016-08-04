@@ -40,32 +40,17 @@
             </div>
             <div class="calendar-btns">
                 <div id="calendar-list-btn"
-                     ng-click="calendar.calendarShow = !calendar.calendarShow; calendar.rangeShow = false">
+                     ng-click="calendar.showPopup('calendarShow')">
+                    <!--ng-click="calendar.calendarShow = !calendar.calendarShow; calendar.rangeShow = false">-->
                     <span>{{calendar.todayForFront}}</span>
                 </div>
                 <div id="range-list-btn"
-                     ng-click="calendar.rangeShow = !calendar.rangeShow; calendar.calendarShow = false "></div>
+                     ng-click="calendar.showPopup('rangeShow')"></div>
+                <!--ng-click="calendar.rangeShow = !calendar.rangeShow; calendar.calendarShow = false "></div>-->
             </div>
         </div>
-        <div class="range-list" ng-class="{'range-list-show': calendar.rangeShow}">
-            <ul>
-                <li ng-repeat="item in calendar.list" ng-click="calendar.listSelected(item)">
-                    <span class="item-name">
-                        {{item.label}}
-                    </span>
-                    <span class="item-date-start">
-                        {{item.start[2]}}.{{item.start[1]+1}}.{{item.start[0]}}
-                    </span>
-                    <span class="item-date-separator">&mdash;</span>
-                    <span class="item-date-end">
-                        {{item.end[2]}}.{{item.end[1]+1}}.{{item.end[0]}}
-                    </span>
 
-                </li>
-            </ul>
-        </div>
-
-        <div class="calendar-box" ng-class="{'calendar-box-show': calendar.calendarShow}">
+        <div click-outside-calendar class="calendar-box calendar-box-show" ng-show="calendar.calendarShow">
             <div class="switchers">
                 <div class="month">
                     <i class="left" aria-hidden="true"
@@ -109,6 +94,26 @@
                 </ul>
             </div>
         </div>
+
+        <div click-outside-range class="range-list range-list-show" ng-show="calendar.rangeShow">
+            <ul>
+                <li ng-repeat="item in calendar.list" ng-click="calendar.listSelected(item)">
+                    <span class="item-name">
+                        {{item.label}}
+                    </span>
+                    <span class="item-date-start">
+                        {{item.start[2]}}.{{item.start[1]+1}}.{{item.start[0]}}
+                    </span>
+                    <span class="item-date-separator">&mdash;</span>
+                    <span class="item-date-end">
+                        {{item.end[2]}}.{{item.end[1]+1}}.{{item.end[0]}}
+                    </span>
+
+                </li>
+            </ul>
+        </div>
+
+
     </div>
 </script>
 
