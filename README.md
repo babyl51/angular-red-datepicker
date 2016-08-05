@@ -1,2 +1,2 @@
-# angular-calendar
-http://johnnyswan.github.io/angular-calendar/
+# angular-datepicker
+https://github.com/johnnyswan/angular-datepicker
