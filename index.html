@@ -42,7 +42,7 @@
                 <div id="calendar-list-btn"
                      ng-click="calendar.showPopup('calendarShow')">
                     <!--ng-click="calendar.calendarShow = !calendar.calendarShow; calendar.rangeShow = false">-->
-                    <span>{{calendar.todayForFront}}</span>
+                    <span id="calendar-list-icon">{{calendar.todayForFront}}</span>
                 </div>
                 <div id="range-list-btn"
                      ng-click="calendar.showPopup('rangeShow')"></div>
@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <div click-outside-calendar class="calendar-box calendar-box-show" ng-show="calendar.calendarShow">
+        <div click-outside-calendar target="calendar.calendarShow" class="calendar-box calendar-box-show" ng-show="calendar.calendarShow">
             <div class="switchers">
                 <div class="month">
                     <i class="left" aria-hidden="true"
@@ -95,7 +95,7 @@
             </div>
         </div>
 
-        <div click-outside-range class="range-list range-list-show" ng-show="calendar.rangeShow">
+        <div click-outside-range target="calendar.rangeShow" class="range-list range-list-show" ng-show="calendar.rangeShow">
             <ul>
                 <li ng-repeat="item in calendar.list" ng-click="calendar.listSelected(item)">
                     <span class="item-name">

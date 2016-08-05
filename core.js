@@ -298,20 +298,25 @@
         return {
             restrict: 'A',
             link: clickFunction,
-            controller: calendarController
+            controller: calendarController,
+            scope: {
+                target: '='
+            }
         };
         function clickFunction(scope, el, attr, ctrl) {
-            // el.bind('click', function (event) {
-            //     event.stopPropagation();
-            // });
-            // var calendar = document.getElementById('calendar-list-btn');
-            // $document.bind('click', function (e) {
-            //     if (e.target == calendar) {
-            //         e.stopPropagation();
-            //     } else {
-            //         ctrl.calendarShow = false;
-            //     }
-            // });
+            el.bind('click', function (event) {
+                event.stopPropagation();
+            });
+            var calendar = document.getElementById('calendar-list-btn');
+            var calendarIcon = document.getElementById('calendar-list-icon');
+            $document.bind('click', function (e) {
+                if (e.target == calendar || e.target == calendarIcon) {
+                    e.stopPropagation();
+                } else {
+                    scope.target = false;
+                }
+                scope.$apply();
+            });
         }
     }
 
@@ -320,20 +325,24 @@
         return {
             restrict: 'A',
             link: clickFunction,
-            controller: calendarController
+            controller: calendarController,
+            scope: {
+                target: '='
+            }
         };
         function clickFunction(scope, el, attr, ctrl) {
-            // el.bind('click', function (event) {
-            //     event.stopPropagation();
-            // });
-            // var range = document.getElementById('range-list-btn');
-            // $document.bind('click', function (e) {
-            //     if (e.target == range) {
-            //         e.stopPropagation();
-            //     } else {
-            //         scope.calendar.rangeShow = false;
-            //     }
-            // });
+            el.bind('click', function (event) {
+                event.stopPropagation();
+            });
+            var range = document.getElementById('range-list-btn');
+            $document.bind('click', function (e) {
+                if (e.target == range) {
+                    e.stopPropagation();
+                } else {
+                    scope.target = false;
+                }
+                scope.$apply();
+            });
         }
     }
 
