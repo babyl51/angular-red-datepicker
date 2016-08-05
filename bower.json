@@ -21,5 +21,12 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "moment": "^2.14.1",
+    "lodash": "^4.14.1"
+  },
+  "devDependencies": {
+    "angular": "^1.5.8"
+  }
 }
