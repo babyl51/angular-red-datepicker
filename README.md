@@ -1,2 +1,2 @@
-# angular-datepicker
-https://github.com/johnnyswan/angular-datepicker
+# angular-red-datepicker
+https://github.com/johnnyswan/angular-red-datepicker
