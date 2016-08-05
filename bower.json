@@ -1,0 +1,25 @@
+{
+  "name": "angular-datepicker",
+  "homepage": "https://github.com/johnnyswan/angular-datepicker",
+  "authors": [
+    "redswan <gagarinred@mail.com>"
+  ],
+  "description": "datepiker for filters by date range",
+  "main": "core.js,datepiker.html,styles.css",
+  "keywords": [
+    "angular",
+    "datepicker",
+    "filters",
+    "date",
+    "filter",
+    "calendar"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

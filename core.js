@@ -11,7 +11,7 @@
     function calendar() {
         return {
             restrict: 'E',
-            templateUrl: 'calendar.html',
+            templateUrl: 'datepicker.html',
             scope: {},
             link: linkFunc,
             controller: calendarController,
