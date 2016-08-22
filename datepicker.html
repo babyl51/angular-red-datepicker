@@ -39,7 +39,7 @@
         </div>
         <div class="calendar-container">
             <ul class="days-name">
-                <li ng-repeat="dayName in calendar.days">{{dayName}}</li>
+                <li ng-repeat="dayName in calendar.days track by $index">{{dayName}}</li>
             </ul>
             <ul class="calendar-body">
                 <li class="day"

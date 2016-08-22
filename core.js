@@ -5,14 +5,18 @@
         .constant('moment', moment)
         .constant('_', window._)
         .directive('calendar', calendar)
-        .directive('clickOutsideCalendar', clickOutsideCalendar)
-        .directive('clickOutsideRange', clickOutsideRange);
+        .service('dateOutput', dateOutput);
+    // .directive('clickOutsideCalendar', clickOutsideCalendar)
+    // .directive('clickOutsideRange', clickOutsideRange);
 
     function calendar() {
         return {
             restrict: 'E',
             templateUrl: 'datepicker.html',
-            scope: {},
+            scope: {
+                days: '=days',
+                locale: '@locale'
+            },
             link: linkFunc,
             controller: calendarController,
             controllerAs: 'calendar',
@@ -25,22 +29,34 @@
         }
     }
 
-    calendarController.$inject = ['$scope'];
-    function calendarController($scope) {
+    calendarController.$inject = ['$scope', 'dateOutput'];
+    function calendarController($scope, dateOutput) {
         var vm = this;
-        moment.locale('ru');
         var date = moment(new Date());
-        // vm.regex = '/(19|20)\d\d-((0[1-9]|1[012])-(0[1-9]|[12]\d)|(0[13-9]|1[012])-30|(0[13578]|1[02])-31)/g';
 
-        vm.days = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
+        var localeDefault = 'en';
+        vm.locale = vm.locale ? (vm.locale != '' ? vm.locale : localeDefault) : localeDefault;
+        moment.locale(vm.locale);
+
+        var localeInfo = moment.localeData();
+        var weekStart = localeInfo._week.dow;
+        var localeDays = localeInfo._weekdaysMin;
+        if (weekStart == 1) {
+            var removed = localeDays.splice(0, 1);
+            localeDays.push(removed[0]);
+        }
+        vm.days = localeDays;
+
         vm.earliest_date = moment(new Date('January 1, 2010')).startOf('day');
         vm.latest_date = moment(new Date('December 31, 2026 ')).startOf('day');
+
+
         vm.today = {
             date: date.startOf('day'),
             year: date.format('YYYY'),
             month: date.format('M')
         };
-        vm.todayForFront = vm.today.date.format('d');
+        vm.todayForFront = vm.today.date.format('DD');
         vm.month = {
             name: moment().format('MMMM'),
             id: moment().format('M')
@@ -51,22 +67,10 @@
         vm.endSelection = moment(new Date()).startOf('day').toArray();
         vm.rangeShow = false;
         vm.calendarShow = false;
-        // vm.startSelection = moment(vm.endSelection).subtract(7, 'day').startOf('day').format('D.M.YYYY');
-        // vm.endSelection = moment(new Date()).startOf('day').format('D.M.YYYY');
 
         vm.inputStart = vm.startSelection[2] + '.' + (vm.startSelection[1] + 1) + '.' + vm.startSelection[0];
         vm.inputEnd = vm.endSelection[2] + '.' + (vm.endSelection[1] + 1) + '.' + vm.endSelection[0];
-
-
-        // TODO change locales
-        // vm.allMoment = moment.localeData();
-        // vm.weekDaysName = vm.allMoment._weekdaysMin;
-        // vm.weekStart = vm.allMoment._week.dow;
-        //
-        // if (vm.allMoment._week.dow == 1) {
-        //     var removed = vm.weekDaysName.splice(0, 1);
-        //     vm.weekDaysName.push(removed[0]);
-        // }
+        dateOutput.setData(vm.inputStart, vm.inputEnd);
 
         vm.list = [
             {
@@ -107,6 +111,16 @@
             }
         ];
 
+        // TODO change locales
+        // vm.allMoment = moment.localeData();
+        // vm.weekDaysName = vm.allMoment._weekdaysMin;
+        // vm.weekStart = vm.allMoment._week.dow;
+        //
+        // if (vm.allMoment._week.dow == 1) {
+        //     var removed = vm.weekDaysName.splice(0, 1);
+        //     vm.weekDaysName.push(removed[0]);
+        // }
+
 
         vm.getDay = getDay;
         vm.daySelect = daySelect;
@@ -121,7 +135,10 @@
             console.log(vm.inputStart);
             console.log(vm.inputEnd);
         };
-
+        /**
+         * Getting day by click on it on calendar
+         * @param {object} day
+         */
         function getDay(day) {
             if (day.fade && !day.afterCurrentNextMonth) {
                 if (day.beforeMonth) {
@@ -162,6 +179,7 @@
             }
             vm.inputStart = vm.startSelection[2] + '.' + (vm.startSelection[1] + 1) + '.' + vm.startSelection[0];
             vm.inputEnd = vm.endSelection[2] + '.' + (vm.endSelection[1] + 1) + '.' + vm.endSelection[0];
+            dateOutput.setData(vm.inputStart, vm.inputEnd);
             vm.monthShow = new vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
         }
 
@@ -276,6 +294,7 @@
             vm.endSelection = item.end;
             vm.inputStart = vm.startSelection[2] + '.' + (vm.startSelection[1] + 1) + '.' + vm.startSelection[0];
             vm.inputEnd = vm.endSelection[2] + '.' + (vm.endSelection[1] + 1) + '.' + vm.endSelection[0];
+            dateOutput.setData(vm.inputStart, vm.inputEnd);
             vm.monthShow = new vm.calendarArray(vm.today.date);
         }
 
@@ -290,60 +309,76 @@
         }
 
         vm.monthShow = new vm.calendarArray(vm.today.date);
-
     }
 
-    clickOutsideCalendar.$inject = ['$document'];
-    function clickOutsideCalendar($document) {
-        return {
-            restrict: 'A',
-            link: clickFunction,
-            controller: calendarController,
-            scope: {
-                target: '='
-            }
-        };
-        function clickFunction(scope, el, attr, ctrl) {
-            el.bind('click', function (event) {
-                event.stopPropagation();
-            });
-            var calendar = document.getElementById('calendar-list-btn');
-            var calendarIcon = document.getElementById('calendar-list-icon');
-            $document.bind('click', function (e) {
-                if (e.target == calendar || e.target == calendarIcon) {
-                    e.stopPropagation();
-                } else {
-                    scope.target = false;
-                }
-                scope.$apply();
-            });
-        }
-    }
+    // clickOutsideCalendar.$inject = ['$document'];
+    // function clickOutsideCalendar($document) {
+    //     return {
+    //         restrict: 'A',
+    //         link: clickFunction,
+    //         controller: calendarController,
+    //         scope: {
+    //             target: '='
+    //         }
+    //     };
+    //     function clickFunction(scope, el, attr, ctrl) {
+    //         el.bind('click', function (event) {
+    //             event.stopPropagation();
+    //         });
+    //         var calendar = document.getElementById('calendar-list-btn');
+    //         var calendarIcon = document.getElementById('calendar-list-icon');
+    //         $document.bind('click', function (e) {
+    //             if (e.target == calendar || e.target == calendarIcon) {
+    //                 e.stopPropagation();
+    //             } else {
+    //                 scope.target = false;
+    //             }
+    //             scope.$apply();
+    //         });
+    //     }
+    // }
+    //
+    // clickOutsideRange.$inject = ['$document'];
+    // function clickOutsideRange($document) {
+    //     return {
+    //         restrict: 'A',
+    //         link: clickFunction,
+    //         controller: calendarController,
+    //         scope: {
+    //             target: '='
+    //         }
+    //     };
+    //     function clickFunction(scope, el, attr, ctrl) {
+    //         el.bind('click', function (event) {
+    //             event.stopPropagation();
+    //         });
+    //         var range = document.getElementById('range-list-btn');
+    //         $document.bind('click', function (e) {
+    //             if (e.target == range) {
+    //                 e.stopPropagation();
+    //             } else {
+    //                 scope.target = false;
+    //             }
+    //             scope.$apply();
+    //         });
+    //     }
+    // }
 
-    clickOutsideRange.$inject = ['$document'];
-    function clickOutsideRange($document) {
+
+    function dateOutput() {
+        var a = {};
         return {
-            restrict: 'A',
-            link: clickFunction,
-            controller: calendarController,
-            scope: {
-                target: '='
+            setData: function (start, end) {
+                a = {
+                    start: start,
+                    end: end
+                };
+                return a;
+            },
+            getData: function () {
+                return a;
             }
         };
-        function clickFunction(scope, el, attr, ctrl) {
-            el.bind('click', function (event) {
-                event.stopPropagation();
-            });
-            var range = document.getElementById('range-list-btn');
-            $document.bind('click', function (e) {
-                if (e.target == range) {
-                    e.stopPropagation();
-                } else {
-                    scope.target = false;
-                }
-                scope.$apply();
-            });
-        }
     }
 
 })();
