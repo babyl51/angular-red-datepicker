@@ -1,12 +1,13 @@
 <div class="calendar">
+    {{calendar.result}}
     <div class="calendar-manage">
         <div class="inputs">
             <div class="selection-start">
-                <input id="date-start" type="text" placeholder="" ng-model="calendar.inputStart">
+                <input id="date-start" type="text" placeholder="" ng-model="calendar.inputStart" maxlength="10">
             </div>
             <div class="separator">&mdash;</div>
             <div class="selection-end">
-                <input id="date-end" type="text" placeholder="" ng-model="calendar.inputEnd">
+                <input id="date-end" type="text" placeholder="" ng-model="calendar.inputEnd" maxlength="10">
             </div>
         </div>
         <div class="calendar-btns">
@@ -41,9 +42,6 @@
             <ul class="days-name">
                 <li ng-repeat="dayName in calendar.days track by $index">{{dayName}}</li>
             </ul>
-            <ul class="days-name">
-                <li ng-repeat="index in [0, 1, 2, 3, 4, 5, 6]">{{index}}</li>
-            </ul>
             <ul class="calendar-body">
                 <li class="day"
                     ng-repeat="day in calendar.monthShow"
@@ -71,11 +69,11 @@
                     {{item.label}}
                 </span>
                 <span class="item-date-start">
-                    {{item.start[2]}}.{{item.start[1]+1}}.{{item.start[0]}}
+                    {{item.start}}
                 </span>
                 <span class="item-date-separator">&mdash;</span>
                 <span class="item-date-end">
-                    {{item.end[2]}}.{{item.end[1]+1}}.{{item.end[0]}}
+                    {{item.end}}
                 </span>
             </li>
         </ul>

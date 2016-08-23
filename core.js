@@ -1,3 +1,6 @@
+/**
+ * @author Johhny Swan <ferdinandgrau@gmail.com>
+ */
 (function () {
     'use strict';
 
@@ -14,6 +17,10 @@
             restrict: 'E',
             templateUrl: 'datepicker.html',
             scope: {
+                /**
+                 * @param {string} locale
+                 * @description Get locale from directive attr
+                 */
                 locale: '@locale'
             },
             controller: calendarController,
@@ -22,23 +29,24 @@
         };
     }
 
-    calendarController.$inject = ['dateOutput'];
-    function calendarController(dateOutput) {
+    calendarController.$inject = ['dateOutput', '$scope'];
+    function calendarController(dateOutput, $scope) {
         var vm = this;
         var date = moment(new Date());
 
         var localeDefault = 'en';
         vm.locale = vm.locale ? (vm.locale != '' ? vm.locale : localeDefault) : localeDefault;
-        moment.locale(vm.locale);
 
+        /**
+         * @description Set locale from locale attr, or 'en' by default
+         */
+        moment.locale(vm.locale);
         vm.localeInfo = moment.localeData();
-        vm.weekStart = vm.localeInfo._week.dow;
-        vm.localeDays = vm.localeInfo._weekdaysMin;
-        if (vm.weekStart == 1) {
-            var removed = vm.localeDays.splice(0, 1);
-            vm.localeDays.push(removed[0]);
-        }
-        vm.days = vm.localeDays;
+        /**
+         * @description Get days namespaces
+         */
+
+
 
         vm.earliest_date = moment(new Date('January 1, 2010')).startOf('day');
         vm.latest_date = moment(new Date('December 31, 2026 ')).startOf('day');
@@ -61,46 +69,52 @@
         vm.rangeShow = false;
         vm.calendarShow = false;
 
-        vm.inputStart = vm.startSelection[2] + '.' + (vm.startSelection[1] + 1) + '.' + vm.startSelection[0];
-        vm.inputEnd = vm.endSelection[2] + '.' + (vm.endSelection[1] + 1) + '.' + vm.endSelection[0];
+        vm.inputStart = moment(vm.startSelection).format('L');
+        vm.inputEnd = moment(vm.endSelection).format('L');
+
+        $scope.$watch('calendar.inputStart', function (current, original) {
+            vm.checkInputs(current);
+        });
+        $scope.$watch('calendar.inputEnd', function (current, original) {
+            vm.checkInputs(current);
+        });
+
+
         dateOutput.setData(vm.inputStart, vm.inputEnd);
 
         vm.list = [
             {
                 label: 'Last Week',
-                start: moment(vm.today.date).subtract(6, 'days').toArray(),
-                end: vm.today.date.toArray()
-            },
-            {
+                start: moment(vm.today.date).subtract(6, 'days').format('L'),
+                end: vm.today.date.format('L')
+            }, {
                 label: 'Last 15 days',
-                start: moment(vm.today.date).subtract(14, 'days').toArray(),
-                end: vm.today.date.toArray()
-            },
-            {
+                start: moment(vm.today.date).subtract(14, 'days').format('L'),
+                end: vm.today.date.format('L')
+            }, {
                 label: 'Last 30 days',
-                start: moment(vm.today.date).subtract(29, 'days').toArray(),
-                end: vm.today.date.toArray()
-            },
-            {
+                start: moment(vm.today.date).subtract(29, 'days').format('L'),
+                end: vm.today.date.format('L')
+            }, {
                 label: 'Last month',
-                start: moment(vm.today.date).subtract(1, 'month').startOf('month').toArray(),
-                end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').toArray()
+                start: moment(vm.today.date).subtract(1, 'month').startOf('month').format('L'),
+                end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
             }, {
                 label: 'Last 3 months',
-                start: moment(vm.today.date).subtract(3, 'month').startOf('month').toArray(),
-                end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').toArray()
+                start: moment(vm.today.date).subtract(3, 'month').startOf('month').format('L'),
+                end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
             }, {
                 label: 'Last 6 months',
-                start: moment(vm.today.date).subtract(6, 'month').startOf('month').toArray(),
-                end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').toArray()
+                start: moment(vm.today.date).subtract(6, 'month').startOf('month').format('L'),
+                end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
             }, {
                 label: 'Last year',
-                start: moment(vm.today.date).subtract(12, 'month').startOf('month').toArray(),
-                end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').toArray()
+                start: moment(vm.today.date).subtract(12, 'month').startOf('month').format('L'),
+                end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
             }, {
                 label: 'All time',
-                start: vm.earliest_date.toArray(),
-                end: vm.latest_date.toArray()
+                start: vm.earliest_date.format('L'),
+                end: vm.latest_date.format('L')
             }
         ];
 
@@ -112,13 +126,30 @@
         vm.calendarArray = calendarArray;
         vm.listSelected = listSelected;
         vm.showPopup = showPopup;
+        vm.getDaysNames = getDaysNames;
+        vm.checkInputs = checkInputs;
+        vm.validateDate = validateDate;
 
         vm.print = function () {
             console.log(vm.inputStart);
             console.log(vm.inputEnd);
         };
+
+        function getDaysNames() {
+            var weekStart = vm.localeInfo._week.dow;
+            var localeDays = vm.localeInfo._weekdaysMin;
+            /**
+             * @description Checking from what day week start
+             */
+            if (weekStart == 1) {
+                var removed = localeDays.splice(0, 1);
+                localeDays.push(removed[0]);
+            }
+            return localeDays;
+        }
+
         /**
-         * Getting day by click on it on calendar
+         * Getting day by click on it on calendar box
          * @param {object} day
          */
         function getDay(day) {
@@ -159,8 +190,8 @@
                 vm.startSelection = moment(value[1].date).toArray();
                 vm.endSelection = moment(value[0].date).toArray();
             }
-            vm.inputStart = vm.startSelection[2] + '.' + (vm.startSelection[1] + 1) + '.' + vm.startSelection[0];
-            vm.inputEnd = vm.endSelection[2] + '.' + (vm.endSelection[1] + 1) + '.' + vm.endSelection[0];
+            vm.inputStart = moment(vm.startSelection).format('L');
+            vm.inputEnd = moment(vm.endSelection).format('L');
             dateOutput.setData(vm.inputStart, vm.inputEnd);
             vm.monthShow = new vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
         }
@@ -285,8 +316,8 @@
         function listSelected(item) {
             vm.startSelection = item.start;
             vm.endSelection = item.end;
-            vm.inputStart = vm.startSelection[2] + '.' + (vm.startSelection[1] + 1) + '.' + vm.startSelection[0];
-            vm.inputEnd = vm.endSelection[2] + '.' + (vm.endSelection[1] + 1) + '.' + vm.endSelection[0];
+            vm.inputStart = moment(vm.startSelection).format('L');
+            vm.inputEnd = moment(vm.endSelection).format('L');
             dateOutput.setData(vm.inputStart, vm.inputEnd);
             vm.monthShow = new vm.calendarArray(vm.today.date);
         }
@@ -301,9 +332,30 @@
             }
         }
 
+        function checkInputs(date) {
+            var regexp = /([0-9]{2}\/[0-9]{2}\/[0-9]{4})|([0-9]{2}-[0-9]{2}-[0-9]{4})|([0-9]{2}.[0-9]{2}.[0-9]{4})|([0-9]{4}\/[0-9]{2}\/[0-9]{2})|([0-9]{4}-[0-9]{2}-[0-9]{2})|([0-9]{4}.[0-9]{2}.[0-9]{2})/g;
+            if (date.match(regexp)) {
+                vm.validateDate(date);
+            } else if (date.length == 10) {
+                console.log('wrong format');
+            }
+        }
+
+        //TODO update checking  and validate data
+        function validateDate(date) {
+            var a = moment(new Date(date));
+            if (a.isValid()) {
+                console.log('date is valid');
+            } else {
+                console.log('date is invalid');
+            }
+        }
+
+        vm.days = vm.getDaysNames();
         vm.monthShow = new vm.calendarArray(vm.today.date);
     }
 
+    //TODO update this directives
     // clickOutsideCalendar.$inject = ['$document'];
     // function clickOutsideCalendar($document) {
     //     return {
