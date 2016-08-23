@@ -314,10 +314,10 @@
         }
 
         function listSelected(item) {
-            vm.startSelection = item.start;
-            vm.endSelection = item.end;
-            vm.inputStart = moment(vm.startSelection).format('L');
-            vm.inputEnd = moment(vm.endSelection).format('L');
+            vm.startSelection = moment(new Date(item.start));
+            vm.endSelection = moment(new Date(item.end));
+            vm.inputStart = item.start;
+            vm.inputEnd = item.end;
             dateOutput.setData(vm.inputStart, vm.inputEnd);
             vm.monthShow = new vm.calendarArray(vm.today.date);
         }
