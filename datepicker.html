@@ -41,6 +41,9 @@
             <ul class="days-name">
                 <li ng-repeat="dayName in calendar.days track by $index">{{dayName}}</li>
             </ul>
+            <ul class="days-name">
+                <li ng-repeat="index in [0, 1, 2, 3, 4, 5, 6]">{{index}}</li>
+            </ul>
             <ul class="calendar-body">
                 <li class="day"
                     ng-repeat="day in calendar.monthShow"

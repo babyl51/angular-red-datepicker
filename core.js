@@ -14,23 +14,16 @@
             restrict: 'E',
             templateUrl: 'datepicker.html',
             scope: {
-                days: '=days',
                 locale: '@locale'
             },
-            link: linkFunc,
             controller: calendarController,
             controllerAs: 'calendar',
             bindToController: true
         };
-        function linkFunc(scope, el, attr, ctrl) {
-            // angular.element(el).find('li').on('click', function (e) {
-            //     console.log(angular.element(e.target).html());
-            // });
-        }
     }
 
-    calendarController.$inject = ['$scope', 'dateOutput'];
-    function calendarController($scope, dateOutput) {
+    calendarController.$inject = ['dateOutput'];
+    function calendarController(dateOutput) {
         var vm = this;
         var date = moment(new Date());
 
@@ -38,14 +31,14 @@
         vm.locale = vm.locale ? (vm.locale != '' ? vm.locale : localeDefault) : localeDefault;
         moment.locale(vm.locale);
 
-        var localeInfo = moment.localeData();
-        var weekStart = localeInfo._week.dow;
-        var localeDays = localeInfo._weekdaysMin;
-        if (weekStart == 1) {
-            var removed = localeDays.splice(0, 1);
-            localeDays.push(removed[0]);
+        vm.localeInfo = moment.localeData();
+        vm.weekStart = vm.localeInfo._week.dow;
+        vm.localeDays = vm.localeInfo._weekdaysMin;
+        if (vm.weekStart == 1) {
+            var removed = vm.localeDays.splice(0, 1);
+            vm.localeDays.push(removed[0]);
         }
-        vm.days = localeDays;
+        vm.days = vm.localeDays;
 
         vm.earliest_date = moment(new Date('January 1, 2010')).startOf('day');
         vm.latest_date = moment(new Date('December 31, 2026 ')).startOf('day');
@@ -110,17 +103,6 @@
                 end: vm.latest_date.toArray()
             }
         ];
-
-        // TODO change locales
-        // vm.allMoment = moment.localeData();
-        // vm.weekDaysName = vm.allMoment._weekdaysMin;
-        // vm.weekStart = vm.allMoment._week.dow;
-        //
-        // if (vm.allMoment._week.dow == 1) {
-        //     var removed = vm.weekDaysName.splice(0, 1);
-        //     vm.weekDaysName.push(removed[0]);
-        // }
-
 
         vm.getDay = getDay;
         vm.daySelect = daySelect;
@@ -223,8 +205,14 @@
             vm.startDay = moment(current).startOf('month').format('d');
             vm.endDay = moment(current).endOf('month').format('d');
 
+
             //Before month
-            var start = (Number(vm.startDay) ? (vm.startDay == 1 ? 7 : vm.startDay - 1) : 6);
+            var start = '';
+            if (vm.weekStart == 0) {
+                start = (Number(vm.startDay) ? (vm.startDay == 1 ? 8 : vm.startDay) : 7);
+            } else {
+                start = (Number(vm.startDay) ? (vm.startDay == 1 ? 7 : vm.startDay - 1) : 6);
+            }
             _.times(start, function (n) {
                 var month = vm.beforeMonth;
                 var a = {
@@ -266,7 +254,12 @@
 
 
             //End Month
-            var end = (Number(vm.endDay) ? (vm.endDay == 6 ? 1 : 7 - vm.endDay ) : 7);
+            var end = '';
+            if (vm.weekStart == 0) {
+                end = (Number(vm.endDay) ? (vm.endDay == 6 ? 7 : 6 - vm.endDay ) : 6);
+            } else {
+                end = (Number(vm.endDay) ? (vm.endDay == 6 ? 1 : 7 - vm.endDay ) : 7);
+            }
             _.times(end, function (n) {
                 var month = vm.nextMonth;
                 var a = {
