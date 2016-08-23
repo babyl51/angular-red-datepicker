@@ -1,6 +1,7 @@
 {
   "name": "angular-datepicker",
   "homepage": "https://github.com/johnnyswan/angular-datepicker",
+  "version": "0.0.1",
   "authors": [
     "redswan <gagarinred@mail.com>"
   ],
