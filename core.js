@@ -42,6 +42,7 @@
          */
         moment.locale(vm.locale);
         vm.localeInfo = moment.localeData();
+        vm.weekStart = vm.localeInfo._week.dow;
         /**
          * @description Get days namespaces
          */
@@ -136,7 +137,7 @@
         };
 
         function getDaysNames() {
-            var weekStart = vm.localeInfo._week.dow;
+            var weekStart = vm.weekStart;
             var localeDays = vm.localeInfo._weekdaysMin;
             /**
              * @description Checking from what day week start
