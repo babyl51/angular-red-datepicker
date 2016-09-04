@@ -21,7 +21,9 @@
                  * @param {string} locale
                  * @description Get locale from directive attr
                  */
-                locale: '@locale'
+                locale: '@locale',
+                earliestDate: '@earliestDate',
+                latestDate: '@latestDate'
             },
             controller: calendarController,
             controllerAs: 'calendar',
@@ -32,7 +34,7 @@
     calendarController.$inject = ['dateOutput', '$scope'];
     function calendarController(dateOutput, $scope) {
         var vm = this;
-        var date = moment(new Date());
+
 
         var localeDefault = 'en';
         vm.locale = vm.locale ? (vm.locale != '' ? vm.locale : localeDefault) : localeDefault;
@@ -47,12 +49,15 @@
          * @description Get days namespaces
          */
 
+        vm.earliestDateDefault = 'January 01, 1990';
+        vm.latestDateDefault = 'December 31, 2030';
+        vm.earliestDate = vm.earliestDate ? ( vm.earliestDate != '' ? vm.earliestDate : vm.earliestDateDefault ) : vm.earliestDateDefault;
+        vm.latestDate = vm.latestDate ? ( vm.latestDate != '' ? vm.latestDate : vm.latestDateDefault ) : vm.latestDateDefault;
 
+        vm.earliest_date = moment(new Date(vm.earliestDate)).startOf('day');
+        vm.latest_date = moment(new Date(vm.latestDate)).startOf('day');
 
-        vm.earliest_date = moment(new Date('January 1, 2010')).startOf('day');
-        vm.latest_date = moment(new Date('December 31, 2026 ')).startOf('day');
-
-
+        var date = moment(new Date());
         vm.today = {
             date: date.startOf('day'),
             year: date.format('YYYY'),
@@ -130,11 +135,6 @@
         vm.getDaysNames = getDaysNames;
         vm.checkInputs = checkInputs;
         vm.validateDate = validateDate;
-
-        vm.print = function () {
-            console.log(vm.inputStart);
-            console.log(vm.inputEnd);
-        };
 
         function getDaysNames() {
             var weekStart = vm.weekStart;
