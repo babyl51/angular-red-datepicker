@@ -1,17 +1,19 @@
 body {
   font-family: 'Open Sans', sans-serif;
 }
-.calendar {
+.calendar,
+.calendar-with-out-range {
   position: relative;
-  max-width: 285px;
 }
-.calendar .calendar-manage {
+.calendar .calendar-manage,
+.calendar-with-out-range .calendar-manage {
   max-width: 315px;
   border: 1px solid #cccccc;
   border-radius: 3px;
   height: 32px;
 }
-.calendar .calendar-manage .inputs {
+.calendar .calendar-manage .inputs,
+.calendar-with-out-range .calendar-manage .inputs {
   display: inline-block;
   overflow: hidden;
   height: 32px;
@@ -19,10 +21,12 @@ body {
   width: 200px;
   text-align: center;
 }
-.calendar .calendar-manage .inputs div {
+.calendar .calendar-manage .inputs div,
+.calendar-with-out-range .calendar-manage .inputs div {
   float: left;
 }
-.calendar .calendar-manage .inputs div input {
+.calendar .calendar-manage .inputs div input,
+.calendar-with-out-range .calendar-manage .inputs div input {
   outline: 0;
   width: 85px;
   text-align: center;
@@ -31,21 +35,26 @@ body {
   font-size: 16px;
 }
 .calendar .calendar-manage .inputs .selection-start,
-.calendar .calendar-manage .inputs .selection-end {
+.calendar-with-out-range .calendar-manage .inputs .selection-start,
+.calendar .calendar-manage .inputs .selection-end,
+.calendar-with-out-range .calendar-manage .inputs .selection-end {
   padding: 0 2px;
   display: inline-block;
 }
-.calendar .calendar-manage .inputs .separator {
+.calendar .calendar-manage .inputs .separator,
+.calendar-with-out-range .calendar-manage .inputs .separator {
   padding: 3px 2px;
   display: inline-block;
 }
-.calendar .calendar-manage .calendar-btns {
+.calendar .calendar-manage .calendar-btns,
+.calendar-with-out-range .calendar-manage .calendar-btns {
   display: inline-block;
   overflow: hidden;
   float: right;
   margin: 0 10px 0 0;
 }
-.calendar .calendar-manage .calendar-btns #calendar-list-btn {
+.calendar .calendar-manage .calendar-btns #calendar-list-btn,
+.calendar-with-out-range .calendar-manage .calendar-btns #calendar-list-btn {
   float: left;
   width: 32px;
   height: 32px;
@@ -54,13 +63,15 @@ body {
   text-align: center;
   cursor: pointer;
 }
-.calendar .calendar-manage .calendar-btns #calendar-list-btn span {
+.calendar .calendar-manage .calendar-btns #calendar-list-btn span,
+.calendar-with-out-range .calendar-manage .calendar-btns #calendar-list-btn span {
   font-size: 14px;
   margin: 9px 0 0 0;
   display: block;
   color: #009f8a;
 }
-.calendar .calendar-manage .calendar-btns #range-list-btn {
+.calendar .calendar-manage .calendar-btns #range-list-btn,
+.calendar-with-out-range .calendar-manage .calendar-btns #range-list-btn {
   float: left;
   width: 25px;
   height: 25px;
@@ -70,14 +81,17 @@ body {
   cursor: pointer;
   margin: 3px 0 0 5px;
 }
-.calendar .calendar-manage:hover {
+.calendar .calendar-manage:hover,
+.calendar-with-out-range .calendar-manage:hover {
   border: 1px solid #009f8a;
 }
-.calendar .range-list {
+.calendar .range-list,
+.calendar-with-out-range .range-list {
   display: none;
   padding: 5px;
 }
-.calendar .range-list ul {
+.calendar .range-list ul,
+.calendar-with-out-range .range-list ul {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -87,34 +101,43 @@ body {
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
 }
-.calendar .range-list ul li {
+.calendar .range-list ul li,
+.calendar-with-out-range .range-list ul li {
   cursor: pointer;
   border-bottom: 1px solid #EBF1F4;
   padding: 5px;
 }
-.calendar .range-list ul li .item-name {
+.calendar .range-list ul li .item-name,
+.calendar-with-out-range .range-list ul li .item-name {
   color: #009f8a;
 }
 .calendar .range-list ul li .item-date-start,
+.calendar-with-out-range .range-list ul li .item-date-start,
 .calendar .range-list ul li .item-date-separator,
-.calendar .range-list ul li .item-date-end {
+.calendar-with-out-range .range-list ul li .item-date-separator,
+.calendar .range-list ul li .item-date-end,
+.calendar-with-out-range .range-list ul li .item-date-end {
   font-size: 12px;
   color: #969696;
 }
-.calendar .range-list ul li:last-child {
+.calendar .range-list ul li:last-child,
+.calendar-with-out-range .range-list ul li:last-child {
   border-bottom: none;
 }
-.calendar .range-list ul li:hover {
+.calendar .range-list ul li:hover,
+.calendar-with-out-range .range-list ul li:hover {
   background: #EBF1F4;
 }
-.calendar .range-list-show {
+.calendar .range-list-show,
+.calendar-with-out-range .range-list-show {
   display: block;
   position: absolute;
   margin: 5px 0 0 0;
   right: 0;
   left: 0;
 }
-.calendar .calendar-box {
+.calendar .calendar-box,
+.calendar-with-out-range .calendar-box {
   display: none;
   width: 217px;
   list-style: none;
@@ -127,52 +150,62 @@ body {
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
 }
-.calendar .calendar-box .switchers {
+.calendar .calendar-box .switchers,
+.calendar-with-out-range .calendar-box .switchers {
   overflow: hidden;
   padding: 5px 0;
   border-bottom: none;
   width: 100%;
 }
 .calendar .calendar-box .switchers .year,
-.calendar .calendar-box .switchers .month {
+.calendar-with-out-range .calendar-box .switchers .year,
+.calendar .calendar-box .switchers .month,
+.calendar-with-out-range .calendar-box .switchers .month {
   padding: 0 20px;
   position: relative;
   border-radius: 3px;
   border: 1px solid rgba(195, 202, 205, 0.5);
 }
-.calendar .calendar-box .switchers .month {
+.calendar .calendar-box .switchers .month,
+.calendar-with-out-range .calendar-box .switchers .month {
   float: left;
   margin: 0 0 0 5px;
 }
-.calendar .calendar-box .switchers .month span {
+.calendar .calendar-box .switchers .month span,
+.calendar-with-out-range .calendar-box .switchers .month span {
   width: 70px;
   display: block;
   text-align: center;
 }
-.calendar .calendar-box .switchers .year {
+.calendar .calendar-box .switchers .year,
+.calendar-with-out-range .calendar-box .switchers .year {
   float: right;
   margin: 0 5px 0 0;
 }
-.calendar .calendar-box .switchers i {
+.calendar .calendar-box .switchers i,
+.calendar-with-out-range .calendar-box .switchers i {
   cursor: pointer;
   width: 16px;
   height: 16px;
 }
-.calendar .calendar-box .switchers .right {
+.calendar .calendar-box .switchers .right,
+.calendar-with-out-range .calendar-box .switchers .right {
   position: absolute;
   top: 3px;
   right: 2px;
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABAElEQVRoQ+3Zyw3CQAwE0EkHdAIlQAd0SglQAnRCCWilcMzFO58ocu5r5c3ksJEXHORZDuJAQ/bWZDfSjYgS6E9rI9g7gBeAryj4zbHMRgbiAeAN4ObGMCGntY1zAsOEjNpjGDYkhlFAIhgVxI5RQqwYNcSGcUAsGBdEjnFCpBg3RIZJQCSYFISOSUKomDSEhtkL5AngAuAD4Fr5l0lDxrV/GjFqTUJoiCSEikhB6IgERIJwQ2QIJ0SKcEHkCAfEglBDbAglxIpQQewIBSSCYENiCDbkv1YoX8Vndirs2+8hFj0zgU6fZTcy/ULVAQ2pJqc6142okq3O7UaqyanO/QBuz2Qzqh3/7wAAAABJRU5ErkJggg==);
   background-size: cover;
 }
-.calendar .calendar-box .switchers .left {
+.calendar .calendar-box .switchers .left,
+.calendar-with-out-range .calendar-box .switchers .left {
   position: absolute;
   top: 3px;
   left: 2px;
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABCklEQVRoQ+3Z0Q0CMQwDUN8GbAIjwEQwAkwGI8AmjIAqAUJ8nmMnd0r/W+nZ/UjVCStZ00ocaEi1JruRbkSUQF8tMtgNgCOAC3nOd3tGIwNxBbB7Q84RGDfkF/EAsAfwXBpEhhhBuBqRIlwQOcIBsSDUEBtCCbEiVBA7QgFJQURD0hCRkFREFCQdEQEpgWAhZRAMpBSChdwAbAHcARyixvG5Iz0z/Y5WymAYyAivDIaFlMFEQEpgoiDpmEhIKiYakoZRQFIwKogdo4RYMWqIDeOAWDAuiBzjhEgxbsg/ZvyPLPJb4fPcGFPzKQrBPKzmvn9k+zKulgTTEEmsxKHdCBGeZGs3IomVOPQFv4RgM1vSu+kAAAAASUVORK5CYII=);
   background-size: cover;
 }
-.calendar .calendar-box .calendar-container .days-name {
+.calendar .calendar-box .calendar-container .days-name,
+.calendar-with-out-range .calendar-box .calendar-container .days-name {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -180,7 +213,8 @@ body {
   border-bottom: 1px solid #cccccc;
   border-top: 1px solid #cccccc;
 }
-.calendar .calendar-box .calendar-container .days-name li {
+.calendar .calendar-box .calendar-container .days-name li,
+.calendar-with-out-range .calendar-box .calendar-container .days-name li {
   float: left;
   display: inline-block;
   cursor: pointer;
@@ -188,13 +222,15 @@ body {
   text-align: center;
   margin: 2px;
 }
-.calendar .calendar-box .calendar-container .calendar-body {
+.calendar .calendar-box .calendar-container .calendar-body,
+.calendar-with-out-range .calendar-box .calendar-container .calendar-body {
   overflow: hidden;
   padding: 0;
   margin: 0;
   list-style: none;
 }
-.calendar .calendar-box .calendar-container .calendar-body li {
+.calendar .calendar-box .calendar-container .calendar-body li,
+.calendar-with-out-range .calendar-box .calendar-container .calendar-body li {
   float: left;
   display: inline-block;
   cursor: pointer;
@@ -202,36 +238,45 @@ body {
   text-align: center;
   padding: 2px;
 }
-.calendar .calendar-box .calendar-container .calendar-body li:hover:not(.fadeNonClick):not(.cantUse) {
+.calendar .calendar-box .calendar-container .calendar-body li:hover:not(.fadeNonClick):not(.cantUse),
+.calendar-with-out-range .calendar-box .calendar-container .calendar-body li:hover:not(.fadeNonClick):not(.cantUse) {
   background-color: #EBF1F4;
 }
-.calendar .calendar-box .calendar-container .calendar-body .current {
+.calendar .calendar-box .calendar-container .calendar-body .current,
+.calendar-with-out-range .calendar-box .calendar-container .calendar-body .current {
   color: #2693D5 !important;
   background-color: rgba(38, 147, 213, 0.2) !important;
 }
-.calendar .calendar-box .calendar-container .calendar-body .cantUse {
+.calendar .calendar-box .calendar-container .calendar-body .cantUse,
+.calendar-with-out-range .calendar-box .calendar-container .calendar-body .cantUse {
   cursor: default;
   color: rgba(195, 202, 205, 0.7);
 }
-.calendar .calendar-box .calendar-container .calendar-body .fade {
+.calendar .calendar-box .calendar-container .calendar-body .fade,
+.calendar-with-out-range .calendar-box .calendar-container .calendar-body .fade {
   cursor: pointer;
   color: rgba(195, 202, 205, 0.7);
 }
-.calendar .calendar-box .calendar-container .calendar-body .fadeNonClick {
+.calendar .calendar-box .calendar-container .calendar-body .fadeNonClick,
+.calendar-with-out-range .calendar-box .calendar-container .calendar-body .fadeNonClick {
   cursor: default;
   color: rgba(195, 202, 205, 0.7);
 }
-.calendar .calendar-box .calendar-container .calendar-body .active {
+.calendar .calendar-box .calendar-container .calendar-body .active,
+.calendar-with-out-range .calendar-box .calendar-container .calendar-body .active {
   background-color: #EBF1F4;
 }
-.calendar .calendar-box .calendar-container .calendar-body .isBetween {
+.calendar .calendar-box .calendar-container .calendar-body .isBetween,
+.calendar-with-out-range .calendar-box .calendar-container .calendar-body .isBetween {
   background-color: #EBF1F4;
 }
-.calendar .calendar-box .calendar-container .calendar-body .start {
+.calendar .calendar-box .calendar-container .calendar-body .start,
+.calendar-with-out-range .calendar-box .calendar-container .calendar-body .start {
   background-color: #EBF1F4;
   position: relative;
 }
-.calendar .calendar-box .calendar-container .calendar-body .start:before {
+.calendar .calendar-box .calendar-container .calendar-body .start:before,
+.calendar-with-out-range .calendar-box .calendar-container .calendar-body .start:before {
   content: "";
   position: absolute;
   z-index: 1;
@@ -241,11 +286,13 @@ body {
   left: 0;
   top: 0;
 }
-.calendar .calendar-box .calendar-container .calendar-body .end {
+.calendar .calendar-box .calendar-container .calendar-body .end,
+.calendar-with-out-range .calendar-box .calendar-container .calendar-body .end {
   background-color: #EBF1F4;
   position: relative;
 }
-.calendar .calendar-box .calendar-container .calendar-body .end:after {
+.calendar .calendar-box .calendar-container .calendar-body .end:after,
+.calendar-with-out-range .calendar-box .calendar-container .calendar-body .end:after {
   content: "";
   position: absolute;
   z-index: 1;
@@ -255,10 +302,17 @@ body {
   right: 0;
   top: 0;
 }
-.calendar .calendar-box-show {
+.calendar .calendar-box-show,
+.calendar-with-out-range .calendar-box-show {
   display: block;
   position: absolute;
   right: 0;
   left: 0;
   margin: 5px auto;
+}
+.calendar {
+  max-width: 285px;
+}
+.calendar-with-out-range {
+  max-width: 255px;
 }

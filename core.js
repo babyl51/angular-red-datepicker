@@ -17,13 +17,16 @@
             restrict: 'E',
             templateUrl: 'datepicker.html',
             scope: {
-                /**
-                 * @param {string} locale
-                 * @description Get locale from directive attr
-                 */
+                /** @param {string} locale - Set locale from directive attr.*/
                 locale: '@locale',
+                /** @param {string} earliestDate - Set Earliest Date For Calendar.*/
                 earliestDate: '@earliestDate',
-                latestDate: '@latestDate'
+                /** @param {string} latestDate - Set Latest Date For Calendar.*/
+                latestDate: '@latestDate',
+                /** @param {boolean} listShow - show date range or not.*/
+                listShow: '=listShow'
+
+
             },
             controller: calendarController,
             controllerAs: 'calendar',
@@ -38,6 +41,7 @@
 
         var localeDefault = 'en';
         vm.locale = vm.locale ? (vm.locale != '' ? vm.locale : localeDefault) : localeDefault;
+
 
         /**
          * @description Set locale from locale attr, or 'en' by default
@@ -88,41 +92,44 @@
 
         dateOutput.setData(vm.inputStart, vm.inputEnd);
 
-        vm.list = [
-            {
-                label: 'Last Week',
-                start: moment(vm.today.date).subtract(6, 'days').format('L'),
-                end: vm.today.date.format('L')
-            }, {
-                label: 'Last 15 days',
-                start: moment(vm.today.date).subtract(14, 'days').format('L'),
-                end: vm.today.date.format('L')
-            }, {
-                label: 'Last 30 days',
-                start: moment(vm.today.date).subtract(29, 'days').format('L'),
-                end: vm.today.date.format('L')
-            }, {
-                label: 'Last month',
-                start: moment(vm.today.date).subtract(1, 'month').startOf('month').format('L'),
-                end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
-            }, {
-                label: 'Last 3 months',
-                start: moment(vm.today.date).subtract(3, 'month').startOf('month').format('L'),
-                end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
-            }, {
-                label: 'Last 6 months',
-                start: moment(vm.today.date).subtract(6, 'month').startOf('month').format('L'),
-                end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
-            }, {
-                label: 'Last year',
-                start: moment(vm.today.date).subtract(12, 'month').startOf('month').format('L'),
-                end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
-            }, {
-                label: 'All time',
-                start: vm.earliest_date.format('L'),
-                end: vm.latest_date.format('L')
-            }
-        ];
+        if (vm.listShow) {
+            vm.list = [
+                {
+                    label: 'Last Week',
+                    start: moment(vm.today.date).subtract(6, 'days').format('L'),
+                    end: vm.today.date.format('L')
+                }, {
+                    label: 'Last 15 days',
+                    start: moment(vm.today.date).subtract(14, 'days').format('L'),
+                    end: vm.today.date.format('L')
+                }, {
+                    label: 'Last 30 days',
+                    start: moment(vm.today.date).subtract(29, 'days').format('L'),
+                    end: vm.today.date.format('L')
+                }, {
+                    label: 'Last month',
+                    start: moment(vm.today.date).subtract(1, 'month').startOf('month').format('L'),
+                    end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
+                }, {
+                    label: 'Last 3 months',
+                    start: moment(vm.today.date).subtract(3, 'month').startOf('month').format('L'),
+                    end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
+                }, {
+                    label: 'Last 6 months',
+                    start: moment(vm.today.date).subtract(6, 'month').startOf('month').format('L'),
+                    end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
+                }, {
+                    label: 'Last year',
+                    start: moment(vm.today.date).subtract(12, 'month').startOf('month').format('L'),
+                    end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
+                }, {
+                    label: 'All time',
+                    start: vm.earliest_date.format('L'),
+                    end: vm.latest_date.format('L')
+                }
+            ];
+        }
+
 
         vm.getDay = getDay;
         vm.daySelect = daySelect;
@@ -136,15 +143,13 @@
         vm.checkInputs = checkInputs;
         vm.validateDate = validateDate;
 
-        function getDaysNames() {
-            var weekStart = vm.weekStart;
-            var localeDays = vm.localeInfo._weekdaysMin;
-            /**
-             * @description Checking from what day week start
-             */
+
+        /**
+         * @description Checking from what day week start
+         */
+        function getDaysNames(weekStart,localeDays) {
             if (weekStart == 1) {
-                var removed = localeDays.splice(0, 1);
-                localeDays.push(removed[0]);
+                localeDays.push(localeDays.splice(0, 1)[0]);
             }
             return localeDays;
         }
@@ -352,7 +357,7 @@
             }
         }
 
-        vm.days = vm.getDaysNames();
+        vm.days = vm.getDaysNames(vm.weekStart, vm.localeInfo._weekdaysMin);
         vm.monthShow = new vm.calendarArray(vm.today.date);
     }
 
