@@ -24,9 +24,9 @@
                 /** @param {string} latestDate - Set Latest Date For Calendar.*/
                 latestDate: '@latestDate',
                 /** @param {boolean} listShow - show date range or not.*/
-                listShow: '=listShow'
-
-
+                listShow: '=listShow',
+                /** Todo need to change list*/
+                listArray: '='
             },
             controller: calendarController,
             controllerAs: 'calendar',
@@ -38,41 +38,32 @@
     function calendarController(dateOutput, $scope) {
         var vm = this;
 
-
-        var localeDefault = 'en';
-        vm.locale = vm.locale ? (vm.locale != '' ? vm.locale : localeDefault) : localeDefault;
-
-
-        /**
-         * @description Set locale from locale attr, or 'en' by default
-         */
+        /** @description Set locale from scope or by default */
+        vm.locale = vm.locale ? (vm.locale != '' ? vm.locale : 'en') : 'en';
         moment.locale(vm.locale);
         vm.localeInfo = moment.localeData();
-        vm.weekStart = vm.localeInfo._week.dow;
-        /**
-         * @description Get days namespaces
-         */
+        console.log(vm.localeInfo);
+        vm.weekSrartDay = vm.localeInfo._week.dow;
 
-        vm.earliestDateDefault = 'January 01, 1990';
-        vm.latestDateDefault = 'December 31, 2030';
-        vm.earliestDate = vm.earliestDate ? ( vm.earliestDate != '' ? vm.earliestDate : vm.earliestDateDefault ) : vm.earliestDateDefault;
-        vm.latestDate = vm.latestDate ? ( vm.latestDate != '' ? vm.latestDate : vm.latestDateDefault ) : vm.latestDateDefault;
-
+        /** @description Get earliest and latest date from scope */
+        vm.earliestDate = vm.earliestDate ? ( vm.earliestDate != '' ? vm.earliestDate : 'January 01, 1990' ) : 'January 01, 1990';
+        vm.latestDate = vm.latestDate ? ( vm.latestDate != '' ? vm.latestDate : 'December 31, 2030' ) : 'December 31, 2030';
         vm.earliest_date = moment(new Date(vm.earliestDate)).startOf('day');
         vm.latest_date = moment(new Date(vm.latestDate)).startOf('day');
 
         var date = moment(new Date());
+        vm.todayForFront = date.format('DD');
         vm.today = {
             date: date.startOf('day'),
             year: date.format('YYYY'),
             month: date.format('M')
         };
-        vm.todayForFront = vm.today.date.format('DD');
         vm.month = {
-            name: moment().format('MMMM'),
-            id: moment().format('M')
+            name: date.format('MMMM'),
+            id: date.format('M')
         };
-        vm.year = moment().year();
+        vm.year = date.year();
+
         vm.selectedDays = [];
         vm.startSelection = moment(vm.endSelection).subtract(6, 'day').startOf('day').toArray();
         vm.endSelection = moment(new Date()).startOf('day').toArray();
@@ -147,8 +138,8 @@
         /**
          * @description Checking from what day week start
          */
-        function getDaysNames(weekStart,localeDays) {
-            if (weekStart == 1) {
+        function getDaysNames(weekSrartDay, localeDays) {
+            if (weekSrartDay == 1) {
                 localeDays.push(localeDays.splice(0, 1)[0]);
             }
             return localeDays;
@@ -245,7 +236,7 @@
 
             //Before month
             var start = '';
-            if (vm.weekStart == 0) {
+            if (vm.weekSrartDay == 0) {
                 start = (Number(vm.startDay) ? (vm.startDay == 1 ? 8 : vm.startDay) : 7);
             } else {
                 start = (Number(vm.startDay) ? (vm.startDay == 1 ? 7 : vm.startDay - 1) : 6);
@@ -292,7 +283,7 @@
 
             //End Month
             var end = '';
-            if (vm.weekStart == 0) {
+            if (vm.weekSrartDay == 0) {
                 end = (Number(vm.endDay) ? (vm.endDay == 6 ? 7 : 6 - vm.endDay ) : 6);
             } else {
                 end = (Number(vm.endDay) ? (vm.endDay == 6 ? 1 : 7 - vm.endDay ) : 7);
@@ -357,7 +348,7 @@
             }
         }
 
-        vm.days = vm.getDaysNames(vm.weekStart, vm.localeInfo._weekdaysMin);
+        vm.days = vm.getDaysNames(vm.weekSrartDay, vm.localeInfo._weekdaysMin);
         vm.monthShow = new vm.calendarArray(vm.today.date);
     }
 
