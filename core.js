@@ -4,15 +4,15 @@
 (function () {
     'use strict';
 
-    angular.module('calendarApp', [])
+    angular.module('redDatepicker', [])
         .constant('moment', moment)
         .constant('_', window._)
-        .directive('calendar', calendar)
-        .service('dateOutput', dateOutput);
+        .directive('redDatepicker', redDatepicker)
+        .service('datepickerOutput', datepickerOutput);
     // .directive('clickOutsideCalendar', clickOutsideCalendar)
     // .directive('clickOutsideRange', clickOutsideRange);
 
-    function calendar() {
+    function redDatepicker() {
         return {
             restrict: 'E',
             templateUrl: 'datepicker.html',
@@ -28,14 +28,14 @@
                 /** Todo need to change list*/
                 listArray: '='
             },
-            controller: calendarController,
+            controller: datepickerController,
             controllerAs: 'calendar',
             bindToController: true
         };
     }
 
-    calendarController.$inject = ['dateOutput', '$scope'];
-    function calendarController(dateOutput, $scope) {
+    datepickerController.$inject = ['datepickerOutput', '$scope'];
+    function datepickerController(datepickerOutput, $scope) {
         var vm = this;
 
         /** @description Set locale from scope or by default */
@@ -81,7 +81,7 @@
         });
 
 
-        dateOutput.setData(vm.inputStart, vm.inputEnd);
+        datepickerOutput.setData(vm.inputStart, vm.inputEnd);
 
         if (vm.listShow) {
             vm.list = [
@@ -189,7 +189,7 @@
             }
             vm.inputStart = moment(vm.startSelection).format('L');
             vm.inputEnd = moment(vm.endSelection).format('L');
-            dateOutput.setData(vm.inputStart, vm.inputEnd);
+            datepickerOutput.setData(vm.inputStart, vm.inputEnd);
             vm.monthShow = new vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
         }
 
@@ -315,7 +315,7 @@
             vm.endSelection = moment(new Date(item.end));
             vm.inputStart = item.start;
             vm.inputEnd = item.end;
-            dateOutput.setData(vm.inputStart, vm.inputEnd);
+            datepickerOutput.setData(vm.inputStart, vm.inputEnd);
             vm.monthShow = new vm.calendarArray(vm.today.date);
         }
 
@@ -407,7 +407,7 @@
     // }
 
 
-    function dateOutput() {
+    function datepickerOutput() {
         var a = {};
         return {
             setData: function (start, end) {
