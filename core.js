@@ -4,13 +4,11 @@
 (function () {
     'use strict';
 
-    angular.module('redDatepicker', [])
+    angular.module('redDatepickerModule', [])
         .constant('moment', moment)
         .constant('_', window._)
         .directive('redDatepicker', redDatepicker)
         .service('datepickerOutput', datepickerOutput);
-    // .directive('clickOutsideCalendar', clickOutsideCalendar)
-    // .directive('clickOutsideRange', clickOutsideRange);
 
     function redDatepicker() {
         return {
@@ -24,9 +22,7 @@
                 /** @param {string} latestDate - Set Latest Date For Calendar.*/
                 latestDate: '@latestDate',
                 /** @param {boolean} listShow - show date range or not.*/
-                listShow: '=listShow',
-                /** Todo need to change list*/
-                listArray: '='
+                listShow: '=listShow'
             },
             controller: datepickerController,
             controllerAs: 'calendar',
@@ -42,8 +38,8 @@
         vm.locale = vm.locale ? (vm.locale != '' ? vm.locale : 'en') : 'en';
         moment.locale(vm.locale);
         vm.localeInfo = moment.localeData();
-        console.log(vm.localeInfo);
-        vm.weekSrartDay = vm.localeInfo._week.dow;
+        console.log(vm.localeInfo._longDateFormat.L);
+        vm.weekStartDay = vm.localeInfo._week.dow;
 
         /** @description Get earliest and latest date from scope */
         vm.earliestDate = vm.earliestDate ? ( vm.earliestDate != '' ? vm.earliestDate : 'January 01, 1990' ) : 'January 01, 1990';
@@ -65,8 +61,8 @@
         vm.year = date.year();
 
         vm.selectedDays = [];
+        vm.endSelection = date.startOf('day').toArray();
         vm.startSelection = moment(vm.endSelection).subtract(6, 'day').startOf('day').toArray();
-        vm.endSelection = moment(new Date()).startOf('day').toArray();
         vm.rangeShow = false;
         vm.calendarShow = false;
 
@@ -119,6 +115,8 @@
                     end: vm.latest_date.format('L')
                 }
             ];
+        } else {
+            vm.list = '';
         }
 
 
@@ -138,8 +136,8 @@
         /**
          * @description Checking from what day week start
          */
-        function getDaysNames(weekSrartDay, localeDays) {
-            if (weekSrartDay == 1) {
+        function getDaysNames(weekStartDay, localeDays) {
+            if (weekStartDay == 1) {
                 localeDays.push(localeDays.splice(0, 1)[0]);
             }
             return localeDays;
@@ -236,7 +234,7 @@
 
             //Before month
             var start = '';
-            if (vm.weekSrartDay == 0) {
+            if (vm.weekStartDay == 0) {
                 start = (Number(vm.startDay) ? (vm.startDay == 1 ? 8 : vm.startDay) : 7);
             } else {
                 start = (Number(vm.startDay) ? (vm.startDay == 1 ? 7 : vm.startDay - 1) : 6);
@@ -283,7 +281,7 @@
 
             //End Month
             var end = '';
-            if (vm.weekSrartDay == 0) {
+            if (vm.weekStartDay == 0) {
                 end = (Number(vm.endDay) ? (vm.endDay == 6 ? 7 : 6 - vm.endDay ) : 6);
             } else {
                 end = (Number(vm.endDay) ? (vm.endDay == 6 ? 1 : 7 - vm.endDay ) : 7);
@@ -330,6 +328,7 @@
         }
 
         function checkInputs(date) {
+            // console.log(date);
             var regexp = /([0-9]{2}\/[0-9]{2}\/[0-9]{4})|([0-9]{2}-[0-9]{2}-[0-9]{4})|([0-9]{2}.[0-9]{2}.[0-9]{4})|([0-9]{4}\/[0-9]{2}\/[0-9]{2})|([0-9]{4}-[0-9]{2}-[0-9]{2})|([0-9]{4}.[0-9]{2}.[0-9]{2})/g;
             if (date.match(regexp)) {
                 vm.validateDate(date);
@@ -337,74 +336,19 @@
                 console.log('wrong format');
             }
         }
-
         //TODO update checking  and validate data
         function validateDate(date) {
             var a = moment(new Date(date));
             if (a.isValid()) {
-                console.log('date is valid');
+                console.log(a + ' date is valid');
             } else {
-                console.log('date is invalid');
+                console.log(a + ' date is invalid');
             }
         }
 
-        vm.days = vm.getDaysNames(vm.weekSrartDay, vm.localeInfo._weekdaysMin);
+        vm.days = vm.getDaysNames(vm.weekStartDay, vm.localeInfo._weekdaysMin);
         vm.monthShow = new vm.calendarArray(vm.today.date);
     }
-
-    //TODO update this directives
-    // clickOutsideCalendar.$inject = ['$document'];
-    // function clickOutsideCalendar($document) {
-    //     return {
-    //         restrict: 'A',
-    //         link: clickFunction,
-    //         controller: calendarController,
-    //         scope: {
-    //             target: '='
-    //         }
-    //     };
-    //     function clickFunction(scope, el, attr, ctrl) {
-    //         el.bind('click', function (event) {
-    //             event.stopPropagation();
-    //         });
-    //         var calendar = document.getElementById('calendar-list-btn');
-    //         var calendarIcon = document.getElementById('calendar-list-icon');
-    //         $document.bind('click', function (e) {
-    //             if (e.target == calendar || e.target == calendarIcon) {
-    //                 e.stopPropagation();
-    //             } else {
-    //                 scope.target = false;
-    //             }
-    //             scope.$apply();
-    //         });
-    //     }
-    // }
-    //
-    // clickOutsideRange.$inject = ['$document'];
-    // function clickOutsideRange($document) {
-    //     return {
-    //         restrict: 'A',
-    //         link: clickFunction,
-    //         controller: calendarController,
-    //         scope: {
-    //             target: '='
-    //         }
-    //     };
-    //     function clickFunction(scope, el, attr, ctrl) {
-    //         el.bind('click', function (event) {
-    //             event.stopPropagation();
-    //         });
-    //         var range = document.getElementById('range-list-btn');
-    //         $document.bind('click', function (e) {
-    //             if (e.target == range) {
-    //                 e.stopPropagation();
-    //             } else {
-    //                 scope.target = false;
-    //             }
-    //             scope.$apply();
-    //         });
-    //     }
-    // }
 
 
     function datepickerOutput() {

@@ -1,6 +1,5 @@
 <div ng-class="{'calendar': calendar.listShow,
                 'calendar-with-out-range': !calendar.listShow}">
-    {{calendar.result}}
     <div class="calendar-manage">
         <div class="inputs">
             <div class="selection-start">
@@ -18,7 +17,7 @@
             <div ng-if="calendar.listShow" id="range-list-btn" ng-click="calendar.showPopup('rangeShow')"></div>
         </div>
     </div>
-    <div click-outside-calendar target="calendar.calendarShow" class="calendar-box calendar-box-show"
+    <div ng-mouseleave="calendar.calendarShow = false" target="calendar.calendarShow" class="calendar-box calendar-box-show"
          ng-show="calendar.calendarShow">
         <div class="switchers">
             <div class="month">
@@ -62,7 +61,7 @@
             </ul>
         </div>
     </div>
-    <div click-outside-range target="calendar.rangeShow" class="range-list range-list-show"
+    <div ng-mouseleave="calendar.rangeShow = false" target="calendar.rangeShow" class="range-list range-list-show"
          ng-show="calendar.rangeShow">
         <ul>
             <li ng-repeat="item in calendar.list" ng-click="calendar.listSelected(item)">
