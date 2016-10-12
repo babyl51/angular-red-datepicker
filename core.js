@@ -38,7 +38,6 @@
         vm.locale = vm.locale ? (vm.locale != '' ? vm.locale : 'en') : 'en';
         moment.locale(vm.locale);
         vm.localeInfo = moment.localeData();
-        console.log(vm.localeInfo._longDateFormat.L);
         vm.weekStartDay = vm.localeInfo._week.dow;
 
         /** @description Get earliest and latest date from scope */
@@ -246,9 +245,6 @@
                     current: month.isSame(vm.today.date),
                     date: month.toArray(),
                     fade: true,
-                    //TODO may need after locales change
-                    // nameOfDay: month.format('dd'),
-                    // idOfDay: month.format('d'),
                     active: false,
                     beforeMonth: true,
                     start: month.isSame(vm.startSelection),

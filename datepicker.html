@@ -1,16 +1,16 @@
-<div ng-class="{'calendar': calendar.listShow,
+<div class="calendar" ng-class="{'calendar-with-range': calendar.listShow,
                 'calendar-with-out-range': !calendar.listShow}">
-    <div class="calendar-manage">
-        <div class="inputs">
-            <div class="selection-start">
+    <div class="output">
+        <div class="output-inputs">
+            <div class="output-inputs-start">
                 <input id="date-start" type="text" placeholder="" ng-model="calendar.inputStart" maxlength="10">
             </div>
-            <div class="separator">&mdash;</div>
-            <div class="selection-end">
+            <div class="-output-inputs-separator">&mdash;</div>
+            <div class="output-inputs-end">
                 <input id="date-end" type="text" placeholder="" ng-model="calendar.inputEnd" maxlength="10">
             </div>
         </div>
-        <div class="calendar-btns">
+        <div class="output-btns">
             <div id="calendar-list-btn" ng-click="calendar.showPopup('calendarShow')">
                 <span id="calendar-list-icon">{{calendar.todayForFront}}</span>
             </div>
@@ -46,14 +46,14 @@
                 <li class="day"
                     ng-repeat="day in calendar.monthShow"
                     ng-class="{
-                            'fade': day.fade,
-                            'current': day.current,
-                            'cantUse': day.afterCurrent,
-                            'fadeNonClick': day.afterCurrentNextMonth,
-                            'active': day.active,
-                            'isBetween': day.isBetween,
-                            'start': day.start,
-                            'end': day.end
+                            'day__fade': day.fade,
+                            'day__current': day.current,
+                            'day__cantUse': day.afterCurrent,
+                            'day__fadeNonClick': day.afterCurrentNextMonth,
+                            'day__active': day.active,
+                            'day__isBetween': day.isBetween,
+                            'day__start': day.start,
+                            'day__end': day.end
                         }"
                     ng-click="calendar.getDay(day)">
                     {{day.str}}

@@ -2,15 +2,13 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
-.calendar, .calendar-with-out-range {
-  position: relative;
-
-  .calendar-manage {
+.calendar {
+  .output {
     max-width: 315px;
     border: 1px solid #cccccc;
     border-radius: 3px;
     height: 32px;
-    .inputs {
+    &-inputs {
       display: inline-block;
       overflow: hidden;
       height: 32px;
@@ -28,23 +26,21 @@ body {
           font-size: 16px;
         }
       }
-      .selection-start,
-      .selection-end {
+      &-selection-start,
+      &-selection-end {
         padding: 0 2px;
         display: inline-block;
       }
-      .separator {
+      &-separator {
         padding: 3px 2px;
         display: inline-block;
       }
-
     }
-    .calendar-btns {
+    &-btns {
       display: inline-block;
       overflow: hidden;
       float: right;
       margin: 0 10px 0 0;
-
       #calendar-list-btn {
         float: left;
         width: 32px;
@@ -71,11 +67,10 @@ body {
         margin: 3px 0 0 5px;
       }
     }
+    &:hover {
+      border: 1px solid #009f8a
+    }
   }
-  .calendar-manage:hover {
-    border: 1px solid #009f8a
-  }
-
   .range-list {
     display: none;
     padding: 5px;
@@ -101,21 +96,21 @@ body {
           font-size: 12px;
           color: #969696;
         }
-      }
-      li:last-child {
-        border-bottom: none;
-      }
-      li:hover {
-        background: #EBF1F4;
+        &:last-child {
+          border-bottom: none;
+        }
+        &:hover {
+          background: #EBF1F4;
+        }
       }
     }
-  }
-  .range-list-show {
-    display: block;
-    position: absolute;
-    margin: 5px 0 0 0;
-    right: 0;
-    left: 0;
+    &-show {
+      display: block;
+      position: absolute;
+      margin: 5px 0 0 0;
+      right: 0;
+      left: 0;
+    }
   }
   .calendar-box {
     display: none;
@@ -158,23 +153,20 @@ body {
         cursor: pointer;
         width: 16px;
         height: 16px;
-      }
-      .right {
         position: absolute;
         top: 3px;
-        right: 2px;
-        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABAElEQVRoQ+3Zyw3CQAwE0EkHdAIlQAd0SglQAnRCCWilcMzFO58ocu5r5c3ksJEXHORZDuJAQ/bWZDfSjYgS6E9rI9g7gBeAryj4zbHMRgbiAeAN4ObGMCGntY1zAsOEjNpjGDYkhlFAIhgVxI5RQqwYNcSGcUAsGBdEjnFCpBg3RIZJQCSYFISOSUKomDSEhtkL5AngAuAD4Fr5l0lDxrV/GjFqTUJoiCSEikhB6IgERIJwQ2QIJ0SKcEHkCAfEglBDbAglxIpQQewIBSSCYENiCDbkv1YoX8Vndirs2+8hFj0zgU6fZTcy/ULVAQ2pJqc6142okq3O7UaqyanO/QBuz2Qzqh3/7wAAAABJRU5ErkJggg==);
-        background-size: cover;
-      }
-      .left {
-        position: absolute;
-        top: 3px;
-        left: 2px;
-        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABCklEQVRoQ+3Z0Q0CMQwDUN8GbAIjwEQwAkwGI8AmjIAqAUJ8nmMnd0r/W+nZ/UjVCStZ00ocaEi1JruRbkSUQF8tMtgNgCOAC3nOd3tGIwNxBbB7Q84RGDfkF/EAsAfwXBpEhhhBuBqRIlwQOcIBsSDUEBtCCbEiVBA7QgFJQURD0hCRkFREFCQdEQEpgWAhZRAMpBSChdwAbAHcARyixvG5Iz0z/Y5WymAYyAivDIaFlMFEQEpgoiDpmEhIKiYakoZRQFIwKogdo4RYMWqIDeOAWDAuiBzjhEgxbsg/ZvyPLPJb4fPcGFPzKQrBPKzmvn9k+zKulgTTEEmsxKHdCBGeZGs3IomVOPQFv4RgM1vSu+kAAAAASUVORK5CYII=);
-        background-size: cover;
+        &.right {
+          right: 2px;
+          background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABAElEQVRoQ+3Zyw3CQAwE0EkHdAIlQAd0SglQAnRCCWilcMzFO58ocu5r5c3ksJEXHORZDuJAQ/bWZDfSjYgS6E9rI9g7gBeAryj4zbHMRgbiAeAN4ObGMCGntY1zAsOEjNpjGDYkhlFAIhgVxI5RQqwYNcSGcUAsGBdEjnFCpBg3RIZJQCSYFISOSUKomDSEhtkL5AngAuAD4Fr5l0lDxrV/GjFqTUJoiCSEikhB6IgERIJwQ2QIJ0SKcEHkCAfEglBDbAglxIpQQewIBSSCYENiCDbkv1YoX8Vndirs2+8hFj0zgU6fZTcy/ULVAQ2pJqc6142okq3O7UaqyanO/QBuz2Qzqh3/7wAAAABJRU5ErkJggg==);
+          background-size: cover;
+        }
+        &.left {
+          left: 2px;
+          background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABCklEQVRoQ+3Z0Q0CMQwDUN8GbAIjwEQwAkwGI8AmjIAqAUJ8nmMnd0r/W+nZ/UjVCStZ00ocaEi1JruRbkSUQF8tMtgNgCOAC3nOd3tGIwNxBbB7Q84RGDfkF/EAsAfwXBpEhhhBuBqRIlwQOcIBsSDUEBtCCbEiVBA7QgFJQURD0hCRkFREFCQdEQEpgWAhZRAMpBSChdwAbAHcARyixvG5Iz0z/Y5WymAYyAivDIaFlMFEQEpgoiDpmEhIKiYakoZRQFIwKogdo4RYMWqIDeOAWDAuiBzjhEgxbsg/ZvyPLPJb4fPcGFPzKQrBPKzmvn9k+zKulgTTEEmsxKHdCBGeZGs3IomVOPQFv4RgM1vSu+kAAAAASUVORK5CYII=);
+          background-size: cover;
+        }
       }
     }
-
     .calendar-container {
       .days-name {
         list-style: none;
@@ -184,7 +176,7 @@ body {
         border-bottom: 1px solid #cccccc;
         border-top: 1px solid #cccccc;
         li {
-          float: left;
+          // float: left;
           display: inline-block;
           cursor: pointer;
           width: 27px;
@@ -197,87 +189,85 @@ body {
         padding: 0;
         margin: 0;
         list-style: none;
-
-        li {
+        .day {
           float: left;
-          display: inline-block;
+          // display: inline-block;
           cursor: pointer;
           width: 27px;
           text-align: center;
           padding: 2px;
+          &:hover:not(.fadeNonClick):not(.cantUse) {
+            background-color: #EBF1F4;
+          }
+          &__current {
+            color: #2693D5 !important;
+            background-color: rgba(38, 147, 213, .2) !important;
+          }
+          &__cantUse {
+            cursor: default;
+            color: rgba(195, 202, 205, .7)
+          }
+          &__fade {
+            cursor: pointer;
+            color: rgba(195, 202, 205, .7)
+          }
+          &__fadeNonClick {
+            cursor: default;
+            color: rgba(195, 202, 205, .7)
+          }
+          &__active {
+            background-color: #EBF1F4;
+          }
+          &__isBetween {
+            background-color: #EBF1F4;
+          }
+          &__start {
+            background-color: #EBF1F4;
+            position: relative;
+            &:before {
+              content: "";
+              position: absolute;
+              z-index: 1;
+              width: 1px;
+              height: 100%;
+              background: #2693D5;
+              left: 0;
+              top: 0;
+            }
+          }
+          &__end {
+            background-color: #EBF1F4;
+            position: relative;
+            &:after {
+              content: "";
+              position: absolute;
+              z-index: 1;
+              width: 1px;
+              height: 100%;
+              background: #2693D5;
+              right: 0;
+              top: 0;
+            }
+          }
         }
-        li:hover:not(.fadeNonClick):not(.cantUse) {
-          background-color: #EBF1F4;
-        }
-        .current {
-          color: #2693D5 !important;
-          background-color: rgba(38, 147, 213, .2) !important;
-        }
-        .cantUse {
-          cursor: default;
-          color: rgba(195, 202, 205, .7)
-        }
-        .fade {
-          cursor: pointer;
-          color: rgba(195, 202, 205, .7)
-        }
-        .fadeNonClick {
-          cursor: default;
-          color: rgba(195, 202, 205, .7)
-        }
-        .active {
-          background-color: #EBF1F4;
-        }
-        .isBetween {
-          background-color: #EBF1F4;
-        }
-        .start {
-          background-color: #EBF1F4;
-          position: relative;
-        }
-        .start:before {
-          content: "";
-          position: absolute;
-          z-index: 1;
-          width: 1px;
-          height: 100%;
-          background: #2693D5;
-          left: 0;
-          top: 0;
-        }
-        .end {
-          background-color: #EBF1F4;
-          position: relative;
-        }
-        .end:after {
-          content: "";
-          position: absolute;
-          z-index: 1;
-          width: 1px;
-          height: 100%;
-          background: #2693D5;
-          right: 0;
-          top: 0;
-        }
-
       }
     }
+    &-show {
+      display: block;
+      position: absolute;
+      right: 0;
+      left: 0;
+      margin: 5px auto;
+    }
   }
-
-  .calendar-box-show {
-    display: block;
-    position: absolute;
-    right: 0;
-    left: 0;
-    margin: 5px auto;
+  &-with-range,
+  &-with-out-range {
+    position: relative;
   }
-
-}
-
-.calendar {
-  max-width: 285px;
-}
-
-.calendar-with-out-range {
-  max-width: 255px;
+  &-with-range {
+    max-width: 285px;
+  }
+  &-with-out-range {
+    max-width: 255px;
+  }
 }
