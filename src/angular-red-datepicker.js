@@ -30,19 +30,18 @@
         };
     }
 
-    datepickerController.$inject = ['datepickerOutput', '$scope'];
-    function datepickerController(datepickerOutput, $scope) {
+    datepickerController.$inject = ['datepickerOutput', '$scope', 'moment', '_'];
+    function datepickerController(datepickerOutput, $scope, moment, _) {
         var vm = this;
-
         /** @description Set locale from scope or by default */
-        vm.locale = vm.locale ? (vm.locale != '' ? vm.locale : 'en') : 'en';
+        vm.locale = vm.locale ? (vm.locale !== '' ? vm.locale : 'en') : 'en';
         moment.locale(vm.locale);
         vm.localeInfo = moment.localeData();
         vm.weekStartDay = vm.localeInfo._week.dow;
 
         /** @description Get earliest and latest date from scope */
-        vm.earliestDate = vm.earliestDate ? ( vm.earliestDate != '' ? vm.earliestDate : 'January 01, 1990' ) : 'January 01, 1990';
-        vm.latestDate = vm.latestDate ? ( vm.latestDate != '' ? vm.latestDate : 'December 31, 2030' ) : 'December 31, 2030';
+        vm.earliestDate = vm.earliestDate ? ( vm.earliestDate !== '' ? vm.earliestDate : 'January 01, 1990' ) : 'January 01, 1990';
+        vm.latestDate = vm.latestDate ? ( vm.latestDate !== '' ? vm.latestDate : 'December 31, 2030' ) : 'December 31, 2030';
         vm.earliest_date = moment(new Date(vm.earliestDate)).startOf('day');
         vm.latest_date = moment(new Date(vm.latestDate)).startOf('day');
 
@@ -332,6 +331,7 @@
                 console.log('wrong format');
             }
         }
+
         //TODO update checking  and validate data
         function validateDate(date) {
             var a = moment(new Date(date));
