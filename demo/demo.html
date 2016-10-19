@@ -10,20 +10,29 @@
 
     <!--inject:css-->
     <link rel="stylesheet" href="/dist/angular-red-datepicker.css">
+    <link rel="stylesheet" href="/dist/angular-red-datepicker.min.css">
     <!--endinject-->
+
+    <style>
+        .row{
+            margin: 25px 0;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
     <h1 class="text-muted">Demo</h1>
 
     <div class="usage row">
-        <h4>Simple usage</h4>
-        <p>This is a simple usage of the directive</p>
-        <pre>&lt;the-directive&gt;&lt;/the-directive&gt;</pre>
-        <h4>Results</h4>
         <red-datepicker></red-datepicker>
+    </div>
 
-        123123
+    <div class="usage row">
+        <red-datepicker locale="ru" list-show="true"></red-datepicker>
+    </div>
+
+    <div class="usage row">
+        <red-datepicker locale="en" list-show="true"></red-datepicker>
     </div>
 </div>
 
@@ -31,12 +40,14 @@
 
 <!--bower:js-->
 <script src="../bower_components/angular/angular.js"></script>
-<script src="../bower_components/moment/moment.js"></script>
+<script src="../bower_components/moment/min/moment-with-locales.min.js"></script>
 <script src="../bower_components/lodash/lodash.js"></script>
 <!--endbower-->
 
 <!--inject:js-->
 <script src="/demo/demo.js"></script>
+<script src="/dist/angular-red-datepicker.js"></script>
+<script src="/dist/angular-red-datepicker.min.js"></script>
 <!--endinject-->
 
 

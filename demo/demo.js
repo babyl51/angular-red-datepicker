@@ -3,7 +3,7 @@
 
     angular
         .module('demo', [
-            'angular-red-datpicker'
+            'redDatepickerModule'
         ]);
 
 })();

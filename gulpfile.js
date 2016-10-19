@@ -47,11 +47,24 @@ gulp.task('watch', function () {
     gulp.watch(['./src/**/*.js', './demo/**/*.js', './**/*.html'], ['scripts']);
 });
 
-gulp.task('clean', function (cb) {
-    del(['dist/**/*'], cb);
+// gulp.task('clean', function (cb) {
+//     del(['dist/**/*'], cb);
+// });
+
+gulp.task('styles', function () {
+    return gulp.src('src/angular-red-datepicker.less')
+        .pipe(less())
+        .pipe(header(config.banner, {
+            timestamp: (new Date()).toISOString(), pkg: config.pkg
+        }))
+        .pipe(gulp.dest('dist'))
+        .pipe(minifyCSS())
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest('dist'))
+        .pipe(connect.reload());
 });
 
-gulp.task('scripts', ['clean'], function () {
+gulp.task('scripts', ['styles'], function () {
 
     function buildTemplates() {
         return gulp.src('src/**/*.html')
@@ -60,7 +73,7 @@ gulp.task('scripts', ['clean'], function () {
                 spare: true,
                 quotes: true
             }))
-            .pipe(templateCache({module: 'angularRedDatepicker'}));
+            .pipe(templateCache({module: 'redDatepickerModule'}));
     }
 
     function buildDistJS() {
@@ -72,17 +85,6 @@ gulp.task('scripts', ['clean'], function () {
             .pipe(jshint.reporter('jshint-stylish'))
             .pipe(jshint.reporter('fail'));
     }
-
-    gulp.src('src/angular-red-datepicker.less')
-        .pipe(less())
-        .pipe(header(config.banner, {
-            timestamp: (new Date()).toISOString(), pkg: config.pkg
-        }))
-        .pipe(gulp.dest('dist'))
-        .pipe(minifyCSS())
-        .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest('dist'))
-        .pipe(connect.reload());
 
     es.merge(buildDistJS(), buildTemplates())
         .pipe(plumber({
@@ -138,8 +140,8 @@ gulp.task('wiredep', function () {
 gulp.task('inject', ['wiredep'], function () {
     return gulp
         .src(config.index)
-        .pipe(inject(gulp.src(config.jsInject, {read: false})))
-        .pipe(inject(gulp.src(config.cssInject, {read: false})))
+        .pipe(inject(gulp.src(config.jsInject, {read: false}, {relative: true})))
+        .pipe(inject(gulp.src(config.cssInject, {read: false}, {relative: true})))
         .pipe(gulp.dest(config.final));
 });
 
@@ -162,12 +164,12 @@ var config = {
     final: './demo/',
 
     jsInject: [
-        './dist/*.js',
-        './demo/*.js'
+        './demo/*.js',
+        './dist/*.js'
     ],
     cssInject: [
-        './dist/*.css',
-        './demo/*.css'
+        './demo/*.css',
+        './dist/*.css'
     ],
     getWiredepDefaultOptions: function () {
         var options = {

@@ -2,7 +2,7 @@
  * angular-red-datepicker
  * https://github.com/johnnyswan/angular-red-datepicker
  * Red Swan
- * Version: 0.0.1 - 2016-10-19T07:47:19.715Z
+ * Version: 0.0.1 - 2016-10-19T19:19:15.819Z
  * License: MIT
  */
 
@@ -61,7 +61,7 @@ body {
 }
 .calendar .output-btns #calendar-list-btn span {
   font-size: 14px;
-  margin: 8px 0 0 0;
+  margin: 11px 2px 0 0;
   display: block;
   color: #009f8a;
 }
@@ -81,6 +81,7 @@ body {
 .calendar .range-list {
   display: none;
   padding: 5px;
+  background: #fff;
 }
 .calendar .range-list ul {
   margin: 0;
@@ -118,6 +119,7 @@ body {
   margin: 5px 0 0 0;
   right: 0;
   left: 0;
+  z-index: 100;
 }
 .calendar .calendar-box {
   display: none;
@@ -126,6 +128,7 @@ body {
   padding: 0;
   margin: 0;
   overflow: hidden;
+  background: #fff;
   box-shadow: 0 0 5px #C3CACD;
   -moz-border-radius-bottomleft: 3px;
   -moz-border-radius-bottomright: 3px;
@@ -262,6 +265,7 @@ body {
   right: 0;
   left: 0;
   margin: 5px auto;
+  z-index: 100;
 }
 .calendar-with-range,
 .calendar-with-out-range {

@@ -1,13 +1,12 @@
 {
-
-  "name": "angular red-datepicker",
+  "name": "angular-red-datepicker",
   "homepage": "https://github.com/johnnyswan/angular-red-datepicker",
   "version": "0.0.1",
   "authors": [
     "redswan <gagarinred@mail.com>"
   ],
   "description": "Date picker for filters by date range",
-  "main": "dist/angular-red-datepicker.min.js, dist/angular-red-datepicker.min.css",
+  "main": "dist/angular-red-datepicker.js, dist/angular-red-datepicker.css",
   "keywords": [
     "angular",
     "datepicker",
@@ -30,7 +29,9 @@
     "moment": "^2.14.1",
     "lodash": "^4.14.1"
   },
-  "devDependencies": {
-
+  "overrides": {
+    "moment": {
+      "main": "min/moment-with-locales.min.js"
+    }
   }
 }

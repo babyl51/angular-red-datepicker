@@ -13,7 +13,7 @@
     function redDatepicker() {
         return {
             restrict: 'E',
-            templateUrl: 'datepicker.html',
+            templateUrl: 'angular-red-datepicker.html',
             scope: {
                 /** @param {string} locale - Set locale from directive attr.*/
                 locale: '@locale',
@@ -22,7 +22,10 @@
                 /** @param {string} latestDate - Set Latest Date For Calendar.*/
                 latestDate: '@latestDate',
                 /** @param {boolean} listShow - show date range or not.*/
-                listShow: '=listShow'
+                listShow: '=listShow',
+                //TODO
+                /** @param {boolean} single - can choose only one day.*/
+                single: '=single'
             },
             controller: datepickerController,
             controllerAs: 'calendar',
@@ -34,10 +37,12 @@
     function datepickerController(datepickerOutput, $scope, moment, _) {
         var vm = this;
         /** @description Set locale from scope or by default */
-        vm.locale = vm.locale ? (vm.locale !== '' ? vm.locale : 'en') : 'en';
+        vm.locale = vm.locale ? (vm.locale != '' ? vm.locale : 'en') : 'en';
         moment.locale(vm.locale);
         vm.localeInfo = moment.localeData();
         vm.weekStartDay = vm.localeInfo._week.dow;
+
+
 
         /** @description Get earliest and latest date from scope */
         vm.earliestDate = vm.earliestDate ? ( vm.earliestDate !== '' ? vm.earliestDate : 'January 01, 1990' ) : 'January 01, 1990';
