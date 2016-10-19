@@ -2,7 +2,7 @@
  * angular-red-datepicker
  * https://github.com/johnnyswan/angular-red-datepicker
  * Red Swan
- * Version: 0.0.1 - 2016-10-19T19:19:15.819Z
+ * Version: 0.0.1 - 2016-10-19T19:45:35.290Z
  * License: MIT
  */
 
@@ -228,14 +228,14 @@ body {
 .calendar .calendar-box .calendar-container .calendar-body .day__active {
   background-color: #EBF1F4;
 }
-.calendar .calendar-box .calendar-container .calendar-body .day__isBetween {
-  background-color: #EBF1F4;
-}
-.calendar .calendar-box .calendar-container .calendar-body .day__start {
+.calendar .calendar-box .calendar-container .calendar-body .day__selected {
   background-color: #EBF1F4;
   position: relative;
 }
-.calendar .calendar-box .calendar-container .calendar-body .day__start:before {
+.calendar .calendar-box .calendar-container .calendar-body > .day__selected:first-child {
+  background: red;
+}
+.calendar .calendar-box .calendar-container .calendar-body > .day__selected:first-child:before {
   content: "";
   position: absolute;
   z-index: 1;
@@ -245,11 +245,10 @@ body {
   left: 0;
   top: 0;
 }
-.calendar .calendar-box .calendar-container .calendar-body .day__end {
-  background-color: #EBF1F4;
-  position: relative;
+.calendar .calendar-box .calendar-container .calendar-body > .day__selected:last-child {
+  background: red;
 }
-.calendar .calendar-box .calendar-container .calendar-body .day__end:after {
+.calendar .calendar-box .calendar-container .calendar-body > .day__selected:last-child:after {
   content: "";
   position: absolute;
   z-index: 1;

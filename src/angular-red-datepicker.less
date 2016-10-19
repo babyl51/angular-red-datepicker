@@ -221,12 +221,14 @@ body {
           &__active {
             background-color: #EBF1F4;
           }
-          &__isBetween {
-            background-color: #EBF1F4;
-          }
-          &__start {
+          &__selected {
             background-color: #EBF1F4;
             position: relative;
+          }
+        }
+        & > .day__selected {
+          &:first-child {
+            background: red;
             &:before {
               content: "";
               position: absolute;
@@ -238,9 +240,8 @@ body {
               top: 0;
             }
           }
-          &__end {
-            background-color: #EBF1F4;
-            position: relative;
+          &:last-child {
+            background: red;
             &:after {
               content: "";
               position: absolute;

@@ -51,9 +51,7 @@
                             'day__cantUse': day.afterCurrent,
                             'day__fadeNonClick': day.afterCurrentNextMonth,
                             'day__active': day.active,
-                            'day__isBetween': day.isBetween,
-                            'day__start': day.start,
-                            'day__end': day.end
+                            'day__selected': day.selected,
                         }"
                     ng-click="calendar.getDay(day)">
                     {{day.str}}
