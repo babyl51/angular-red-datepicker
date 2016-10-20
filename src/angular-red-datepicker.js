@@ -251,8 +251,6 @@
                     fade: true,
                     active: false,
                     beforeMonth: true,
-                    // start: month.isSame(vm.startSelection),
-                    // end: month.isSame(vm.endSelection),
                     selected: month.isBetween(vm.startSelection, vm.endSelection, null, '[]')
                 };
                 vm.beforeMonthShow.push(a);
@@ -269,8 +267,6 @@
                     fade: false,
                     afterCurrent: month.isAfter(vm.today.date),
                     active: false,
-                    // start: month.isSame(vm.startSelection),
-                    // end: month.isSame(vm.endSelection),
                     selected: month.isBetween(vm.startSelection, vm.endSelection, null, '[]')
                 };
                 vm.currentMonthShow.push(a);
@@ -296,8 +292,6 @@
                     afterCurrentNextMonth: month.isAfter(vm.today.date),
                     active: false,
                     nextMonth: true,
-                    // start: month.isSame(vm.startSelection),
-                    // end: month.isSame(vm.endSelection),
                     selected: month.isBetween(vm.startSelection, vm.endSelection, null, '[]')
                 };
                 vm.nextMonthShow.push(a);

@@ -2,7 +2,7 @@
  * angular-red-datepicker
  * https://github.com/johnnyswan/angular-red-datepicker
  * Red Swan
- * Version: 0.0.1 - 2016-10-19T19:33:35.476Z
+ * Version: 0.0.1 - 2016-10-20T19:06:55.038Z
  * License: MIT
  */
 
@@ -260,8 +260,6 @@
                     fade: true,
                     active: false,
                     beforeMonth: true,
-                    // start: month.isSame(vm.startSelection),
-                    // end: month.isSame(vm.endSelection),
                     selected: month.isBetween(vm.startSelection, vm.endSelection, null, '[]')
                 };
                 vm.beforeMonthShow.push(a);
@@ -278,8 +276,6 @@
                     fade: false,
                     afterCurrent: month.isAfter(vm.today.date),
                     active: false,
-                    // start: month.isSame(vm.startSelection),
-                    // end: month.isSame(vm.endSelection),
                     selected: month.isBetween(vm.startSelection, vm.endSelection, null, '[]')
                 };
                 vm.currentMonthShow.push(a);
@@ -305,8 +301,6 @@
                     afterCurrentNextMonth: month.isAfter(vm.today.date),
                     active: false,
                     nextMonth: true,
-                    // start: month.isSame(vm.startSelection),
-                    // end: month.isSame(vm.endSelection),
                     selected: month.isBetween(vm.startSelection, vm.endSelection, null, '[]')
                 };
                 vm.nextMonthShow.push(a);
