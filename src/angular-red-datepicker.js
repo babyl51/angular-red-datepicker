@@ -36,13 +36,15 @@
     datepickerController.$inject = ['datepickerOutput', '$scope', 'moment', '_'];
     function datepickerController(datepickerOutput, $scope, moment, _) {
         var vm = this;
+        /** @description Variables show/hide elements*/
+        vm.rangeShow = false;
+        vm.calendarShow = false;
+
         /** @description Set locale from scope or by default */
         vm.locale = vm.locale ? (vm.locale != '' ? vm.locale : 'en') : 'en';
         moment.locale(vm.locale);
         vm.localeInfo = moment.localeData();
         vm.weekStartDay = vm.localeInfo._week.dow;
-
-
 
         /** @description Get earliest and latest date from scope */
         vm.earliestDate = vm.earliestDate ? ( vm.earliestDate !== '' ? vm.earliestDate : 'January 01, 1990' ) : 'January 01, 1990';
@@ -50,6 +52,7 @@
         vm.earliest_date = moment(new Date(vm.earliestDate)).startOf('day');
         vm.latest_date = moment(new Date(vm.latestDate)).startOf('day');
 
+        /** @description Date variables*/
         var date = moment(new Date());
         vm.todayForFront = date.format('DD');
         vm.today = {
@@ -63,12 +66,14 @@
         };
         vm.year = date.year();
 
+
+        /** @description Variables for showing selected days*/
         vm.selectedDays = [];
         vm.endSelection = date.startOf('day').toArray();
         vm.startSelection = moment(vm.endSelection).subtract(6, 'day').startOf('day').toArray();
-        vm.rangeShow = false;
-        vm.calendarShow = false;
 
+        //TODO
+        /** @description Variables for input date*/
         vm.inputStart = moment(vm.startSelection).format('L');
         vm.inputEnd = moment(vm.endSelection).format('L');
 
@@ -80,7 +85,7 @@
         });
 
 
-        datepickerOutput.setData(vm.inputStart, vm.inputEnd);
+        datepickerOutput.setData({start: vm.inputStart, end: vm.inputEnd});
 
         if (vm.listShow) {
             vm.list = [
@@ -190,7 +195,7 @@
             }
             vm.inputStart = moment(vm.startSelection).format('L');
             vm.inputEnd = moment(vm.endSelection).format('L');
-            datepickerOutput.setData(vm.inputStart, vm.inputEnd);
+            datepickerOutput.setData({start: vm.inputStart, end: vm.inputEnd});
             vm.monthShow = new vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
         }
 
@@ -307,7 +312,7 @@
             vm.endSelection = moment(new Date(item.end));
             vm.inputStart = item.start;
             vm.inputEnd = item.end;
-            datepickerOutput.setData(vm.inputStart, vm.inputEnd);
+            datepickerOutput.setData({start: vm.inputStart, end: vm.inputEnd});
             vm.monthShow = new vm.calendarArray(vm.today.date);
         }
 
@@ -347,19 +352,21 @@
 
 
     function datepickerOutput() {
-        var a = {};
+        var a;
         return {
-            setData: function (start, end) {
-                a = {
-                    start: start,
-                    end: end
-                };
-                return a;
-            },
-            getData: function () {
-                return a;
-            }
+            setData: setData,
+            getData: getData
         };
+
+        function setData(obj) {
+            return a = obj;
+        }
+
+        function getData() {
+            return a;
+        }
+
+
     }
 
 })();
