@@ -77,12 +77,12 @@
         vm.inputStart = moment(vm.startSelection).format('L');
         vm.inputEnd = moment(vm.endSelection).format('L');
 
-        $scope.$watch('calendar.inputStart', function (current, original) {
-            vm.checkInputs(current);
-        });
-        $scope.$watch('calendar.inputEnd', function (current, original) {
-            vm.checkInputs(current);
-        });
+        // $scope.$watch('calendar.inputStart', function (current, original) {
+        //     vm.checkInputs(current);
+        // });
+        // $scope.$watch('calendar.inputEnd', function (current, original) {
+        //     vm.checkInputs(current);
+        // });
 
 
         datepickerOutput.setData({start: vm.inputStart, end: vm.inputEnd});
@@ -326,25 +326,25 @@
             }
         }
 
-        function checkInputs(date) {
-            // console.log(date);
-            var regexp = /([0-9]{2}\/[0-9]{2}\/[0-9]{4})|([0-9]{2}-[0-9]{2}-[0-9]{4})|([0-9]{2}.[0-9]{2}.[0-9]{4})|([0-9]{4}\/[0-9]{2}\/[0-9]{2})|([0-9]{4}-[0-9]{2}-[0-9]{2})|([0-9]{4}.[0-9]{2}.[0-9]{2})/g;
-            if (date.match(regexp)) {
-                vm.validateDate(date);
-            } else if (date.length == 10) {
-                console.log('wrong format');
-            }
-        }
+        // function checkInputs(date) {
+        //     // console.log(date);
+        //     var regexp = /([0-9]{2}\/[0-9]{2}\/[0-9]{4})|([0-9]{2}-[0-9]{2}-[0-9]{4})|([0-9]{2}.[0-9]{2}.[0-9]{4})|([0-9]{4}\/[0-9]{2}\/[0-9]{2})|([0-9]{4}-[0-9]{2}-[0-9]{2})|([0-9]{4}.[0-9]{2}.[0-9]{2})/g;
+        //     if (date.match(regexp)) {
+        //         vm.validateDate(date);
+        //     } else if (date.length == 10) {
+        //         console.log('wrong format');
+        //     }
+        // }
 
-        //TODO update checking  and validate data
-        function validateDate(date) {
-            var a = moment(new Date(date));
-            if (a.isValid()) {
-                console.log(a + ' date is valid');
-            } else {
-                console.log(a + ' date is invalid');
-            }
-        }
+        // //TODO update checking  and validate data
+        // function validateDate(date) {
+        //     var a = moment(new Date(date));
+        //     if (a.isValid()) {
+        //         console.log(a + ' date is valid');
+        //     } else {
+        //         console.log(a + ' date is invalid');
+        //     }
+        // }
 
         vm.days = vm.getDaysNames(vm.weekStartDay, vm.localeInfo._weekdaysMin);
         vm.monthShow = new vm.calendarArray(vm.today.date);
@@ -365,8 +365,6 @@
         function getData() {
             return a;
         }
-
-
     }
 
 })();
