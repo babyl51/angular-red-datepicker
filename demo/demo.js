@@ -14,11 +14,7 @@
     function DemoCtrl(datepickerOutput) {
         var vm = this;
 
-        vm.getDate = getDate;
-
-        function getDate() {
-            vm.output = datepickerOutput.getData();
-        }
+        vm.dateRange = {};
     }
 
 })();

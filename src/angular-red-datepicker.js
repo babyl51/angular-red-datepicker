@@ -7,8 +7,7 @@
     angular.module('redDatepickerModule', [])
         .constant('moment', moment)
         .constant('_', window._)
-        .directive('redDatepicker', redDatepicker)
-        .service('datepickerOutput', datepickerOutput);
+        .directive('redDatepicker', redDatepicker);
 
     function redDatepicker() {
         return {
@@ -22,10 +21,9 @@
                 /** @param {string} latestDate - Set Latest Date For Calendar.*/
                 latestDate: '@latestDate',
                 /** @param {boolean} listShow - show date range or not.*/
-                listShow: '=listShow',
-                //TODO
-                /** @param {boolean} single - can choose only one day.*/
-                single: '=single'
+                listShow: '@listShow',
+                /** @param {oject} output - show date range or not.*/
+                output: '=output'
             },
             controller: datepickerController,
             controllerAs: 'calendar',
@@ -84,8 +82,7 @@
         //     vm.checkInputs(current);
         // });
 
-
-        datepickerOutput.setData({start: vm.inputStart, end: vm.inputEnd});
+        vm.output = {start: vm.inputStart, end: vm.inputEnd};
 
         if (vm.listShow) {
             vm.list = [
@@ -137,8 +134,8 @@
         vm.listSelected = listSelected;
         vm.showPopup = showPopup;
         vm.getDaysNames = getDaysNames;
-        vm.checkInputs = checkInputs;
-        vm.validateDate = validateDate;
+        // vm.checkInputs = checkInputs;
+        // vm.validateDate = validateDate;
 
 
         /**
@@ -195,7 +192,7 @@
             }
             vm.inputStart = moment(vm.startSelection).format('L');
             vm.inputEnd = moment(vm.endSelection).format('L');
-            datepickerOutput.setData({start: vm.inputStart, end: vm.inputEnd});
+            vm.output = {start: vm.inputStart, end: vm.inputEnd};
             vm.monthShow = new vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
         }
 
@@ -312,7 +309,7 @@
             vm.endSelection = moment(new Date(item.end));
             vm.inputStart = item.start;
             vm.inputEnd = item.end;
-            datepickerOutput.setData({start: vm.inputStart, end: vm.inputEnd});
+            vm.output = {start: vm.inputStart, end: vm.inputEnd};
             vm.monthShow = new vm.calendarArray(vm.today.date);
         }
 
@@ -348,23 +345,6 @@
 
         vm.days = vm.getDaysNames(vm.weekStartDay, vm.localeInfo._weekdaysMin);
         vm.monthShow = new vm.calendarArray(vm.today.date);
-    }
-
-
-    function datepickerOutput() {
-        var a;
-        return {
-            setData: setData,
-            getData: getData
-        };
-
-        function setData(obj) {
-            return a = obj;
-        }
-
-        function getData() {
-            return a;
-        }
     }
 
 })();
