@@ -31,8 +31,8 @@
         };
     }
 
-    datepickerController.$inject = ['datepickerOutput', '$scope', 'moment', '_'];
-    function datepickerController(datepickerOutput, $scope, moment, _) {
+    datepickerController.$inject = ['$scope', 'moment', '_'];
+    function datepickerController($scope, moment, _) {
         var vm = this;
         /** @description Variables show/hide elements*/
         vm.rangeShow = false;
@@ -301,7 +301,6 @@
             });
 
             return vm.beforeMonthShow.concat(vm.currentMonthShow, vm.nextMonthShow);
-
         }
 
         function listSelected(item) {

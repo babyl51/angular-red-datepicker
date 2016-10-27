@@ -10,8 +10,8 @@
         .module('demo')
         .controller('DemoCtrl', DemoCtrl);
 
-    DemoCtrl.$inject = ['datepickerOutput'];
-    function DemoCtrl(datepickerOutput) {
+    DemoCtrl.$inject = [];
+    function DemoCtrl() {
         var vm = this;
 
         vm.dateRange = {};
