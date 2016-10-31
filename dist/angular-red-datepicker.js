@@ -2,7 +2,7 @@
  * angular-red-datepicker
  * https://github.com/johnnyswan/angular-red-datepicker
  * Red Swan
- * Version: 0.0.1 - 2016-10-30T18:13:56.423Z
+ * Version: 0.0.1 - 2016-10-31T07:03:10.538Z
  * License: MIT
  */
 
