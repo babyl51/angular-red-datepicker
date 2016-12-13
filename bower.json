@@ -6,7 +6,7 @@
     "redswan <gagarinred@mail.com>"
   ],
   "description": "Date picker for filters by date range",
-  "main": "dist/angular-red-datepicker.js, dist/angular-red-datepicker.css",
+  "main": ["dist/angular-red-datepicker.js", "dist/angular-red-datepicker.css"],
   "keywords": [
     "angular",
     "datepicker",
