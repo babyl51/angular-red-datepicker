@@ -161,7 +161,7 @@
 
         function daySelect(day) {
             if (!day.afterCurrentNextMonth && !day.afterCurrent) {
-                day.active = day.active ? false : true;
+                day.active = !day.active;
                 if (vm.selectedDays.length === 2) {
                     _.forEach(vm.selectedDays, function (value) {
                         value.active = false;
@@ -227,7 +227,7 @@
                 nextMonth = moment(current).add(1, 'month').startOf('month'),
                 startDay = moment(current).startOf('month').format('d'),
                 endDay = moment(current).endOf('month').format('d');
-            return vm.getPreviousMonth(previousMonth, startDay).concat(vm.getCurrentMonth(currentMonth), vm.getNextMonth(nextMonth, endDay));
+            return _.reverse(vm.getNextMonth(nextMonth, endDay).concat(vm.getCurrentMonth(currentMonth), vm.getPreviousMonth(previousMonth, startDay)));
         }
 
         function getPreviousMonth(previousMonth, startDay) {

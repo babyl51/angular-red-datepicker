@@ -2,7 +2,7 @@
  * angular-red-datepicker
  * https://github.com/johnnyswan/angular-red-datepicker
  * Red Swan
- * Version: 0.0.1 - 2016-10-31T07:03:10.538Z
+ * Version: 0.0.1 - 2016-12-14T08:14:28.150Z
  * License: MIT
  */
 
@@ -170,7 +170,7 @@
 
         function daySelect(day) {
             if (!day.afterCurrentNextMonth && !day.afterCurrent) {
-                day.active = day.active ? false : true;
+                day.active = !day.active;
                 if (vm.selectedDays.length === 2) {
                     _.forEach(vm.selectedDays, function (value) {
                         value.active = false;
@@ -236,7 +236,7 @@
                 nextMonth = moment(current).add(1, 'month').startOf('month'),
                 startDay = moment(current).startOf('month').format('d'),
                 endDay = moment(current).endOf('month').format('d');
-            return vm.getPreviousMonth(previousMonth, startDay).concat(vm.getCurrentMonth(currentMonth), vm.getNextMonth(nextMonth, endDay));
+            return _.reverse(vm.getNextMonth(nextMonth, endDay).concat(vm.getCurrentMonth(currentMonth), vm.getPreviousMonth(previousMonth, startDay)));
         }
 
         function getPreviousMonth(previousMonth, startDay) {
