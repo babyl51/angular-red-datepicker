@@ -1,14 +1,10 @@
-body {
-  font-family: 'Open Sans', sans-serif;
-}
-
 .calendar {
   .output {
     max-width: 315px;
     border: 1px solid #cccccc;
     border-radius: 3px;
     height: 32px;
-    &-inputs {
+    &__inputs {
       display: inline-block;
       overflow: hidden;
       height: 32px;
@@ -26,17 +22,17 @@ body {
           font-size: 16px;
         }
       }
-      &-selection-start,
-      &-selection-end {
+      &_start,
+      &_end {
         padding: 0 2px;
         display: inline-block;
       }
-      &-separator {
+      &_separator {
         padding: 3px 2px;
         display: inline-block;
       }
     }
-    &-btns {
+    &__btns {
       display: inline-block;
       overflow: hidden;
       float: right;
@@ -170,87 +166,55 @@ body {
         }
       }
     }
-    .calendar-container {
-      .days-name {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        border-bottom: 1px solid #cccccc;
-        border-top: 1px solid #cccccc;
-        li {
-          // float: left;
-          display: inline-block;
-          cursor: pointer;
-          width: 27px;
-          text-align: center;
-          margin: 2px;
-        }
+    .days-name {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      border-bottom: 1px solid #cccccc;
+      border-top: 1px solid #cccccc;
+      li {
+        display: inline-block;
+        cursor: pointer;
+        width: 27px;
+        text-align: center;
+        margin: 2px;
       }
-      .calendar-body {
-        overflow: hidden;
-        padding: 0;
-        margin: 0;
-        list-style: none;
-        .day {
-          float: left;
-          cursor: pointer;
-          width: 27px;
-          text-align: center;
-          padding: 2px;
-          &:hover:not(.fadeNonClick):not(.cantUse) {
-            background-color: #EBF1F4;
-          }
-          &__current {
-            color: #2693D5 !important;
-            background-color: rgba(38, 147, 213, .2) !important;
-          }
-          &__cantUse {
-            cursor: default;
-            color: rgba(195, 202, 205, .7)
-          }
-          &__fade {
-            cursor: pointer;
-            color: rgba(195, 202, 205, .7)
-          }
-          &__fadeNonClick {
-            cursor: default;
-            color: rgba(195, 202, 205, .7)
-          }
-          &__active {
-            background-color: #EBF1F4;
-          }
-          &__selected {
-            background-color: #EBF1F4;
-            position: relative;
-          }
-        }
-        .day__selected:nth-of-type(1) {
-          background: red;
-          &:before {
-            content: "";
-            position: absolute;
-            z-index: 1;
-            width: 1px;
-            height: 100%;
-            background: #2693D5;
-            left: 0;
-            top: 0;
-          }
-        }
-        .day__selected:nth-last-of-type(1) {
-          background: red;
-          &:after {
-            content: "";
-            position: absolute;
-            z-index: 1;
-            width: 1px;
-            height: 100%;
-            background: #2693D5;
-            right: 0;
-            top: 0;
-          }
-        }
+    }
+    .calendar-body {
+      overflow: hidden;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    .day {
+      float: left;
+      cursor: pointer;
+      width: 27px;
+      text-align: center;
+      padding: 2px;
+      &_current {
+        color: #2693D5 !important;
+        background-color: rgba(38, 147, 213, .2) !important;
+      }
+      &_cantUse {
+        cursor: default;
+        color: rgba(195, 202, 205, .7)
+      }
+      &_fade {
+        cursor: pointer;
+        color: rgba(195, 202, 205, .7)
+      }
+      &_fadeNonClick {
+        cursor: default;
+        color: rgba(195, 202, 205, .7)
+      }
+      &_active {
+        background-color: #EBF1F4;
+      }
+      &_selected {
+        background-color: #EBF1F4;
+        position: relative;
       }
     }
     &-show {
@@ -262,14 +226,14 @@ body {
       z-index: 100;
     }
   }
-  &-with-range,
-  &-with-out-range {
+  &__with-range,
+  &__with-out-range {
     position: relative;
   }
-  &-with-range {
+  &__with-range {
     max-width: 285px;
   }
-  &-with-out-range {
+  &__with-out-range {
     max-width: 255px;
   }
 }

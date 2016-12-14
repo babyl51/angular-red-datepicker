@@ -2,21 +2,18 @@
  * angular-red-datepicker
  * https://github.com/johnnyswan/angular-red-datepicker
  * Red Swan
- * Version: 0.0.1 - 2016-12-14T08:14:28.038Z
+ * Version: 0.0.1 - 2016-12-14T08:25:15.973Z
  * License: MIT
  */
 
 
-body {
-  font-family: 'Open Sans', sans-serif;
-}
 .calendar .output {
   max-width: 315px;
   border: 1px solid #cccccc;
   border-radius: 3px;
   height: 32px;
 }
-.calendar .output-inputs {
+.calendar .output__inputs {
   display: inline-block;
   overflow: hidden;
   height: 32px;
@@ -24,10 +21,10 @@ body {
   width: 200px;
   text-align: center;
 }
-.calendar .output-inputs div {
+.calendar .output__inputs div {
   float: left;
 }
-.calendar .output-inputs div input {
+.calendar .output__inputs div input {
   outline: 0;
   width: 85px;
   text-align: center;
@@ -35,22 +32,22 @@ body {
   border: 0;
   font-size: 16px;
 }
-.calendar .output-inputs-selection-start,
-.calendar .output-inputs-selection-end {
+.calendar .output__inputs_start,
+.calendar .output__inputs_end {
   padding: 0 2px;
   display: inline-block;
 }
-.calendar .output-inputs-separator {
+.calendar .output__inputs_separator {
   padding: 3px 2px;
   display: inline-block;
 }
-.calendar .output-btns {
+.calendar .output__btns {
   display: inline-block;
   overflow: hidden;
   float: right;
   margin: 0 10px 0 0;
 }
-.calendar .output-btns #calendar-list-btn {
+.calendar .output__btns #calendar-list-btn {
   float: left;
   width: 32px;
   height: 32px;
@@ -59,13 +56,13 @@ body {
   text-align: center;
   cursor: pointer;
 }
-.calendar .output-btns #calendar-list-btn span {
+.calendar .output__btns #calendar-list-btn span {
   font-size: 14px;
   margin: 11px 2px 0 0;
   display: block;
   color: #009f8a;
 }
-.calendar .output-btns #range-list-btn {
+.calendar .output__btns #range-list-btn {
   float: left;
   width: 25px;
   height: 25px;
@@ -178,7 +175,7 @@ body {
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABCklEQVRoQ+3Z0Q0CMQwDUN8GbAIjwEQwAkwGI8AmjIAqAUJ8nmMnd0r/W+nZ/UjVCStZ00ocaEi1JruRbkSUQF8tMtgNgCOAC3nOd3tGIwNxBbB7Q84RGDfkF/EAsAfwXBpEhhhBuBqRIlwQOcIBsSDUEBtCCbEiVBA7QgFJQURD0hCRkFREFCQdEQEpgWAhZRAMpBSChdwAbAHcARyixvG5Iz0z/Y5WymAYyAivDIaFlMFEQEpgoiDpmEhIKiYakoZRQFIwKogdo4RYMWqIDeOAWDAuiBzjhEgxbsg/ZvyPLPJb4fPcGFPzKQrBPKzmvn9k+zKulgTTEEmsxKHdCBGeZGs3IomVOPQFv4RgM1vSu+kAAAAASUVORK5CYII=);
   background-size: cover;
 }
-.calendar .calendar-box .calendar-container .days-name {
+.calendar .calendar-box .days-name {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -186,77 +183,48 @@ body {
   border-bottom: 1px solid #cccccc;
   border-top: 1px solid #cccccc;
 }
-.calendar .calendar-box .calendar-container .days-name li {
+.calendar .calendar-box .days-name li {
   display: inline-block;
   cursor: pointer;
   width: 27px;
   text-align: center;
   margin: 2px;
 }
-.calendar .calendar-box .calendar-container .calendar-body {
+.calendar .calendar-box .calendar-body {
   overflow: hidden;
   padding: 0;
   margin: 0;
   list-style: none;
 }
-.calendar .calendar-box .calendar-container .calendar-body .day {
+.calendar .calendar-box .day {
   float: left;
   cursor: pointer;
   width: 27px;
   text-align: center;
   padding: 2px;
 }
-.calendar .calendar-box .calendar-container .calendar-body .day:hover:not(.fadeNonClick):not(.cantUse) {
-  background-color: #EBF1F4;
-}
-.calendar .calendar-box .calendar-container .calendar-body .day__current {
+.calendar .calendar-box .day_current {
   color: #2693D5 !important;
   background-color: rgba(38, 147, 213, 0.2) !important;
 }
-.calendar .calendar-box .calendar-container .calendar-body .day__cantUse {
+.calendar .calendar-box .day_cantUse {
   cursor: default;
   color: rgba(195, 202, 205, 0.7);
 }
-.calendar .calendar-box .calendar-container .calendar-body .day__fade {
+.calendar .calendar-box .day_fade {
   cursor: pointer;
   color: rgba(195, 202, 205, 0.7);
 }
-.calendar .calendar-box .calendar-container .calendar-body .day__fadeNonClick {
+.calendar .calendar-box .day_fadeNonClick {
   cursor: default;
   color: rgba(195, 202, 205, 0.7);
 }
-.calendar .calendar-box .calendar-container .calendar-body .day__active {
+.calendar .calendar-box .day_active {
   background-color: #EBF1F4;
 }
-.calendar .calendar-box .calendar-container .calendar-body .day__selected {
+.calendar .calendar-box .day_selected {
   background-color: #EBF1F4;
   position: relative;
-}
-.calendar .calendar-box .calendar-container .calendar-body .day__selected:nth-of-type(1) {
-  background: red;
-}
-.calendar .calendar-box .calendar-container .calendar-body .day__selected:nth-of-type(1):before {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  width: 1px;
-  height: 100%;
-  background: #2693D5;
-  left: 0;
-  top: 0;
-}
-.calendar .calendar-box .calendar-container .calendar-body .day__selected:nth-last-of-type(1) {
-  background: red;
-}
-.calendar .calendar-box .calendar-container .calendar-body .day__selected:nth-last-of-type(1):after {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  width: 1px;
-  height: 100%;
-  background: #2693D5;
-  right: 0;
-  top: 0;
 }
 .calendar .calendar-box-show {
   display: block;
@@ -266,13 +234,13 @@ body {
   margin: 5px auto;
   z-index: 100;
 }
-.calendar-with-range,
-.calendar-with-out-range {
+.calendar__with-range,
+.calendar__with-out-range {
   position: relative;
 }
-.calendar-with-range {
+.calendar__with-range {
   max-width: 285px;
 }
-.calendar-with-out-range {
+.calendar__with-out-range {
   max-width: 255px;
 }
