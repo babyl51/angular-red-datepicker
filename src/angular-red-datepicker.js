@@ -18,8 +18,10 @@
                 locale: '@locale',
                 /** @param {boolean} listShow - show date range or not.*/
                 listShow: '@listShow',
-                /** @param {object} output - show date range or not.*/
-                output: '=output'
+                /** @param {object} output - variable that return date values.*/
+                output: '=output',
+                /** @param {object} todayBtn - show or not today btns.*/
+                todayBtn: '@todayBtn'
             },
             controller: datepickerController,
             controllerAs: 'calendar',
@@ -40,6 +42,9 @@
 
             /** @description Set locale from scope or by default */
             vm.locale = vm.locale ? (vm.locale !== '' ? vm.locale : 'en') : 'en';
+
+            vm.todayBtnName = vm.todayBtnName ? vm.todayBtnName : 'Today';
+
             moment.locale(vm.locale);
             vm.localeInfo = moment.localeData();
             vm.weekStartDay = vm.localeInfo._week.dow;
@@ -50,7 +55,7 @@
 
             /** @description Date variables*/
             var date = moment(new Date());
-            vm.todayForFront = date.format('DD');
+            vm.todayForFront = date.format('DD.MM.YYYY');
             vm.today = {
                 date: date.startOf('day'),
                 year: date.format('YYYY'),

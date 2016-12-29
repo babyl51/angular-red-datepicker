@@ -2,7 +2,7 @@
  * angular-red-datepicker
  * https://github.com/johnnyswan/angular-red-datepicker
  * Red Swan
- * Version: 0.0.1 - 2016-12-14T09:49:12.220Z
+ * Version: 0.0.1 - 2016-12-29T10:05:08.999Z
  * License: MIT
  */
 
@@ -27,8 +27,10 @@
                 locale: '@locale',
                 /** @param {boolean} listShow - show date range or not.*/
                 listShow: '@listShow',
-                /** @param {object} output - show date range or not.*/
-                output: '=output'
+                /** @param {object} output - variable that return date values.*/
+                output: '=output',
+                /** @param {object} todayBtn - show or not today btns.*/
+                todayBtn: '@todayBtn'
             },
             controller: datepickerController,
             controllerAs: 'calendar',
@@ -49,6 +51,9 @@
 
             /** @description Set locale from scope or by default */
             vm.locale = vm.locale ? (vm.locale !== '' ? vm.locale : 'en') : 'en';
+
+            vm.todayBtnName = vm.todayBtnName ? vm.todayBtnName : 'Today';
+
             moment.locale(vm.locale);
             vm.localeInfo = moment.localeData();
             vm.weekStartDay = vm.localeInfo._week.dow;
@@ -59,7 +64,7 @@
 
             /** @description Date variables*/
             var date = moment(new Date());
-            vm.todayForFront = date.format('DD');
+            vm.todayForFront = date.format('DD.MM.YYYY');
             vm.today = {
                 date: date.startOf('day'),
                 year: date.format('YYYY'),
@@ -332,4 +337,4 @@
 
 })();
 
-angular.module("redDatepickerModule").run(["$templateCache", function($templateCache) {$templateCache.put("angular-red-datepicker.html","<div class=\"calendar\" ng-class=\"{\'calendar__with-range\': calendar.listShow, \'calendar__with-out-range\': !calendar.listShow}\"><div class=\"output\"><div class=\"output__inputs\"><div class=\"output__inputs_start\"><input id=\"date-start\" type=\"text\" placeholder=\"\" ng-model=\"calendar.inputStart\" maxlength=\"10\"></div><div class=\"output__inputs_separator\">&mdash;</div><div class=\"output__inputs_end\"><input id=\"date-end\" type=\"text\" placeholder=\"\" ng-model=\"calendar.inputEnd\" maxlength=\"10\"></div></div><div class=\"output__btns\"><div id=\"calendar-list-btn\" ng-click=\"calendar.showPopup(\'calendarShow\')\"><span id=\"calendar-list-icon\">{{calendar.todayForFront}}</span></div><div ng-if=\"calendar.listShow\" id=\"range-list-btn\" ng-click=\"calendar.showPopup(\'rangeShow\')\"></div></div></div><div ng-mouseleave=\"calendar.calendarShow = false\" target=\"calendar.calendarShow\" class=\"calendar-box calendar-box-show\" ng-show=\"calendar.calendarShow\"><div class=\"switchers\"><div class=\"month\"><i class=\"left\" aria-hidden=\"true\" ng-click=\"calendar.monthChange(calendar.month.id, \'left\')\"></i> <span>{{calendar.month.name}}</span> <i class=\"right\" aria-hidden=\"true\" ng-click=\"calendar.monthChange(calendar.month.id, \'right\')\" ng-hide=\"calendar.today.month == calendar.month.id\"></i></div><div class=\"year\"><i class=\"left\" aria-hidden=\"true\" ng-click=\"calendar.yearChange(\'left\')\"></i> <span>{{calendar.year}}</span> <i class=\"right\" aria-hidden=\"true\" ng-click=\"calendar.yearChange(\'right\')\" ng-hide=\"calendar.today.year == calendar.year\"></i></div></div><div class=\"calendar-container\"><ul class=\"days-name\"><li ng-repeat=\"dayName in calendar.days track by $index\">{{dayName}}</li></ul><ul class=\"calendar-body\"><li class=\"day\" ng-repeat=\"day in calendar.monthShow\" ng-class=\"{ \'day_fade\': day.fade, \'day_current\': day.current, \'day_cantUse\': day.afterCurrent, \'day_fadeNonClick\': day.afterCurrentNextMonth, \'day_active\': day.active, \'day_selected\': day.selected }\" ng-click=\"calendar.getDay(day)\">{{day.str}}</li></ul></div></div><div ng-mouseleave=\"calendar.rangeShow = false\" target=\"calendar.rangeShow\" class=\"range-list range-list-show\" ng-show=\"calendar.rangeShow\"><ul><li ng-repeat=\"item in calendar.list\" ng-click=\"calendar.listSelected(item)\"><span class=\"item-name\">{{item.label}}</span> <span class=\"item-date-start\">{{item.start}}</span> <span class=\"item-date-separator\">&mdash;</span> <span class=\"item-date-end\">{{item.end}}</span></li></ul></div></div>");}]);
+angular.module("redDatepickerModule").run(["$templateCache", function($templateCache) {$templateCache.put("angular-red-datepicker.html","<div class=\"calendar\" ng-class=\"{\'calendar__with-range\': calendar.listShow, \'calendar__with-out-range\': !calendar.listShow}\"><div class=\"output\"><div class=\"output__inputs\"><div class=\"output__inputs_start\"><input id=\"date-start\" type=\"text\" placeholder=\"\" ng-model=\"calendar.inputStart\" maxlength=\"10\"></div><div class=\"output__inputs_separator\">&mdash;</div><div class=\"output__inputs_end\"><input id=\"date-end\" type=\"text\" placeholder=\"\" ng-model=\"calendar.inputEnd\" maxlength=\"10\"></div></div><div class=\"output__btns\"><div id=\"calendar-list-btn\" ng-click=\"calendar.showPopup(\'calendarShow\')\"><svg fill=\"#646e7a\" height=\"24\" viewbox=\"0 0 24 24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z\"></path></svg></div><div ng-if=\"calendar.todayBtn\" id=\"calendar-today-btn\" ng-click=\"calendar.activeRange([calendar.todayForFront, calendar.todayForFront])\"><svg fill=\"#646e7a\" height=\"24\" viewbox=\"0 0 24 24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z\"></path></svg></div><div ng-if=\"calendar.listShow\" id=\"range-list-btn\" ng-click=\"calendar.showPopup(\'rangeShow\')\"><svg fill=\"#646e7a\" height=\"24\" viewbox=\"0 0 24 24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M14 17H4v2h10v-2zm6-8H4v2h16V9zM4 15h16v-2H4v2zM4 5v2h16V5H4z\"></path><path d=\"M0 0h24v24H0z\" fill=\"none\"></path></svg></div></div></div><div ng-mouseleave=\"calendar.calendarShow = false\" target=\"calendar.calendarShow\" class=\"calendar-box calendar-box-show\" ng-show=\"calendar.calendarShow\"><div class=\"switchers\"><div class=\"month\"><i class=\"left\" aria-hidden=\"true\" ng-click=\"calendar.monthChange(calendar.month.id, \'left\')\"></i> <span>{{calendar.month.name}}</span> <i class=\"right\" aria-hidden=\"true\" ng-click=\"calendar.monthChange(calendar.month.id, \'right\')\" ng-hide=\"calendar.today.month == calendar.month.id\"></i></div><div class=\"year\"><i class=\"left\" aria-hidden=\"true\" ng-click=\"calendar.yearChange(\'left\')\"></i> <span>{{calendar.year}}</span> <i class=\"right\" aria-hidden=\"true\" ng-click=\"calendar.yearChange(\'right\')\" ng-hide=\"calendar.today.year == calendar.year\"></i></div></div><div class=\"calendar-container\"><ul class=\"days-name\"><li ng-repeat=\"dayName in calendar.days track by $index\">{{dayName}}</li></ul><ul class=\"calendar-body\"><li class=\"day\" ng-repeat=\"day in calendar.monthShow\" ng-class=\"{ \'day_fade\': day.fade, \'day_current\': day.current, \'day_cantUse\': day.afterCurrent, \'day_fadeNonClick\': day.afterCurrentNextMonth, \'day_active\': day.active, \'day_selected\': day.selected }\" ng-click=\"calendar.getDay(day)\">{{day.str}}</li></ul></div></div><div ng-mouseleave=\"calendar.rangeShow = false\" target=\"calendar.rangeShow\" class=\"range-list range-list-show\" ng-show=\"calendar.rangeShow\"><ul><li ng-repeat=\"item in calendar.list\" ng-click=\"calendar.listSelected(item)\"><span class=\"item-name\">{{item.label}}</span> <span class=\"item-date-start\">{{item.start}}</span> <span class=\"item-date-separator\">&mdash;</span> <span class=\"item-date-end\">{{item.end}}</span></li></ul></div></div>");}]);
