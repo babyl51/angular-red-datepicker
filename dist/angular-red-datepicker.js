@@ -2,7 +2,7 @@
  * angular-red-datepicker
  * https://github.com/johnnyswan/angular-red-datepicker
  * Red Swan
- * Version: 0.0.1 - 2016-12-29T10:05:08.999Z
+ * Version: 0.0.1 - 2016-12-29T12:17:52.455Z
  * License: MIT
  */
 
@@ -30,7 +30,9 @@
                 /** @param {object} output - variable that return date values.*/
                 output: '=output',
                 /** @param {object} todayBtn - show or not today btns.*/
-                todayBtn: '@todayBtn'
+                todayBtn: '@todayBtn',
+                /** @param {number} startSelection - quantity of days from today.*/
+                numberOfDays: '@numberOfDays'
             },
             controller: datepickerController,
             controllerAs: 'calendar',
@@ -48,6 +50,8 @@
             /** @description Variables show/hide elements*/
             vm.rangeShow = false;
             vm.calendarShow = false;
+
+            vm.numberOfDays = +vm.numberOfDays ? +vm.numberOfDays : (+vm.numberOfDays == 0 ? 0 : 7);
 
             /** @description Set locale from scope or by default */
             vm.locale = vm.locale ? (vm.locale !== '' ? vm.locale : 'en') : 'en';
@@ -80,7 +84,7 @@
             /** @description Variables for showing selected days*/
             vm.selectedDays = [];
             vm.endSelection = date.startOf('day').toArray();
-            vm.startSelection = moment(vm.endSelection).subtract(6, 'day').startOf('day').toArray();
+            vm.startSelection = moment(vm.endSelection).subtract(vm.numberOfDays, 'day').startOf('day').toArray();
 
 
             /** @description Variables for input date*/

@@ -21,6 +21,7 @@ angular.module('app', ['redDatepickerModule']);
 * `list-show` - showing the list of defalts date range. By defaults is false.
 * `output` - set the variable for date output. 
 * `today-btn` - show today button.
+* `number-of-days` - set quantity of days from start selection to today on init.
 
 
 ## Dependencies
