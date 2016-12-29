@@ -20,6 +20,7 @@ angular.module('app', ['redDatepickerModule']);
 * `locale` is optional and set language and rules for displaying calendar. By defaults is English. The list of languages you can look in the [MomentJS](http://momentjs.com/).
 * `list-show` - showing the list of defalts date range. By defaults is false.
 * `output` - set the variable for date output. 
+* `today-btn` - show today button.
 
 
 ## Dependencies
