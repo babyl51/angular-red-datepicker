@@ -40,20 +40,17 @@
         function init() {
             /** @description Variables show/hide elements*/
             vm.rangeShow = false;
-            vm.calendarShow = false;
+            // TODO change to false before commit
+            vm.calendarShow = true;
 
             vm.numberOfDays = +vm.numberOfDays ? +vm.numberOfDays : (+vm.numberOfDays == 0 ? 0 : 7);
 
             /** @description Set locale from scope or by default */
             vm.locale = vm.locale ? (vm.locale !== '' ? vm.locale : 'en') : 'en';
-
-            vm.todayBtnName = vm.todayBtnName ? vm.todayBtnName : 'Today';
-
             moment.locale(vm.locale);
             vm.localeInfo = moment.localeData();
             vm.weekStartDay = vm.localeInfo._week.dow;
-
-
+            
             vm.earliestDate = moment(new Date('January 01, 1990')).startOf('day');
             vm.latestDate = moment(new Date('December 31, 2030')).startOf('day');
 

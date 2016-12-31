@@ -2,7 +2,7 @@
  * angular-red-datepicker
  * https://github.com/johnnyswan/angular-red-datepicker
  * Red Swan
- * Version: 0.0.1 - 2016-12-29T12:17:52.391Z
+ * Version: 0.0.1 - 2016-12-31T13:27:41.325Z
  * License: MIT
  */
 
@@ -17,33 +17,31 @@
   border-radius: 3px;
   height: 32px;
 }
-.calendar .output__inputs {
+.calendar .output__field {
   display: inline-block;
   overflow: hidden;
   height: 32px;
   padding: 0 5px;
-  width: 200px;
   text-align: center;
 }
-.calendar .output__inputs div {
+.calendar .output__field div {
   float: left;
-}
-.calendar .output__inputs div input {
-  outline: 0;
-  width: 85px;
-  text-align: center;
-  height: 30px;
-  border: 0;
   font-size: 16px;
 }
-.calendar .output__inputs_start,
-.calendar .output__inputs_end {
+.calendar .output__field_start,
+.calendar .output__field_end {
   padding: 0 2px;
   display: inline-block;
+  outline: 0;
+  text-align: center;
+  height: 32px;
+  border: 0;
+  line-height: 2;
 }
-.calendar .output__inputs_separator {
+.calendar .output__field_separator {
   padding: 3px 2px;
   display: inline-block;
+  line-height: 1.5;
 }
 .calendar .output__btns {
   display: inline-block;
@@ -59,6 +57,12 @@
   text-align: center;
   cursor: pointer;
   margin: 3px 0 0 5px;
+  fill: #646e7a;
+}
+.calendar .output__btns #range-list-btn:hover,
+.calendar .output__btns #calendar-today-btn:hover,
+.calendar .output__btns #calendar-list-btn:hover {
+  fill: #009f8a;
 }
 .calendar .output:hover {
   border: 1px solid #009f8a;
@@ -222,8 +226,4 @@
   left: 0;
   margin: 5px auto;
   z-index: 100;
-}
-.calendar__with-range,
-.calendar__with-out-range {
-  position: relative;
 }

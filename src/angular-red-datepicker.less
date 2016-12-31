@@ -6,32 +6,30 @@
     border: 1px solid #cccccc;
     border-radius: 3px;
     height: 32px;
-    &__inputs {
+    &__field {
       display: inline-block;
       overflow: hidden;
       height: 32px;
       padding: 0 5px;
-      width: 200px;
       text-align: center;
       div {
         float: left;
-        input {
-          outline: 0;
-          width: 85px;
-          text-align: center;
-          height: 30px;
-          border: 0;
-          font-size: 16px;
-        }
+        font-size: 16px;
       }
       &_start,
       &_end {
         padding: 0 2px;
         display: inline-block;
+        outline: 0;
+        text-align: center;
+        height: 32px;
+        border: 0;
+        line-height: 2;
       }
       &_separator {
         padding: 3px 2px;
         display: inline-block;
+        line-height: 1.5;
       }
     }
     &__btns {
@@ -47,6 +45,10 @@
         text-align: center;
         cursor: pointer;
         margin: 3px 0 0 5px;
+        fill: #646e7a;
+        &:hover {
+          fill: #009f8a;
+        }
       }
     }
     &:hover {
@@ -212,9 +214,5 @@
       margin: 5px auto;
       z-index: 100;
     }
-  }
-  &__with-range,
-  &__with-out-range {
-    position: relative;
   }
 }
