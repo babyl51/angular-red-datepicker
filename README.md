@@ -15,7 +15,7 @@ angular.module('app', ['redDatepickerModule']);
 - Add attribute directives to your html:
 
 ```html
-    <red-datepicker locale="en" list-show="true" output="{variable}"></red-datepicker>
+    <red-datepicker locale="en" list-show="true" list-arr={variable} output="{variable}" today-btn="true" number-of-days="6"></red-datepicker>
 ```
 * `locale` is optional and set language and rules for displaying calendar. By defaults is English. The list of languages you can look in the [MomentJS](http://momentjs.com/).
 * `list-show` - showing the list of defalts date range. By defaults is false.
