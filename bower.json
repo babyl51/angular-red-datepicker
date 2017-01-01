@@ -1,9 +1,9 @@
 {
   "name": "angular-red-datepicker",
   "homepage": "https://github.com/johnnyswan/angular-red-datepicker",
-  "version": "0.0.1",
+  "version": "0.0.9",
   "authors": [
-    "redswan <gagarinred@mail.com>"
+    "redswan <ferdinandgrau@mail.com>"
   ],
   "description": "Date picker for filters by date range",
   "main": ["dist/angular-red-datepicker.js", "dist/angular-red-datepicker.css"],
