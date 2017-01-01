@@ -4,12 +4,10 @@
         <div class="output__field">
             <div class="output__field_start">
                 {{calendar.inputStart}}
-                <!--<span id="date-start"></span>-->
             </div>
             <div class="output__field_separator">&mdash;</div>
             <div class="output__field_end">
                 {{calendar.inputEnd}}
-                <!--<span id="date-end"></span>-->
             </div>
         </div>
         <div class="output__btns">
@@ -68,7 +66,9 @@
                             'day_cantUse': day.afterCurrent,
                             'day_fadeNonClick': day.afterCurrentNextMonth,
                             'day_active': day.active,
-                            'day_selected': day.selected
+                            'day_selected': day.selected,
+                            'day_start': day.dayStart,
+                            'day_end': day.dayEnd
                         }"
                     ng-click="calendar.getDay(day)">
                     {{day.str}}
@@ -76,7 +76,7 @@
             </ul>
         </div>
     </div>
-    <div ng-mouseleave="calendar.rangeShow = false" class="range-list range-list-show"
+    <div ng-mouseleave="calendar.rangeShow = false" ng-if="calendar.list" class="range-list range-list-show"
          ng-show="calendar.rangeShow">
         <ul>
             <li ng-repeat="item in calendar.list" ng-click="calendar.listSelected(item)">

@@ -1,6 +1,6 @@
 {
   "name": "angular-red-datepicker",
-  "version": "0.0.1",
+  "version": "0.0.9",
   "description": "Date picker for filters by date range",
   "homepage": "https://github.com/johnnyswan/angular-red-datepicker",
   "main": "dist/angular-red-datepicker.min.js",

@@ -205,6 +205,28 @@
         background-color: #EBF1F4;
         position: relative;
       }
+      &_start {
+        &:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 2px;
+          background: rgba(38, 147, 213, 1);
+        }
+      }
+      &_end {
+        &:after {
+          content: '';
+          position: absolute;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          width: 2px;
+          background: rgba(38, 147, 213, 1);
+        }
+      }
     }
     &-show {
       display: block;
