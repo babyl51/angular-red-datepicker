@@ -1,4 +1,3 @@
-
 <div class="calendar">
     <div class="output">
         <div class="output__field">
@@ -84,11 +83,11 @@
                     {{item.label}}
                 </span>
                 <span class="item-date-start">
-                    {{item.start}}
+                    {{vm.formatFrontDate(item.start)}}
                 </span>
                 <span class="item-date-separator">&mdash;</span>
                 <span class="item-date-end">
-                    {{item.end}}
+                    {{vm.formatFrontDate(item.end)}}
                 </span>
             </li>
         </ul>

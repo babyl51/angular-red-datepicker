@@ -25,7 +25,7 @@
                 /** @param {boolean} listShow - show date range or not.*/
                 listShow: '@listShow',
                 /** @param {array} listArr - set list of dates for quick change with list button.*/
-                listArr: '=listArr'
+                listArr: '@listArr'
             },
             controller: datepickerController,
             controllerAs: 'calendar',
@@ -37,13 +37,16 @@
     function datepickerController(moment, _) {
         var vm = this;
 
+        (function () {
+            console.log(vm.locale);
+            console.log(vm.todayBtn);
+            console.log(vm.numberOfDays);
+            console.log(vm.listShow);
+            console.log(vm.listArr);
 
-        (function init() {
             /** @description Variables show/hide elements*/
             vm.rangeShow = false;
             vm.calendarShow = false;
-
-            vm.numberOfDays = +vm.numberOfDays ? +vm.numberOfDays : (+vm.numberOfDays == 0 ? 0 : 7);
 
             /** @description Set locale from scope or by default */
             vm.locale = vm.locale ? (vm.locale !== '' ? vm.locale : 'en') : 'en';
@@ -76,15 +79,16 @@
 
             vm.output = {start: vm.inputStart, end: vm.inputEnd};
 
+
             if (vm.listShow) {
                 if (Array.isArray(vm.listArr)) {
                     _.forEach(vm.listArr, function (o) {
                         if (o.days < 30) {
-                            o.start = moment(vm.today.date).subtract(o.days - 1, 'days').format('L');
-                            o.end = vm.today.date.format('L');
+                            o.start = moment(vm.today.date).subtract(o.days - 1, 'days');
+                            o.end = vm.today.date;
                         } else {
-                            o.start = moment(vm.today.date).subtract(o.days, 'days').startOf('month').format('L');
-                            o.end = moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L');
+                            o.start = moment(vm.today.date).subtract(o.days, 'days').startOf('month');
+                            o.end = moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day');
                         }
                     });
                     vm.list = vm.listArr;
@@ -92,32 +96,32 @@
                     vm.list = [
                         {
                             label: 'Last Week',
-                            start: moment(vm.today.date).subtract(6, 'days').format('L'),
-                            end: vm.today.date.format('L')
+                            start: moment(vm.today.date).subtract(6, 'days'),
+                            end: vm.today.date
                         }, {
                             label: 'Last 15 days',
-                            start: moment(vm.today.date).subtract(14, 'days').format('L'),
-                            end: vm.today.date.format('L')
+                            start: moment(vm.today.date).subtract(14, 'days'),
+                            end: vm.today.date
                         }, {
                             label: 'Last 30 days',
-                            start: moment(vm.today.date).subtract(29, 'days').format('L'),
-                            end: vm.today.date.format('L')
+                            start: moment(vm.today.date).subtract(29, 'days'),
+                            end: vm.today.date
                         }, {
                             label: 'Last month',
-                            start: moment(vm.today.date).subtract(30, 'days').startOf('month').format('L'),
-                            end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
+                            start: moment(vm.today.date).subtract(30, 'days').startOf('month'),
+                            end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day')
                         }, {
                             label: 'Last 3 months',
-                            start: moment(vm.today.date).subtract(3, 'month').startOf('month').format('L'),
-                            end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
+                            start: moment(vm.today.date).subtract(3, 'month').startOf('month'),
+                            end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day')
                         }, {
                             label: 'Last 6 months',
-                            start: moment(vm.today.date).subtract(6, 'month').startOf('month').format('L'),
-                            end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
+                            start: moment(vm.today.date).subtract(6, 'month').startOf('month'),
+                            end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day')
                         }, {
                             label: 'Last year',
-                            start: moment(vm.today.date).subtract(12, 'month').startOf('month').format('L'),
-                            end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
+                            start: moment(vm.today.date).subtract(12, 'month').startOf('month'),
+                            end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day')
                         }
                     ];
                 }
@@ -125,6 +129,7 @@
                 vm.list = '';
             }
         })();
+
 
         vm.getDay = getDay;
         vm.daySelect = daySelect;
@@ -138,6 +143,7 @@
         vm.getPreviousMonth = getPreviousMonth;
         vm.getCurrentMonth = getCurrentMonth;
         vm.getNextMonth = getNextMonth;
+        vm.formatFrontDate = formatFrontDate;
 
 
         /**
@@ -256,7 +262,7 @@
                     beforeMonth: true,
                     selected: previousMonth.isBetween(vm.startSelection, vm.endSelection, null, '[]'),
                     dayStart: previousMonth.isSame(moment(vm.startSelection)),
-                    dayEnd:  previousMonth.isSame(moment(vm.endSelection))
+                    dayEnd: previousMonth.isSame(moment(vm.endSelection))
                 };
                 previousMonthArray.push(a);
                 previousMonth.subtract(1, 'day');
@@ -276,7 +282,7 @@
                     active: false,
                     selected: currentMonth.isBetween(vm.startSelection, vm.endSelection, null, '[]'),
                     dayStart: currentMonth.isSame(moment(vm.startSelection)),
-                    dayEnd:  currentMonth.isSame(moment(vm.endSelection))
+                    dayEnd: currentMonth.isSame(moment(vm.endSelection))
                 };
                 currentMonthArray.push(a);
                 currentMonth.add(1, 'day');
@@ -303,20 +309,20 @@
                     nextMonth: true,
                     selected: nextMonth.isBetween(vm.startSelection, vm.endSelection, null, '[]'),
                     dayStart: nextMonth.isSame(moment(vm.startSelection)),
-                    dayEnd:  nextMonth.isSame(moment(vm.endSelection))
+                    dayEnd: nextMonth.isSame(moment(vm.endSelection))
                 };
                 nextMonthArray.push(a);
                 nextMonth.add(1, 'day');
             });
-            return nextMonthArray;
+            return _.reverse(nextMonthArray);
         }
 
 
         function listSelected(item) {
             vm.startSelection = moment(new Date(item.start));
             vm.endSelection = moment(new Date(item.end));
-            vm.inputStart = item.start;
-            vm.inputEnd = item.end;
+            vm.inputStart = moment(new Date(item.start)).format('L');
+            vm.inputEnd = moment(new Date(item.end)).format('L');
             vm.output = {start: vm.inputStart, end: vm.inputEnd};
             vm.monthShow = new vm.calendarArray(vm.today.date);
         }
@@ -329,6 +335,10 @@
                 vm.rangeShow = !vm.rangeShow;
                 vm.calendarShow = false;
             }
+        }
+
+        function formatFrontDate(el) {
+            return el.format('L')
         }
 
 
