@@ -15,34 +15,32 @@
             templateUrl: 'angular-red-datepicker.html',
             scope: {
                 /** @param {string} locale - Set locale from directive attr.*/
-                locale: '@locale',
+                locale: '@?',
                 /** @param {object} output - variable that return date values.*/
-                output: '=output',
+                output: '=?',
                 /** @param {object} todayBtn - show or not today btns.*/
-                todayBtn: '@todayBtn',
+                todayBtn: '@?',
                 /** @param {number} startSelection - quantity of days from today.*/
-                numberOfDays: '@numberOfDays',
+                numberOfDays: '@?',
                 /** @param {boolean} listShow - show date range or not.*/
-                listShow: '@listShow',
+                listShow: '@?',
                 /** @param {array} listArr - set list of dates for quick change with list button.*/
-                listArr: '@listArr'
+                listArr: '@?'
             },
             controller: datepickerController,
             controllerAs: 'calendar',
             bindToController: true
         };
     }
-
-    datepickerController.$inject = ['moment', '_'];
-    function datepickerController(moment, _) {
+    
+    datepickerController.$inject = ['moment', '_', '$attrs'];
+    function datepickerController(moment, _, $attrs) {
         var vm = this;
-
         (function () {
-            console.log(vm.locale);
-            console.log(vm.todayBtn);
-            console.log(vm.numberOfDays);
-            console.log(vm.listShow);
-            console.log(vm.listArr);
+            vm.locale = vm.locale || $attrs.locale;
+            vm.todayBtn = vm.todayBtn || $attrs.todayBtn;
+            vm.numberOfDays = vm.numberOfDays || $attrs.numberOfDays;
+            vm.listShow = vm.listShow || $attrs.listShow;
 
             /** @description Variables show/hide elements*/
             vm.rangeShow = false;
@@ -79,7 +77,7 @@
 
             vm.output = {start: vm.inputStart, end: vm.inputEnd};
 
-
+            vm.listArr = vm.listArr || $attrs.listArr;
             if (vm.listShow) {
                 if (Array.isArray(vm.listArr)) {
                     _.forEach(vm.listArr, function (o) {
@@ -129,7 +127,6 @@
                 vm.list = '';
             }
         })();
-
 
         vm.getDay = getDay;
         vm.daySelect = daySelect;

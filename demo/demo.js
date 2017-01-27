@@ -13,7 +13,7 @@
     DemoCtrl.$inject = [];
     function DemoCtrl() {
         var vm = this;
-
+        
         vm.dateRange = {};
         vm.arrayTest = [{
             label: 'Last Week',
