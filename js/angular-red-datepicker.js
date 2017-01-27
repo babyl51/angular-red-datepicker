@@ -2,7 +2,7 @@
  * angular-red-datepicker
  * https://github.com/johnnyswan/angular-red-datepicker
  * Red Swan
- * Version: 0.0.1 - 2017-01-01T19:54:05.036Z
+ * Version: 0.0.9 - 2017-01-27T20:44:08.081Z
  * License: MIT
  */
 
@@ -24,17 +24,17 @@
             templateUrl: 'angular-red-datepicker.html',
             scope: {
                 /** @param {string} locale - Set locale from directive attr.*/
-                locale: '@locale',
+                locale: '@?',
                 /** @param {object} output - variable that return date values.*/
-                output: '=output',
+                output: '=?',
                 /** @param {object} todayBtn - show or not today btns.*/
-                todayBtn: '@todayBtn',
+                todayBtn: '@?',
                 /** @param {number} startSelection - quantity of days from today.*/
-                numberOfDays: '@numberOfDays',
+                numberOfDays: '@?',
                 /** @param {boolean} listShow - show date range or not.*/
-                listShow: '@listShow',
+                listShow: '@?',
                 /** @param {array} listArr - set list of dates for quick change with list button.*/
-                listArr: '=listArr'
+                listArr: '@?'
             },
             controller: datepickerController,
             controllerAs: 'calendar',
@@ -42,17 +42,18 @@
         };
     }
 
-    datepickerController.$inject = ['moment', '_'];
-    function datepickerController(moment, _) {
+    datepickerController.$inject = ['moment', '_', '$attrs'];
+    function datepickerController(moment, _, $attrs) {
         var vm = this;
+        (function () {
+            vm.locale = vm.locale || $attrs.locale;
+            vm.todayBtn = vm.todayBtn || $attrs.todayBtn;
+            vm.numberOfDays = vm.numberOfDays || $attrs.numberOfDays;
+            vm.listShow = vm.listShow || $attrs.listShow;
 
-
-        (function init() {
             /** @description Variables show/hide elements*/
             vm.rangeShow = false;
             vm.calendarShow = false;
-
-            vm.numberOfDays = +vm.numberOfDays ? +vm.numberOfDays : (+vm.numberOfDays == 0 ? 0 : 7);
 
             /** @description Set locale from scope or by default */
             vm.locale = vm.locale ? (vm.locale !== '' ? vm.locale : 'en') : 'en';
@@ -85,15 +86,16 @@
 
             vm.output = {start: vm.inputStart, end: vm.inputEnd};
 
+            vm.listArr = vm.listArr || $attrs.listArr;
             if (vm.listShow) {
                 if (Array.isArray(vm.listArr)) {
                     _.forEach(vm.listArr, function (o) {
                         if (o.days < 30) {
-                            o.start = moment(vm.today.date).subtract(o.days - 1, 'days').format('L');
-                            o.end = vm.today.date.format('L');
+                            o.start = moment(vm.today.date).subtract(o.days - 1, 'days');
+                            o.end = vm.today.date;
                         } else {
-                            o.start = moment(vm.today.date).subtract(o.days, 'days').startOf('month').format('L');
-                            o.end = moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L');
+                            o.start = moment(vm.today.date).subtract(o.days, 'days').startOf('month');
+                            o.end = moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day');
                         }
                     });
                     vm.list = vm.listArr;
@@ -101,32 +103,32 @@
                     vm.list = [
                         {
                             label: 'Last Week',
-                            start: moment(vm.today.date).subtract(6, 'days').format('L'),
-                            end: vm.today.date.format('L')
+                            start: moment(vm.today.date).subtract(6, 'days'),
+                            end: vm.today.date
                         }, {
                             label: 'Last 15 days',
-                            start: moment(vm.today.date).subtract(14, 'days').format('L'),
-                            end: vm.today.date.format('L')
+                            start: moment(vm.today.date).subtract(14, 'days'),
+                            end: vm.today.date
                         }, {
                             label: 'Last 30 days',
-                            start: moment(vm.today.date).subtract(29, 'days').format('L'),
-                            end: vm.today.date.format('L')
+                            start: moment(vm.today.date).subtract(29, 'days'),
+                            end: vm.today.date
                         }, {
                             label: 'Last month',
-                            start: moment(vm.today.date).subtract(30, 'days').startOf('month').format('L'),
-                            end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
+                            start: moment(vm.today.date).subtract(30, 'days').startOf('month'),
+                            end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day')
                         }, {
                             label: 'Last 3 months',
-                            start: moment(vm.today.date).subtract(3, 'month').startOf('month').format('L'),
-                            end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
+                            start: moment(vm.today.date).subtract(3, 'month').startOf('month'),
+                            end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day')
                         }, {
                             label: 'Last 6 months',
-                            start: moment(vm.today.date).subtract(6, 'month').startOf('month').format('L'),
-                            end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
+                            start: moment(vm.today.date).subtract(6, 'month').startOf('month'),
+                            end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day')
                         }, {
                             label: 'Last year',
-                            start: moment(vm.today.date).subtract(12, 'month').startOf('month').format('L'),
-                            end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day').format('L')
+                            start: moment(vm.today.date).subtract(12, 'month').startOf('month'),
+                            end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day')
                         }
                     ];
                 }
@@ -147,6 +149,7 @@
         vm.getPreviousMonth = getPreviousMonth;
         vm.getCurrentMonth = getCurrentMonth;
         vm.getNextMonth = getNextMonth;
+        vm.formatFrontDate = formatFrontDate;
 
 
         /**
@@ -265,7 +268,7 @@
                     beforeMonth: true,
                     selected: previousMonth.isBetween(vm.startSelection, vm.endSelection, null, '[]'),
                     dayStart: previousMonth.isSame(moment(vm.startSelection)),
-                    dayEnd:  previousMonth.isSame(moment(vm.endSelection))
+                    dayEnd: previousMonth.isSame(moment(vm.endSelection))
                 };
                 previousMonthArray.push(a);
                 previousMonth.subtract(1, 'day');
@@ -285,7 +288,7 @@
                     active: false,
                     selected: currentMonth.isBetween(vm.startSelection, vm.endSelection, null, '[]'),
                     dayStart: currentMonth.isSame(moment(vm.startSelection)),
-                    dayEnd:  currentMonth.isSame(moment(vm.endSelection))
+                    dayEnd: currentMonth.isSame(moment(vm.endSelection))
                 };
                 currentMonthArray.push(a);
                 currentMonth.add(1, 'day');
@@ -312,20 +315,20 @@
                     nextMonth: true,
                     selected: nextMonth.isBetween(vm.startSelection, vm.endSelection, null, '[]'),
                     dayStart: nextMonth.isSame(moment(vm.startSelection)),
-                    dayEnd:  nextMonth.isSame(moment(vm.endSelection))
+                    dayEnd: nextMonth.isSame(moment(vm.endSelection))
                 };
                 nextMonthArray.push(a);
                 nextMonth.add(1, 'day');
             });
-            return nextMonthArray;
+            return _.reverse(nextMonthArray);
         }
 
 
         function listSelected(item) {
             vm.startSelection = moment(new Date(item.start));
             vm.endSelection = moment(new Date(item.end));
-            vm.inputStart = item.start;
-            vm.inputEnd = item.end;
+            vm.inputStart = moment(new Date(item.start)).format('L');
+            vm.inputEnd = moment(new Date(item.end)).format('L');
             vm.output = {start: vm.inputStart, end: vm.inputEnd};
             vm.monthShow = new vm.calendarArray(vm.today.date);
         }
@@ -340,6 +343,10 @@
             }
         }
 
+        function formatFrontDate(el) {
+            return el.format('L')
+        }
+
 
         vm.days = vm.getDaysNames(vm.weekStartDay, vm.localeInfo._weekdaysMin);
         vm.monthShow = new vm.calendarArray(vm.today.date);
@@ -347,4 +354,4 @@
 
 })();
 
-angular.module("redDatepickerModule").run(["$templateCache", function($templateCache) {$templateCache.put("angular-red-datepicker.html","<div class=\"calendar\"><div class=\"output\"><div class=\"output__field\"><div class=\"output__field_start\">{{calendar.inputStart}}</div><div class=\"output__field_separator\">&mdash;</div><div class=\"output__field_end\">{{calendar.inputEnd}}</div></div><div class=\"output__btns\"><div id=\"calendar-list-btn\" ng-click=\"calendar.showPopup(\'calendarShow\')\"><svg height=\"24\" viewbox=\"0 0 24 24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z\"></path></svg></div><div ng-if=\"calendar.todayBtn\" id=\"calendar-today-btn\" ng-click=\"calendar.activeRange([calendar.todayForFront, calendar.todayForFront])\"><svg height=\"24\" viewbox=\"0 0 24 24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z\"></path></svg></div><div ng-if=\"calendar.listShow\" id=\"range-list-btn\" ng-click=\"calendar.showPopup(\'rangeShow\')\"><svg height=\"24\" viewbox=\"0 0 24 24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M14 17H4v2h10v-2zm6-8H4v2h16V9zM4 15h16v-2H4v2zM4 5v2h16V5H4z\"></path><path d=\"M0 0h24v24H0z\" fill=\"none\"></path></svg></div></div></div><div ng-mouseleave=\"calendar.calendarShow = false\" class=\"calendar-box calendar-box-show\" ng-show=\"calendar.calendarShow\"><div class=\"switchers\"><div class=\"month\"><i class=\"left\" aria-hidden=\"true\" ng-click=\"calendar.monthChange(calendar.month.id, \'left\')\"></i> <span>{{calendar.month.name}}</span> <i class=\"right\" aria-hidden=\"true\" ng-click=\"calendar.monthChange(calendar.month.id, \'right\')\" ng-hide=\"calendar.today.month == calendar.month.id\"></i></div><div class=\"year\"><i class=\"left\" aria-hidden=\"true\" ng-click=\"calendar.yearChange(\'left\')\"></i> <span>{{calendar.year}}</span> <i class=\"right\" aria-hidden=\"true\" ng-click=\"calendar.yearChange(\'right\')\" ng-hide=\"calendar.today.year == calendar.year\"></i></div></div><div class=\"calendar-container\"><ul class=\"days-name\"><li ng-repeat=\"dayName in calendar.days track by $index\">{{dayName}}</li></ul><ul class=\"calendar-body\"><li class=\"day\" ng-repeat=\"day in calendar.monthShow\" ng-class=\"{ \'day_fade\': day.fade, \'day_current\': day.current, \'day_cantUse\': day.afterCurrent, \'day_fadeNonClick\': day.afterCurrentNextMonth, \'day_active\': day.active, \'day_selected\': day.selected, \'day_start\': day.dayStart, \'day_end\': day.dayEnd }\" ng-click=\"calendar.getDay(day)\">{{day.str}}</li></ul></div></div><div ng-mouseleave=\"calendar.rangeShow = false\" ng-if=\"calendar.list\" class=\"range-list range-list-show\" ng-show=\"calendar.rangeShow\"><ul><li ng-repeat=\"item in calendar.list\" ng-click=\"calendar.listSelected(item)\"><span class=\"item-name\">{{item.label}}</span> <span class=\"item-date-start\">{{item.start}}</span> <span class=\"item-date-separator\">&mdash;</span> <span class=\"item-date-end\">{{item.end}}</span></li></ul></div></div>");}]);
+angular.module("redDatepickerModule").run(["$templateCache", function($templateCache) {$templateCache.put("angular-red-datepicker.html","<div class=\"calendar\"><div class=\"output\"><div class=\"output__field\"><div class=\"output__field_start\">{{calendar.inputStart}}</div><div class=\"output__field_separator\">&mdash;</div><div class=\"output__field_end\">{{calendar.inputEnd}}</div></div><div class=\"output__btns\"><div id=\"calendar-list-btn\" ng-click=\"calendar.showPopup(\'calendarShow\')\"><svg height=\"24\" viewbox=\"0 0 24 24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z\"></path></svg></div><div ng-if=\"calendar.todayBtn\" id=\"calendar-today-btn\" ng-click=\"calendar.activeRange([calendar.todayForFront, calendar.todayForFront])\"><svg height=\"24\" viewbox=\"0 0 24 24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z\"></path></svg></div><div ng-if=\"calendar.listShow\" id=\"range-list-btn\" ng-click=\"calendar.showPopup(\'rangeShow\')\"><svg height=\"24\" viewbox=\"0 0 24 24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M14 17H4v2h10v-2zm6-8H4v2h16V9zM4 15h16v-2H4v2zM4 5v2h16V5H4z\"></path><path d=\"M0 0h24v24H0z\" fill=\"none\"></path></svg></div></div></div><div ng-mouseleave=\"calendar.calendarShow = false\" class=\"calendar-box calendar-box-show\" ng-show=\"calendar.calendarShow\"><div class=\"switchers\"><div class=\"month\"><i class=\"left\" aria-hidden=\"true\" ng-click=\"calendar.monthChange(calendar.month.id, \'left\')\"></i> <span>{{calendar.month.name}}</span> <i class=\"right\" aria-hidden=\"true\" ng-click=\"calendar.monthChange(calendar.month.id, \'right\')\" ng-hide=\"calendar.today.month == calendar.month.id\"></i></div><div class=\"year\"><i class=\"left\" aria-hidden=\"true\" ng-click=\"calendar.yearChange(\'left\')\"></i> <span>{{calendar.year}}</span> <i class=\"right\" aria-hidden=\"true\" ng-click=\"calendar.yearChange(\'right\')\" ng-hide=\"calendar.today.year == calendar.year\"></i></div></div><div class=\"calendar-container\"><ul class=\"days-name\"><li ng-repeat=\"dayName in calendar.days track by $index\">{{dayName}}</li></ul><ul class=\"calendar-body\"><li class=\"day\" ng-repeat=\"day in calendar.monthShow\" ng-class=\"{ \'day_fade\': day.fade, \'day_current\': day.current, \'day_cantUse\': day.afterCurrent, \'day_fadeNonClick\': day.afterCurrentNextMonth, \'day_active\': day.active, \'day_selected\': day.selected, \'day_start\': day.dayStart, \'day_end\': day.dayEnd }\" ng-click=\"calendar.getDay(day)\">{{day.str}}</li></ul></div></div><div ng-mouseleave=\"calendar.rangeShow = false\" ng-if=\"calendar.listShow\" class=\"range-list range-list-show\" ng-show=\"calendar.rangeShow\"><ul><li ng-repeat=\"item in calendar.list\" ng-click=\"calendar.listSelected(item)\"><span class=\"item-name\">{{item.label}}</span> <span class=\"item-date-start\">{{calendar.formatFrontDate(item.start)}}</span> <span class=\"item-date-separator\">&mdash;</span> <span class=\"item-date-end\">{{calendar.formatFrontDate(item.end)}}</span></li></ul></div></div>");}]);
