@@ -2,7 +2,7 @@
  * angular-red-datepicker
  * https://github.com/johnnyswan/angular-red-datepicker
  * Red Swan
- * Version: 0.0.9 - 2017-01-27T20:28:08.952Z
+ * Version: 0.0.9 - 2017-01-27T20:44:08.081Z
  * License: MIT
  */
 
@@ -45,9 +45,6 @@
     datepickerController.$inject = ['moment', '_', '$attrs'];
     function datepickerController(moment, _, $attrs) {
         var vm = this;
-
-        console.log($attrs);
-
         (function () {
             vm.locale = vm.locale || $attrs.locale;
             vm.todayBtn = vm.todayBtn || $attrs.todayBtn;
