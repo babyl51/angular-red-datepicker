@@ -1,4 +1,3 @@
-
 <div class="calendar">
     <div class="output">
         <div class="output__field">
@@ -76,7 +75,7 @@
             </ul>
         </div>
     </div>
-    <div ng-mouseleave="calendar.rangeShow = false" ng-if="calendar.list" class="range-list range-list-show"
+    <div ng-mouseleave="calendar.rangeShow = false" ng-if="calendar.listShow" class="range-list range-list-show"
          ng-show="calendar.rangeShow">
         <ul>
             <li ng-repeat="item in calendar.list" ng-click="calendar.listSelected(item)">
@@ -84,11 +83,11 @@
                     {{item.label}}
                 </span>
                 <span class="item-date-start">
-                    {{item.start}}
+                    {{calendar.formatFrontDate(item.start)}}
                 </span>
                 <span class="item-date-separator">&mdash;</span>
                 <span class="item-date-end">
-                    {{item.end}}
+                    {{calendar.formatFrontDate(item.end)}}
                 </span>
             </li>
         </ul>
