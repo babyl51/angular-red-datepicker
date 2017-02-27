@@ -24,7 +24,7 @@
     <h1 class="text-muted">Demo</h1>
 
     <div class="usage row">
-        <red-datepicker locale="en" list-show="true"  output="vm.dateRange" today-btn="true" date-start="02.02.2017" date-end="02.16.2017" list-arr="vm.arrayTest"></red-datepicker>
+        <red-datepicker locale="ru" list-show="true"  output="vm.dateRange" today-btn="true" date-start="vm.testStart" date-end="vm.testEnd" list-arr="vm.arrayTest"></red-datepicker>
     </div>
 
 
@@ -32,6 +32,7 @@
     <p>Date start {{vm.dateRange.start}}</p>
     <p>Date end {{vm.dateRange.end}}</p>
 
+    <button ng-click="vm.test()">123</button>
 </div>
 
 

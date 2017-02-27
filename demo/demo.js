@@ -10,9 +10,12 @@
         .module('demo')
         .controller('DemoCtrl', DemoCtrl);
 
-    DemoCtrl.$inject = [];
-    function DemoCtrl() {
+    DemoCtrl.$inject = ['redDatepickerService'];
+    function DemoCtrl(redDatepickerService) {
         var vm = this;
+
+        vm.testStart = '02.02.2017';
+        vm.testEnd = '02.16.2017';
 
         vm.dateRange = {};
         vm.arrayTest = [{
@@ -37,8 +40,9 @@
             label: 'Last year',
             days: 365
         }];
-
-
+        vm.test = function () {
+            redDatepickerService.setData('19.09.1992','20.12.2015', true);
+        }
     }
 
 })();
