@@ -25,7 +25,7 @@
                 /** @param {boolean} listShow - show date range or not.*/
                 listShow: '@?',
                 /** @param {array} listArr - set list of dates for quick change with list button.*/
-                listArr: '@?',
+                listArr: '=?',
                 dateStart: '@?',
                 dateEnd: '@?'
             },
@@ -86,22 +86,22 @@
 
             vm.output = {start: vm.inputStart, end: vm.inputEnd};
 
-            vm.listArr = vm.listArr || $attrs.listArr;
-            if (vm.listShow) {
-                if (Array.isArray(vm.listArr)) {
-                    _.forEach(vm.listArr, function (o) {
-                        if (o.days < 30) {
-                            o.start = moment(vm.today.date).subtract(o.days - 1, 'days');
-                            o.end = vm.today.date;
-                        } else {
-                            o.start = moment(vm.today.date).subtract(o.days, 'days').startOf('month');
-                            o.end = moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day');
-                        }
-                    });
-                    vm.list = vm.listArr;
-                } else {
-                    vm.list = [
-                        {
+            setTimeout(function () {
+                vm.listArr = vm.listArr || $attrs.listArr;
+                if (vm.listShow) {
+                    if (Array.isArray(vm.listArr)) {
+                        _.forEach(vm.listArr, function (o) {
+                            if (o.days < 30) {
+                                o.start = moment(vm.today.date).subtract(o.days - 1, 'days');
+                                o.end = vm.today.date;
+                            } else {
+                                o.start = moment(vm.today.date).subtract(o.days, 'days').startOf('month');
+                                o.end = moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day');
+                            }
+                        });
+                        vm.list = vm.listArr;
+                    } else {
+                        vm.list = [{
                             label: 'Last Week',
                             start: moment(vm.today.date).subtract(6, 'days'),
                             end: vm.today.date
@@ -129,12 +129,13 @@
                             label: 'Last year',
                             start: moment(vm.today.date).subtract(12, 'month').startOf('month'),
                             end: moment(vm.today.date).subtract(1, 'month').endOf('month').startOf('day')
-                        }
-                    ];
+                        }];
+                    }
+                } else {
+                    vm.list = '';
                 }
-            } else {
-                vm.list = '';
-            }
+            }, 300);
+
         })();
 
         vm.getDay = getDay;
