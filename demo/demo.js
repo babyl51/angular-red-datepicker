@@ -17,7 +17,7 @@
         vm.dateRange = {};
         vm.arrayTest = [{
             label: 'Last Week',
-            days: 7
+            days: 365
         }, {
             label: 'Last 15 days',
             days: 15
