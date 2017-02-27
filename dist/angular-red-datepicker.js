@@ -2,7 +2,7 @@
  * angular-red-datepicker
  * https://github.com/johnnyswan/angular-red-datepicker
  * Red Swan
- * Version: 0.1.1 - 2017-02-27T12:26:15.643Z
+ * Version: 0.1.2 - 2017-02-27T15:43:37.587Z
  * License: MIT
  */
 
@@ -16,7 +16,8 @@
     angular.module('redDatepickerModule', [])
         .constant('moment', window.moment)
         .constant('_', window._)
-        .directive('redDatepicker', redDatepicker);
+        .directive('redDatepicker', redDatepicker)
+        .service('redDatepickerService', redDatepickerService);
 
     function redDatepicker() {
         return {
@@ -34,9 +35,7 @@
                 /** @param {boolean} listShow - show date range or not.*/
                 listShow: '@?',
                 /** @param {array} listArr - set list of dates for quick change with list button.*/
-                listArr: '=?',
-                dateStart: '@?',
-                dateEnd: '@?'
+                listArr: '=?'
             },
             controller: datepickerController,
             controllerAs: 'calendar',
@@ -44,8 +43,8 @@
         };
     }
 
-    datepickerController.$inject = ['moment', '_', '$attrs'];
-    function datepickerController(moment, _, $attrs) {
+    datepickerController.$inject = ['moment', '_', '$attrs', '$rootScope'];
+    function datepickerController(moment, _, $attrs, $rootScope) {
         var vm = this;
         (function () {
             vm.locale = vm.locale || $attrs.locale;
@@ -82,17 +81,11 @@
 
             /** @description Variables for showing selected days*/
             vm.selectedDays = [];
-            if (vm.dateStart && vm.dateEnd) {
-                vm.endSelection = moment(new Date(vm.dateEnd).toISOString());
-                vm.startSelection = moment(new Date(vm.dateStart).toISOString());
-            } else {
-                vm.endSelection = date.startOf('day').toArray();
-                vm.startSelection = moment(vm.endSelection).subtract(vm.numberOfDays, 'day').startOf('day').toArray();
-            }
+            vm.endSelection = date.startOf('day').toArray();
+            vm.startSelection = moment(vm.endSelection).subtract(vm.numberOfDays, 'day').startOf('day').toArray();
             /** @description Variables for input date*/
             vm.inputStart = moment(vm.startSelection).format('L');
             vm.inputEnd = moment(vm.endSelection).format('L');
-
             vm.output = {start: vm.inputStart, end: vm.inputEnd};
 
             setTimeout(function () {
@@ -357,8 +350,29 @@
             return el.format('L');
         }
 
+        $rootScope.$on('updateDate', function (event, data) {
+            vm.endSelection = moment(data.end, vm.localeInfo._longDateFormat.L);
+            vm.startSelection = moment(data.start, vm.localeInfo._longDateFormat.L);
+            vm.inputStart = moment(vm.startSelection).format('L');
+            vm.inputEnd = moment(vm.endSelection).format('L');
+            vm.output = {start: vm.inputStart, end: vm.inputEnd};
+            vm.monthShow = new vm.calendarArray(vm.today.date);
+        });
+
         vm.days = vm.getDaysNames(vm.weekStartDay, vm.localeInfo._weekdaysMin);
         vm.monthShow = new vm.calendarArray(vm.today.date);
+    }
+
+    redDatepickerService.$inject = ['$rootScope'];
+    function redDatepickerService($rootScope) {
+        var a = {};
+        this.setData = function (start, end, fire) {
+            a = {start: start, end: end};
+            if (fire) {
+                $rootScope.$emit('updateDate', a);
+            }
+            return a;
+        }
     }
 
 })();
