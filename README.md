@@ -17,9 +17,11 @@ angular.module('app', ['redDatepickerModule']);
 ```html
     <red-datepicker locale="en"
                     list-show="true"
-                    list-arr={variable}
+                    list-arr="{variable}"
                     output="{variable}"
                     today-btn="true"
+                    date-start="{string}"
+                    date-end="{string}"
                     number-of-days="6"></red-datepicker>
 ```
 * `locale` is optional and set language and rules for displaying calendar. By defaults is English. The list of languages you can look in the [MomentJS](http://momentjs.com/).
@@ -27,6 +29,8 @@ angular.module('app', ['redDatepickerModule']);
 * `list-arr` - array of objects where object - item of list `{label: 'Name of label', days: 'number of days from today'}`
 * `output` - set the variable for date output.
 * `today-btn` - show today button.
+* `date-start` - init datepicker with specific date.
+* `date-end` - init datepicker with specific date.
 * `number-of-days` - set quantity of days from start selection to today on init.
 
 

@@ -1,22 +1,22 @@
 var fs = require('fs');
-var connect = require('gulp-connect');
-var gulp = require('gulp');
-var karma = require('karma').server;
-var concat = require('gulp-concat');
-var jshint = require('gulp-jshint');
-var header = require('gulp-header');
-var rename = require('gulp-rename');
-var es = require('event-stream');
-var del = require('del');
-var uglify = require('gulp-uglify');
-var minifyHtml = require('gulp-minify-html');
-var minifyCSS = require('gulp-minify-css');
-var templateCache = require('gulp-angular-templatecache');
-var gutil = require('gulp-util');
-var plumber = require('gulp-plumber');
-var open = require('gulp-open');
-var less = require('gulp-less');
-var order = require("gulp-order");
+var connect = require('gulp-connect'),
+    gulp = require('gulp'),
+    karma = require('karma').Server,
+    concat = require('gulp-concat'),
+    jshint = require('gulp-jshint'),
+    header = require('gulp-header'),
+    rename = require('gulp-rename'),
+    es = require('event-stream'),
+    del = require('del'),
+    uglify = require('gulp-uglify'),
+    minifyHtml = require('gulp-minify-html'),
+    minifyCSS = require('gulp-minify-css'),
+    templateCache = require('gulp-angular-templatecache'),
+    gutil = require('gulp-util'),
+    plumber = require('gulp-plumber'),
+    open = require('gulp-open'),
+    less = require('gulp-less'),
+    order = require("gulp-order");
 
 var wiredep = require('wiredep').stream;
 var inject = require('gulp-inject');
@@ -114,7 +114,8 @@ gulp.task('jshint-test', function () {
 });
 
 gulp.task('karma', function (done) {
-    karma.start({
+    server = new Server(config, [done]);
+    server.start({
         configFile: __dirname + '/karma.conf.js',
         singleRun: true
     }, done);

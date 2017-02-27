@@ -2,19 +2,19 @@
  * angular-red-datepicker
  * https://github.com/johnnyswan/angular-red-datepicker
  * Red Swan
- * Version: 0.0.9 - 2017-01-27T20:44:08.081Z
+ * Version: 0.1.1 - 2017-02-27T09:25:28.683Z
  * License: MIT
  */
 
 
 /**
- * @author Johhny Swan <ferdinandgrau@gmail.com>
+ * @author Johnny Swan <ferdinandgrau@gmail.com>
  */
 (function () {
     'use strict';
 
     angular.module('redDatepickerModule', [])
-        .constant('moment', moment)
+        .constant('moment', window.moment)
         .constant('_', window._)
         .directive('redDatepicker', redDatepicker);
 
@@ -34,14 +34,16 @@
                 /** @param {boolean} listShow - show date range or not.*/
                 listShow: '@?',
                 /** @param {array} listArr - set list of dates for quick change with list button.*/
-                listArr: '@?'
+                listArr: '@?',
+                dateStart: '@?',
+                dateEnd: '@?'
             },
             controller: datepickerController,
             controllerAs: 'calendar',
             bindToController: true
         };
     }
-    
+
     datepickerController.$inject = ['moment', '_', '$attrs'];
     function datepickerController(moment, _, $attrs) {
         var vm = this;
@@ -50,6 +52,8 @@
             vm.todayBtn = vm.todayBtn || $attrs.todayBtn;
             vm.numberOfDays = vm.numberOfDays || $attrs.numberOfDays;
             vm.listShow = vm.listShow || $attrs.listShow;
+            vm.dateEnd = vm.dateEnd || $attrs.dateEnd;
+            vm.dateStart = vm.dateStart || $attrs.dateStart;
 
             /** @description Variables show/hide elements*/
             vm.rangeShow = false;
@@ -78,8 +82,13 @@
 
             /** @description Variables for showing selected days*/
             vm.selectedDays = [];
-            vm.endSelection = date.startOf('day').toArray();
-            vm.startSelection = moment(vm.endSelection).subtract(vm.numberOfDays, 'day').startOf('day').toArray();
+            if (vm.dateStart && vm.dateEnd) {
+                vm.endSelection = moment(new Date(vm.dateEnd).toISOString());
+                vm.startSelection = moment(new Date(vm.dateStart).toISOString());
+            } else {
+                vm.endSelection = date.startOf('day').toArray();
+                vm.startSelection = moment(vm.endSelection).subtract(vm.numberOfDays, 'day').startOf('day').toArray();
+            }
             /** @description Variables for input date*/
             vm.inputStart = moment(vm.startSelection).format('L');
             vm.inputEnd = moment(vm.endSelection).format('L');
@@ -214,14 +223,14 @@
             var thisMoment = moment([vm.year, id - 1, 1]);
             if (direction === 'left') {
 
-                if (vm.month.id == 1) {
+                if (+vm.month.id === 1) {
                     vm.year = thisMoment.subtract(1, 'year').format('YYYY');
                 }
                 vm.month.name = thisMoment.subtract(1, 'month').format('MMMM');
                 vm.month.id = moment().month(vm.month.name).format('M');
                 vm.monthShow = new vm.calendarArray(moment([vm.year, vm.month.id - 1, 1]));
             } else if (direction === 'right') {
-                if (vm.month.id == 12) {
+                if (+vm.month.id === 12) {
                     vm.year = thisMoment.add(1, 'year').format('YYYY');
                 }
                 vm.month.name = thisMoment.add(1, 'month').format('MMMM');
@@ -344,9 +353,8 @@
         }
 
         function formatFrontDate(el) {
-            return el.format('L')
+            return el.format('L');
         }
-
 
         vm.days = vm.getDaysNames(vm.weekStartDay, vm.localeInfo._weekdaysMin);
         vm.monthShow = new vm.calendarArray(vm.today.date);
