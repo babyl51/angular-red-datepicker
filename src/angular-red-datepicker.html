@@ -43,7 +43,7 @@
                 <span>{{calendar.month.name}}</span>
                 <i class="right" aria-hidden="true"
                    ng-click="calendar.monthChange(calendar.month.id, 'right')"
-                   ng-hide="calendar.today.month == calendar.month.id"
+                   ng-hide="calendar.today.month == calendar.month.id && calendar.today.year == calendar.year"
                 ></i>
             </div>
             <div class="year">
@@ -51,7 +51,7 @@
                 <span>{{calendar.year}}</span>
                 <i class="right" aria-hidden="true"
                    ng-click="calendar.yearChange('right')"
-                   ng-hide="calendar.today.year == calendar.year"
+                   ng-hide="calendar.today.year <= calendar.year"
                 ></i>
             </div>
         </div>

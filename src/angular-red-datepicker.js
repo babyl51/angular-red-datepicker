@@ -167,7 +167,6 @@
         function monthChange(id, direction) {
             var thisMoment = moment([vm.year, id - 1, 1]);
             if (direction === 'left') {
-
                 if (+vm.month.id === 1) {
                     vm.year = thisMoment.subtract(1, 'year').format('YYYY');
                 }
@@ -201,9 +200,6 @@
                 nextMonth = moment(current).add(1, 'month').startOf('month'),
                 startDay = moment(current).startOf('month').format('d'),
                 endDay = moment(current).endOf('month').format('d');
-            // return vm.getNextMonth(nextMonth, endDay)
-            //     .concat(vm.getCurrentMonth(currentMonth), vm.getPreviousMonth(previousMonth, startDay)).reverse();
-
             return vm.getPreviousMonth(previousMonth, startDay)
                 .concat(vm.getCurrentMonth(currentMonth), vm.getNextMonth(nextMonth, endDay));
         }
