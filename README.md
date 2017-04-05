@@ -44,7 +44,6 @@ redDatepickerService.setData(start, end, true)
 ## Dependencies
 - [Angular^1.5.8](https://angularjs.org/)
 - [MomentJS](http://momentjs.com/)
-- [Lodash](https://lodash.com/)
 
 
 ## [Demo](https://johnnyswan.github.io/angular-red-datepicker/)
