@@ -6,32 +6,26 @@
 
     angular.module('redDatepickerModule', [])
         .constant('moment', window.moment)
-        .directive('redDatepicker', redDatepicker)
-        .service('redDatepickerService', redDatepickerService);
-
-    function redDatepicker() {
-        return {
-            restrict: 'E',
+        .service('redDatepickerService', redDatepickerService)
+        .component('redDatepicker', {
             templateUrl: 'angular-red-datepicker.html',
-            scope: {
+            bindings: {
                 /** @param {string} locale - Set locale from directive attr.*/
-                locale: '@?',
+                locale: '<',
                 /** @param {object} output - variable that return date values.*/
-                output: '=?',
+                output: '=',
                 /** @param {object} todayBtn - show or not today btns.*/
-                todayBtn: '@?',
+                todayBtn: '<',
                 /** @param {number} startSelection - quantity of days from today.*/
-                numberOfDays: '@?',
+                numberOfDays: '<',
                 /** @param {boolean} listShow - show date range or not.*/
-                listShow: '@?',
+                listShow: '<',
                 /** @param {array} listArr - set list of dates for quick change with list button.*/
-                listArr: '=?'
+                listArr: '<'
             },
             controller: datepickerController,
-            controllerAs: 'calendar',
-            bindToController: true
-        };
-    }
+            controllerAs: 'calendar'
+        });
 
     datepickerController.$inject = ['moment', '$attrs', '$rootScope'];
     function datepickerController(moment, $attrs, $rootScope) {
@@ -57,7 +51,7 @@
 
             /** @description Date variables*/
             var date = moment(new Date());
-            vm.todayForFront = date.format('DD.MM.YYYY');
+            vm.todayForFront = date.format(vm.localeInfo._longDateFormat.L);
             vm.today = {
                 date: date.startOf('day'),
                 year: date.format('YYYY'),
@@ -77,18 +71,18 @@
             vm.inputEnd = moment(vm.endSelection).format('L');
             vm.output = {start: vm.inputStart, end: vm.inputEnd};
 
-            setTimeout(function () {
-                vm.listArr = vm.listArr || $attrs.listArr;
-                if (vm.listShow) {
-                    if (Array.isArray(vm.listArr)) {
-                        vm.list = listSetByUser();
-                    } else {
-                        vm.list = listDefault();
-                    }
+
+            vm.listArr = vm.listArr || $attrs.listArr;
+            if (vm.listShow) {
+                if (Array.isArray(vm.listArr)) {
+                    vm.list = listSetByUser();
                 } else {
-                    vm.list = '';
+                    vm.list = listDefault();
                 }
-            }, 300);
+            } else {
+                vm.list = '';
+            }
+
         })();
 
         vm.getDay = getDay;
@@ -205,7 +199,7 @@
         }
 
         function getPreviousMonth(previousMonth, startDay) {
-            var previousMonthArray = [], start = '', date = '';
+            var previousMonthArray = [], start, date;
             if (vm.weekStartDay === 0) {
                 start = (Number(startDay) ? (startDay === 1 ? 8 : startDay) : 7);
             } else {
@@ -252,7 +246,7 @@
         }
 
         function getNextMonth(nextMonth, endDay) {
-            var nextMonthArray = [], end = '';
+            var nextMonthArray = [], end;
             if (vm.weekStartDay === 0) {
                 end = (Number(endDay) ? (endDay === 6 ? 7 : 6 - endDay ) : 6);
             } else {
